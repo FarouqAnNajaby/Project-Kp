@@ -1,17 +1,35 @@
 <div class="main-sidebar sidebar-style-2">
 	<aside id="sidebar-wrapper">
 		<div class="sidebar-brand">
-			<a href="index.php">Lamongan Mart Admin</a>
+			<a href="{{ route('admin.index') }}">Lamongan Mart Admin</a>
 		</div>
 		<div class="sidebar-brand sidebar-brand-sm">
-			<a href="index.php">LMA</a>
+			<a href="{{ route('admin.index') }}">LMA</a>
 		</div>
 		<ul class="sidebar-menu">
-			<li class="active"><a class="nav-link" href="index.php"><i class="fas fa-home"></i> <span>Beranda</span></a></li>
+			<li class="{{ request()->routeIs('admin.index') ? 'active' : null }}">
+				<a class="nav-link" href="{{ route('admin.index') }}">
+					<i class="fas fa-home"></i> <span>Beranda</span>
+				</a>
+			</li>
 			<li class="menu-header">Data Umum</li>
-			<li><a class="nav-link" href="{{ route('admin.umkm.index') }}"><i class="fas fa-store"></i> <span>UMKM</span></a></li>
-			<li class="dropdown">
-				<a class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-boxes"></i> <span>Barang</span></a>
+			<li class="dropdown{{ request()->routeIs('admin.umkm*') ? ' active' : null }}">
+				<a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
+					<i class="fas fa-store"></i><span>UMKM</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li class="{{ request()->routeIs('admin.umkm.index') ? ' active' : null }}">
+						<a class="nav-link" href="{{ route('admin.umkm.index') }}">Data UMKM</a>
+					</li>
+					<li>
+						<a class="nav-link" href="javascript:;">Kategori UMKM</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown{{ request()->routeIs('admin.barang*') ? ' active' : null }}">
+				<a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
+					<i class="fas fa-boxes"></i><span>Barang</span>
+				</a>
 				<ul class="dropdown-menu">
 					<li><a class="nav-link" href="barang.php">Data Barang</a></li>
 					<li><a class="nav-link" href="history_barang.php">History Barang</a></li>

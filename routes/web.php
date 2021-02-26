@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
-	Route::get('/', function () {
-		return view('admin.app.index');
-	})->name('admin.index');
+	Route::get('/', 'HomeController@index')->name('admin.index');
 
 	Route::group(['prefix' => 'umkm'], function () {
 

@@ -3,18 +3,12 @@
 @section('content')
 
 <section class="section">
-	<div class="section-header">
-		<div class="section-header-back">
-			<a href="{{ route('admin.umkm.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
-		</div>
-		<h1>Tambah Data UMKM</h1>
-		<div class="section-header-breadcrumb">
-			<div class="breadcrumb-item active"><a href="{{ route('admin.index') }}">Dashboard</a></div>
+	<x-admin-breadcrumb backBtn=true title="Tambah UMKM" url="{{ route('admin.umkm.index') }}">
+		<x-slot name="breadcrumbItem">
 			<div class="breadcrumb-item"><a href="{{ route('admin.umkm.index') }}">Data UMKM</a></div>
 			<div class="breadcrumb-item"><a>Tambah UMKM</a></div>
-		</div>
-	</div>
-
+		</x-slot>
+	</x-admin-breadcrumb>
 	<div class="section-body">
 		<div class="row">
 			<div class="col-12">
@@ -33,7 +27,9 @@
 						<div class="form-group row mb-4">
 							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kategori</label>
 							<div class="col-sm-12 col-md-7">
-								{{ Form::select('kategori', ['' => 'Pilih', 'pakaian' => 'Pakaian', 'makanan' => 'Makanan', 'minuman' => 'Minuman'], '', ['class' => 'form-control']) }}
+								{{ Form::select('kategori', [
+									'pakaian' => 'Pakaian', 'makanan' => 'Makanan', 'minuman' => 'Minuman'
+									], null, ['placeholder' => 'Pilih', 'class' => 'form-control']) }}
 							</div>
 						</div>
 						<div class="form-group row mb-4">

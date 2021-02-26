@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @push('stylesheet')
-<link rel="stylesheet" href="assets/modules/jquery-selectric/selectric.css">
+<link rel="stylesheet" href="assets/modules/select2/dist/css/select2.min.css">
 @endpush
 
 @section('content')
@@ -66,43 +66,9 @@
 			<div class="card">
 				<div class="card-header">
 					<h4>Statistik Transaksi</h4>
-					<div class="card-header-action">
-						<div class="btn-group">
-							<div class="float-left mr-4">
-								<select class="form-control selectric">
-									<option>Bulan</option>
-									<option>Januari</option>
-									<option>Februari</option>
-									<option>Maret</option>
-									<option>April</option>
-									<option>Mei</option>
-									<option>Juni</option>
-									<option>Juli</option>
-									<option>Agustus</option>
-									<option>September</option>
-									<option>Oktober</option>
-									<option>November</option>
-									<option>Desember</option>
-								</select>
-							</div>
-							<div class="float-left">
-								<select class="form-control selectric">
-									<option>Tahun</option>
-									<option>Januari</option>
-									<option>Februari</option>
-									<option>Maret</option>
-									<option>April</option>
-									<option>Mei</option>
-									<option>Juni</option>
-									<option>Juli</option>
-									<option>Agustus</option>
-									<option>September</option>
-									<option>Oktober</option>
-									<option>November</option>
-									<option>Desember</option>
-								</select>
-							</div>
-						</div>
+					<div class="card-header-form">
+						{!! Form::select('bulan', $bulan, null, ['placeholder' => 'Bulan', 'class' => 'form-control select2']) !!}
+						{!! Form::select('tahun', $tahun, null, ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
 					</div>
 				</div>
 				<div class="card-body">
@@ -118,41 +84,9 @@
 			<div class="card">
 				<div class="card-header">
 					<h4>Statistik UMKM</h4>
-					<div class="card-header-action">
-						<div class="float-left mr-4">
-							<select class="form-control selectric">
-								<option>Bulan</option>
-								<option>Januari</option>
-								<option>Februari</option>
-								<option>Maret</option>
-								<option>April</option>
-								<option>Mei</option>
-								<option>Juni</option>
-								<option>Juli</option>
-								<option>Agustus</option>
-								<option>September</option>
-								<option>Oktober</option>
-								<option>November</option>
-								<option>Desember</option>
-							</select>
-						</div>
-						<div class="float-left">
-							<select class="form-control selectric">
-								<option>Tahun</option>
-								<option>Januari</option>
-								<option>Februari</option>
-								<option>Maret</option>
-								<option>April</option>
-								<option>Mei</option>
-								<option>Juni</option>
-								<option>Juli</option>
-								<option>Agustus</option>
-								<option>September</option>
-								<option>Oktober</option>
-								<option>November</option>
-								<option>Desember</option>
-							</select>
-						</div>
+					<div class="card-header-form">
+						{!! Form::select('bulan', $bulan, null, ['placeholder' => 'Bulan', 'class' => 'form-control select2']) !!}
+						{!! Form::select('tahun', $tahun, null, ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
 					</div>
 				</div>
 				<div class="card-body">
@@ -167,7 +101,7 @@
 @endsection
 
 @push('javascript')
-<script src="assets/modules/jquery-selectric/jquery.selectric.min.js"></script>
+<script src="assets/modules/select2/dist/js/select2.min.js"></script>
 <script src="assets/modules/chart.min.js"></script>
 @endpush
 
