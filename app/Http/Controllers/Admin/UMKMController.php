@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Admin\UMKMListDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,9 @@ class UMKMController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(UMKMListDataTable $dataTable)
 	{
-		return view('admin.app.umkm.index');
+		return $dataTable->render('admin.app.umkm.index');
 	}
 
 	/**
