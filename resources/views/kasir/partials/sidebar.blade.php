@@ -16,4 +16,6 @@
             <li class="dropdown">
                 <a href="laporan.php" class="nav-link"><i class="far fa-file-alt"></i> <span>Laporan Transaksi</span></a>
             </li>
+        </ul>
+    </aside>
 </div>
