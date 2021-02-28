@@ -70,6 +70,7 @@ class UMKMListDataTable extends DataTable
 				'orderable' => false,
 				'searchable' => false,
 				'printable' => false,
+				'exportable' => false,
 				'render' => function () {
 					return 'function (data, type, row, meta) {return meta.row + 1;}';
 				}
