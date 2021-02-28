@@ -3,21 +3,22 @@
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+* ->namespace 		: Lokasi Folder Controller
+*
+* ->prefix			: Path atau target url. Contoh: prefix('umkm') = http://website.com/umkm
+*					  Contoh lain, di dalam route group prefix ada route group prefix lagi,
+*					  prefix('barang') = http://website.com/umkm/barang
+*
+* ->name			: Alias atau shortcut untuk memanggil route. Contoh: name('admin.index),
+*					  di controller/blade bisa dipanggil dengan route('admin.index'), yang mana
+*					  nanti hasilnya di url = http://website.com/admin
 */
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+Route::namespace('Admin')->prefix('admin')->group(function () {
 
 	Route::get('/', 'HomeController@index')->name('admin.index');
 
-	Route::group(['prefix' => 'umkm'], function () {
+	Route::prefix('umkm')->group(function () {
 
 		Route::get('/', 'UMKMController@index')->name('admin.umkm.index');
 
