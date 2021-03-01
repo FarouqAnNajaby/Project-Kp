@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Kasir;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TransaksiController extends Controller
+class LaporanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        return view('kasir.app.transaksi.index');
+        return view('kasir.app.laporan.index');
     }
 
     /**
@@ -24,7 +24,6 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -46,7 +45,7 @@ class TransaksiController extends Controller
      */
     public function show()
     {
-        return view('kasir.app.transaksi.show');
+        return view('kasir.app.laporan.show');
     }
 
     /**
