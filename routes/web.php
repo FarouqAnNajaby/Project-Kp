@@ -19,11 +19,27 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
     Route::get('/', 'HomeController@index')->name('admin.index');
 
+    Route::get('login', function () {
+
+        return view('admin.app.login');
+    })->name('admin.login');
+
     Route::prefix('umkm')->group(function () {
 
         Route::get('/', 'UMKMController@index')->name('admin.umkm.index');
 
         Route::get('create', 'UMKMController@create')->name('admin.umkm.create');
+
+        Route::get('edit', 'UMKMController@edit')->name('admin.umkm.edit');
+    });
+
+    Route::prefix('barang')->group(function () {
+
+        Route::get('/', 'BarangController@index')->name('admin.barang.index');
+
+        Route::get('create', 'BarangController@create')->name('admin.barang.create');
+
+        Route::get('edit', 'BarangController@edit')->name('admin.barang.edit');
     });
 });
 

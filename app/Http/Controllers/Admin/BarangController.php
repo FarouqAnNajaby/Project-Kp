@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\DataTables\Admin\UMKMListDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class UMKMController extends Controller
+class BarangController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(UMKMListDataTable $dataTable)
+	public function index()
 	{
-		return $dataTable->render('admin.app.umkm.index');
+		return view('admin.app.barang.index');
 	}
 
 	/**
@@ -25,7 +24,7 @@ class UMKMController extends Controller
 	 */
 	public function create()
 	{
-		return view('admin.app.umkm.create');
+		return view('admin.app.barang.create');
 	}
 
 	/**
@@ -58,7 +57,7 @@ class UMKMController extends Controller
 	 */
 	public function edit()
 	{
-		return view('admin.app.umkm.edit');
+		return view('admin.app.barang.edit');
 	}
 
 	/**
