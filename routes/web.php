@@ -17,40 +17,49 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('Admin')->prefix('admin')->group(function () {
 
-	Route::get('/', 'HomeController@index')->name('admin.index');
+    Route::get('/', 'HomeController@index')->name('admin.index');
 
-	Route::get('login', function () {
+    Route::get('login', function () {
 
-		return view('admin.app.login');
-	})->name('admin.login');
+        return view('admin.app.login');
+    })->name('admin.login');
 
-	Route::prefix('umkm')->group(function () {
+    Route::prefix('umkm')->group(function () {
 
-		Route::get('/', 'UMKMController@index')->name('admin.umkm.index');
+        Route::get('/', 'UMKMController@index')->name('admin.umkm.index');
 
-		Route::get('create', 'UMKMController@create')->name('admin.umkm.create');
+        Route::get('create', 'UMKMController@create')->name('admin.umkm.create');
 
-		Route::get('edit', 'UMKMController@edit')->name('admin.umkm.edit');
-	});
+        Route::get('edit', 'UMKMController@edit')->name('admin.umkm.edit');
+    });
 
-	Route::prefix('barang')->group(function () {
+    Route::prefix('barang')->group(function () {
 
-		Route::get('/', 'BarangController@index')->name('admin.barang.index');
+        Route::get('/', 'BarangController@index')->name('admin.barang.index');
 
-		Route::get('create', 'BarangController@create')->name('admin.barang.create');
+        Route::get('create', 'BarangController@create')->name('admin.barang.create');
 
-		Route::get('edit', 'BarangController@edit')->name('admin.barang.edit');
-	});
+        Route::get('edit', 'BarangController@edit')->name('admin.barang.edit');
+    });
 });
 
 Route::namespace('Kasir')->prefix('kasir')->group(function () {
 
-	Route::get('/', 'HomeController@index')->name('kasir.index');
+    Route::get('/', 'HomeController@index')->name('kasir.index');
 
-	Route::prefix('transaksi')->group(function () {
+    Route::prefix('transaksi')->group(function () {
 
-		Route::get('/', 'TransaksiController@index')->name('kasir.transaksi.index');
-	});
+        Route::get('/', 'TransaksiController@index')->name('kasir.transaksi.index');
+
+        Route::get('show', 'TransaksiController@show')->name('kasir.transaksi.show');
+    });
+
+    Route::prefix('laporan')->group(function () {
+
+        Route::get('/', 'LaporanController@index')->name('kasir.laporan.index');
+
+        Route::get('show', 'LaporanController@show')->name('kasir.laporan.show');
+    });
 });
 
 
