@@ -3,9 +3,14 @@
 @section('content')
 
 <section class="section">
-	<x-admin-breadcrumb backBtn=true title="History Barang" url="{{ route('admin.barang.show') }}">
+	<x-admin-breadcrumb backBtn=true title="History Barang" url="{{ route('admin.barang.history.index') }}">
 		<x-slot name="breadcrumbItem">
-			<div class="breadcrumb-item">History Barang</div>
+			<div class="breadcrumb-item">
+				<a href="{{ route('admin.barang.history.index') }}">
+					History Barang
+				</a>
+			</div>
+			<div class=" breadcrumb-item">Detail Barang</div>
 		</x-slot>
 	</x-admin-breadcrumb>
 	<div class="section-body">

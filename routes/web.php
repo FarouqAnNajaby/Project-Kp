@@ -33,7 +33,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('edit', 'UMKMController@edit')->name('admin.umkm.edit');
 	});
 
-	Route::prefix('barang')->group(function () {
+	Route::prefix('barang')->namespace('Barang')->group(function () {
 
 		Route::get('/', 'BarangController@index')->name('admin.barang.index');
 
@@ -41,9 +41,19 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 		Route::get('edit', 'BarangController@edit')->name('admin.barang.edit');
 
-		Route::get('show', 'BarangController@show')->name('admin.barang.show');
+		Route::prefix('gambar')->group(function () {
 
-		Route::get('showDetilHistory', 'BarangController@showDetilHistory')->name('admin.barang.detilHistory');
+			Route::get('/', 'GambarController@index')->name('admin.barang.gambar.index');
+
+			Route::get('create', 'GambarController@create')->name('admin.barang.gambar.create');
+		});
+
+		Route::prefix('history')->group(function () {
+
+			Route::get('/', 'HistoryController@index')->name('admin.barang.history.index');
+
+			Route::get('detail', 'HistoryController@show')->name('admin.barang.history.show');
+		});
 	});
 });
 

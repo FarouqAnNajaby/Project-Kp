@@ -72,7 +72,7 @@
 										<td>120.000</td>
 										<td>30</td>
 										<td>
-											<a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Foto"><i class="far fa-images"></i></a>
+											<a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Foto" href="{{ route('admin.barang.gambar.index') }}"><i class="far fa-images"></i></a>
 
 											<a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Ubah" href="{{ route('admin.barang.edit') }}"><i class="fas fa-pencil-alt"></i></a>
 

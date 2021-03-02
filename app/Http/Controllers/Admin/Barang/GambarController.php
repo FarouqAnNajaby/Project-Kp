@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Barang;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class BarangController extends Controller
+class GambarController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
@@ -14,13 +14,7 @@ class BarangController extends Controller
 	 */
 	public function index()
 	{
-		$kategori = [
-			'pakaian' => 'Pakaian',
-			'minuman' => 'Minuman',
-			'makanan' => 'Makanan'
-		];
-
-		return view('admin.app.barang.index', compact('kategori'));
+		return view('admin.app.barang.gambar.index');
 	}
 
 	/**
@@ -30,7 +24,7 @@ class BarangController extends Controller
 	 */
 	public function create()
 	{
-		return view('admin.app.barang.create');
+		return view('admin.app.barang.gambar.create');
 	}
 
 	/**
@@ -50,14 +44,9 @@ class BarangController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show()
+	public function show($id)
 	{
-		return view('admin.app.barang.history');
-	}
-
-	public function showDetilHistory()
-	{
-		return view('admin.app.barang.detilHistory');
+		//
 	}
 
 	/**
@@ -66,9 +55,9 @@ class BarangController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit()
+	public function edit($id)
 	{
-		return view('admin.app.barang.edit');
+		//
 	}
 
 	/**

@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="section">
-	<x-admin-breadcrumb backBtn=true title="History Barang" url="{{ route('admin.barang.index') }}">
+	<x-admin-breadcrumb title="History Barang">
 		<x-slot name="breadcrumbItem">
 			<div class="breadcrumb-item">History Barang</div>
 		</x-slot>
@@ -36,7 +36,7 @@
 										<td>30</td>
 										<td>Kamila Collection</td>
 										<td>
-											<a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detil" href="{{ route('admin.barang.detilHistory') }}"><i class="fas fa-eye"></i></a>
+											<a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail" href="{{ route('admin.barang.history.show') }}"><i class="fas fa-eye"></i></a>
 										</td>
 									</tr>
 								</tbody>
