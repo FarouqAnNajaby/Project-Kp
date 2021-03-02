@@ -47,9 +47,9 @@
                                         Rp. 20.000
                                     </td>
                                     <td class="p-0 text-center">
-                                        <a href="{{ route('kasir.transaksi.show') }}" class="btn btn-info">Lihat</a>
-                                        <button href="#" class="btn btn-success">Terima</button>
-                                        <button href="#" class="btn btn-danger">Tolak</button>
+                                        <a href="{{ route('kasir.transaksi.show') }}" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
+                                        <button href="#" class="btn btn-success" data-toggle="tooltip" title="Terima"><i class="fas fa-check"></i></button>
+                                        <button href="#" class="btn btn-danger" data-toggle="tooltip" title="Tolak"><i class="fas fa-times"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -69,9 +69,9 @@
                                         Rp. 20.000
                                     </td>
                                     <td class="p-0 text-center">
-                                        <button href="#" class="btn btn-info">Lihat</button>
-                                        <button href="#" class="btn btn-success">Terima</button>
-                                        <button href="#" class="btn btn-danger">Tolak</button>
+                                        <a href="{{ route('kasir.transaksi.show') }}" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
+                                        <button href="#" class="btn btn-success" data-toggle="tooltip" title="Terima"><i class="fas fa-check"></i></button>
+                                        <button href="#" class="btn btn-danger" data-toggle="tooltip" title="Tolak"><i class="fas fa-times"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -91,9 +91,9 @@
                                         Rp. 20.000
                                     </td>
                                     <td class="p-0 text-center">
-                                        <button href="#" class="btn btn-info">Lihat</button>
-                                        <button href="#" class="btn btn-success">Terima</button>
-                                        <button href="#" class="btn btn-danger">Tolak</button>
+                                        <a href="{{ route('kasir.transaksi.show') }}" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
+                                        <button href="#" class="btn btn-success" data-toggle="tooltip" title="Terima"><i class="fas fa-check"></i></button>
+                                        <button href="#" class="btn btn-danger" data-toggle="tooltip" title="Tolak"><i class="fas fa-times"></i></button>
                                     </td>
                                 </tr>
                             </table>

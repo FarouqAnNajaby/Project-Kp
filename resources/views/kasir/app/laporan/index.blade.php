@@ -1,5 +1,8 @@
 @extends('admin.layout.app')
 
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+@endpush
 @section('content')
 
 <section class="section">
@@ -65,10 +68,14 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Laporan Transaksi</h4>
+                        <div class="card-header-form">
+                            {!! Form::select('bulan', $bulan, null, ['placeholder' => 'Bulan', 'class' => 'form-control select2']) !!}
+                            {!! Form::select('tahun', $tahun, null, ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
+                        </div>
                     </div>
                     <div class="card-body ">
                         <div class="table-responsive">
@@ -88,7 +95,7 @@
                                     <td class="text-center">1</td>
                                     <td class="text-right">Rp. 5.000</td>
                                     <td class="text-center">
-                                        <a href="{{ route('kasir.laporan.show') }}" class="btn btn-primary">Lihat</a>
+                                        <a href="{{ route('kasir.laporan.show') }}" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -97,7 +104,7 @@
                                     <td class="text-center">23/02/2021</td>
                                     <td class="text-center">1</td>
                                     <td class="text-right">Rp. 5.000</td>
-                                    <td class="text-center"><button href="#" class="btn btn-primary">Lihat</button></td>
+                                    <td class="text-center"><button href="#" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -105,7 +112,7 @@
                                     <td class="text-center">01/03/2021</td>
                                     <td class="text-center">1</td>
                                     <td class="text-right">Rp. 5.000</td>
-                                    <td class="text-center"><button href="#" class="btn btn-primary">Lihat</button></td>
+                                    <td class="text-center"><button href="#" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
                                 </tr>
                             </table>
                         </div>
@@ -120,3 +127,7 @@
 </section>
 
 @endsection
+
+@push('javascript')
+<script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
+@endpush
