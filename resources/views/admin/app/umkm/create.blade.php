@@ -19,41 +19,41 @@
 					<div class="card-body">
 						{!! Form::open() !!}
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama UMKM</label>
+							{!! Form::label('nama_umkm', 'Nama UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
 								{!! Form::text('nama_umkm', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kategori</label>
+							{!! Form::label('kategori_umkm', 'Kategori UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								{{ Form::select('kategori', [
+								{{ Form::select('kategori_umkm', [
 									'pakaian' => 'Pakaian', 'makanan' => 'Makanan', 'minuman' => 'Minuman'
 									], null, ['placeholder' => 'Pilih', 'class' => 'form-control']) }}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Alamat UMKM</label>
+							{!! Form::label('alamat_umkm', 'Alamat UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="text" class="form-control">
+								{!! Form::text('alamat', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pemilik UMKM</label>
+							{!! Form::label('nama_pemilik_umkm', 'Nama Pemilik UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="text" class="form-control">
+								{!! Form::text('nama_pemilik_umkm', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Email UMKM</label>
+							{!! Form::label('email_umkm', 'Email UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="text" class="form-control">
+								{!! Form::text('email_umkm', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nomor Telepon</label>
+							{!! Form::label('nomor_umkm', 'Nomor Telepon', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="number" class="form-control inputtags">
+								{!! Form::number('nomor_umkm', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 
@@ -62,16 +62,15 @@
 							</label>
 							<div class="col-sm-12 col-md-7">
 								<div class="custom-control custom-checkbox" style="c">
-									<input type="checkbox" name="agree" class="custom-control-input" id="agree">
-									<label class="custom-control-label" for="agree">Dengan ini saya menyatakan <b>setuju</b> dengan <a href="">persyaratan & ketentuan </a></label>
+									{!! Form::checkbox('syarat_ketentuan', false, false, ['class' => 'custom-control-input', 'id' => 'syarat_ketentuan']) !!}
+									<label class="custom-control-label" for="syarat_ketentuan">Dengan ini saya menyatakan <b>setuju</b> dengan <a href="">persyaratan & ketentuan </a></label>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-							<div class="col-sm-12 col-md-7">
-								<button class="btn btn-primary">Kirim</button>
+							<div class="col-sm-12 col-md-9 offset-md-3">
+								{!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
 							</div>
 						</div>
 						{!! Form::close() !!}

@@ -49,6 +49,9 @@
 				<div class="card">
 					<div class="card-header">
 						<h4>Data Barang</h4>
+						<div class="card-header-form">
+							{!! Form::select('kategori', $kategori, null, ['placeholder' => 'Semua Kategori', 'class' => 'form-control select2']) !!}
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
@@ -69,9 +72,13 @@
 										<td>120.000</td>
 										<td>30</td>
 										<td>
+											<a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Foto"><i class="far fa-images"></i></a>
+
 											<a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Ubah" href="{{ route('admin.barang.edit') }}"><i class="fas fa-pencil-alt"></i></a>
-											<a class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus" data-confirm="Anda yakin?|Data akan terhapus permanen, ingin melanjutkan?" data-confirm-yes="alert('Terhapus')"><i class="fas fa-trash"></i></a>
-											<a class="btn btn-secondary btn-action mr-1" data-toggle="tooltip" title="Detil" id="modal-2"><i class="fas fa-eye"></i></a>
+
+											<a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Anda yakin?|Data akan terhapus permanen, ingin melanjutkan?" data-confirm-yes="alert('Terhapus')"><i class="fas fa-trash"></i></a>
+
+											<a class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
 										</td>
 									</tr>
 								</tbody>
@@ -86,9 +93,14 @@
 
 @endsection
 
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+@endpush
+
 @push('javascript')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
 {{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts() }} --}}

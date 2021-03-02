@@ -22,8 +22,9 @@
 									<tr>
 										<th>No</th>
 										<th>Nama Barang</th>
-										<th>Harga</th>
-										<th>Persediaan</th>
+										<th>Tanggal Input</th>
+										<th>Persediaan Awal</th>
+										<th>Nama UMKM</th>
 										<th>Opsi</th>
 									</tr>
 								</thead>
@@ -31,10 +32,11 @@
 									<tr>
 										<td>1</td>
 										<td>Batik Sutra</td>
-										<td>120.000</td>
+										<td>12-02-2021</td>
 										<td>30</td>
+										<td>Kamila Collection</td>
 										<td>
-											<a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Ubah" href="{{ route('admin.barang.edit') }}"><i class="fas fa-pencil-alt"></i></a>
+											<a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detil" href="{{ route('admin.barang.detilHistory') }}"><i class="fas fa-eye"></i></a>
 										</td>
 									</tr>
 								</tbody>

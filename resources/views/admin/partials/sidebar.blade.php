@@ -18,7 +18,7 @@
 					<i class="fas fa-store"></i><span>UMKM</span>
 				</a>
 				<ul class="dropdown-menu">
-					<li class="{{ request()->routeIs('admin.umkm.index') ? ' active' : null }}">
+					<li class="{{ request()->routeIs('admin.umkm*') ? ' active' : null }}">
 						<a class="nav-link" href="{{ route('admin.umkm.index') }}">Data UMKM</a>
 					</li>
 					<li>

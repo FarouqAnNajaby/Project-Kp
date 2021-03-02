@@ -42,6 +42,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('edit', 'BarangController@edit')->name('admin.barang.edit');
 
 		Route::get('show', 'BarangController@show')->name('admin.barang.show');
+
+		Route::get('showDetilHistory', 'BarangController@showDetilHistory')->name('admin.barang.detilHistory');
 	});
 });
 

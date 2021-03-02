@@ -14,7 +14,13 @@ class BarangController extends Controller
 	 */
 	public function index()
 	{
-		return view('admin.app.barang.index');
+		$kategori = [
+			'pakaian' => 'Pakaian',
+			'minuman' => 'Minuman',
+			'makanan' => 'Makanan'
+		];
+
+		return view('admin.app.barang.index', compact('kategori'));
 	}
 
 	/**
@@ -47,6 +53,11 @@ class BarangController extends Controller
 	public function show()
 	{
 		return view('admin.app.barang.history');
+	}
+
+	public function showDetilHistory()
+	{
+		return view('admin.app.barang.detilHistory');
 	}
 
 	/**

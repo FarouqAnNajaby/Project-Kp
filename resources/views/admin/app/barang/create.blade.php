@@ -45,15 +45,18 @@
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Ukuran Pakaian</label>
+							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Warna Pakaian</label>
 							<div class="col-sm-12 col-md-7">
-								<select class="form-control selectric">
-									<option>S</option>
-									<option>M</option>
-									<option>L</option>
-									<option>XL</option>
-									<option>XXL</option>
-								</select>
+								<div class="form-group">
+									<select class="form-control select2" multiple="">
+										<option>Option 1</option>
+										<option>Option 2</option>
+										<option>Option 3</option>
+										<option>Option 4</option>
+										<option>Option 5</option>
+										<option>Option 6</option>
+									</select>
+								</div>
 							</div>
 						</div>
 						<div class="form-group row mb-4">
@@ -88,3 +91,11 @@
 </section>
 
 @endsection
+
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+@endpush
+
+@push('javascript')
+<script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+@endpush
