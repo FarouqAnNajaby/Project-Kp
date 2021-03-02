@@ -2,9 +2,10 @@
 
 @section('content')
 <section class="section">
-    <x-admin-breadcrumb title="Laporan Transaksi">
+    <x-admin-breadcrumb backBtn=true title="Detail Laporan Transaksi" url="{{ route('kasir.laporan.index') }}">
         <x-slot name="breadcrumbItem">
-            <div class="breadcrumb-item">Laporan Transaksi</div>
+            <div class="breadcrumb-item"><a href="{{ route('kasir.laporan.index') }}">Laporan Transaksi</a></div>
+            <div class="breadcrumb-item">Detail Laporan Transaksi</div>
         </x-slot>
     </x-admin-breadcrumb>
 
@@ -21,7 +22,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="col-sm-8">
-                            <h4>Laporan Transaksi</h4>
+                            <h3>Laporan Transaksi</h3>
+                            <p class="mt-3"> Nama : Dwi Kumara Widyatna</p>
                         </div>
                         <div class="col-sm-4 text-right">
                             <h6>20/02/2021</h6>
@@ -65,7 +67,7 @@
                             <div class="col-lg-4 text-right ml-auto">
 
                                 <div class="invoice-detail-item mt-4">
-                                    <h4>Total</h4>
+                                    <div class="invoice-detail-name">Total</div>
                                     <h4>Rp. 29.000</h4>
                                 </div>
                             </div>

@@ -14,7 +14,26 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        return view('kasir.app.laporan.index');
+        $bulan = [
+            'jan' => 'Januari',
+            'feb' => 'Februari',
+            'mar' => 'Maret',
+            'apr' => 'April',
+            'mei' => 'Mei',
+            'jun' => 'Juni',
+            'jul' => 'Juli',
+            'agu' => 'Agustus',
+            'sep' => 'September',
+            'okt' => 'Oktober',
+            'nov' => 'November',
+            'des' => 'Desember'
+        ];
+        $tahun = [];
+        $x = 0;
+        for ($i = date('Y'); $i > date('Y') - 21; $i--) {
+            $tahun[$x++] = $i;
+        };
+        return view('kasir.app.laporan.index', compact('bulan', 'tahun'));
     }
 
     /**
