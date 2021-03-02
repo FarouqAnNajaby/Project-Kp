@@ -56,6 +56,18 @@
 								<input type="number" class="form-control inputtags">
 							</div>
 						</div>
+
+						<div class="form-group row mb-4">
+							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
+							</label>
+							<div class="col-sm-12 col-md-7">
+								<div class="custom-control custom-checkbox" style="c">
+									<input type="checkbox" name="agree" class="custom-control-input" id="agree">
+									<label class="custom-control-label" for="agree">Dengan ini saya menyatakan <b>setuju</b> dengan <a href="">persyaratan & ketentuan </a></label>
+								</div>
+							</div>
+						</div>
+
 						<div class="form-group row mb-4">
 							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
 							<div class="col-sm-12 col-md-7">

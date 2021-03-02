@@ -32,7 +32,8 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li class="{{ request()->routeIs('admin.barang.index') ? ' active' : null }}"><a class=" nav-link" href="{{ route('admin.barang.index') }}">Data Barang</a></li>
-					<li><a class="nav-link" href="history_barang.php">History Barang</a></li>
+
+					<li class="{{ request()->routeIs('admin.barang.show') ? ' active' : null }}"><a href="{{ route('admin.barang.show') }}">History Barang</a></li>
 				</ul>
 			</li>
 		</ul>

@@ -45,13 +45,21 @@
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama UMKM</label>
+							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Ukuran Pakaian</label>
 							<div class="col-sm-12 col-md-7">
 								<select class="form-control selectric">
-									<option>Pilih</option>
-									<option>Kamila Collection</option>
-									<option>Keripik Madura</option>
+									<option>S</option>
+									<option>M</option>
+									<option>L</option>
+									<option>XL</option>
+									<option>XXL</option>
 								</select>
+							</div>
+						</div>
+						<div class="form-group row mb-4">
+							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama UMKM</label>
+							<div class="col-sm-12 col-md-7">
+								<input type="text" class="form-control">
 							</div>
 						</div>
 						<div class="form-group row mb-4">
