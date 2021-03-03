@@ -22,7 +22,7 @@ class UMKMListDataTable extends DataTable
 	{
 		return datatables()
 			->eloquent($query)
-			->addColumn('opsi', function ($query) {
+			->addColumn('action', function ($query) {
 				$opsi = '<a class="btn btn-icon btn-success" data-toggle="tooltip" title="Detail" href="' . route('admin.umkm.edit', $query->uuid) . '">
 							<i class="fas fa-pencil-alt"></i>
 						</a>';
@@ -33,7 +33,7 @@ class UMKMListDataTable extends DataTable
 				$opsi .= Form::close();
 				return $opsi;
 			})
-			->rawColumns(['opsi' => 'opsi']);
+			->rawColumns(['action' => 'action']);
 	}
 
 	/**
@@ -58,14 +58,14 @@ class UMKMListDataTable extends DataTable
 			->setTableId('umkmlist-table')
 			->columns($this->getColumns())
 			->minifiedAjax()
-			->parameters([
-				'dom' => '"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
+			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
 							"<\'row\'<\'col-sm-12\'tr>>" + 
-							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
-				'buttons' => [
-					'pdf', 'excel', 'print', 'reload'
-				],
-			])
+							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
+			->buttons(
+				Button::make('export'),
+				Button::make('print'),
+				Button::make('reload')
+			)
 			->orderBy(1, 'asc');
 	}
 
@@ -77,19 +77,17 @@ class UMKMListDataTable extends DataTable
 	protected function getColumns()
 	{
 		return [
-			'id' => [
-				'title' => 'No',
-				'orderable' => false,
-				'searchable' => false,
-				'printable' => false,
-				'exportable' => false,
-				'render' => function () {
-					return 'function (data, type, row, meta) {return meta.row + 1;}';
-				}
-			],
+			Column::computed('no', 'No')
+				->printable(false)
+				->exportable(false)
+				->addClass('text-center')
+				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
 			Column::make('email'),
-			Column::make('opsi')
+			Column::computed('action', 'Opsi')
+				->printable(false)
+				->exportable(false)
+				->addClass('text-center'),
 		];
 	}
 

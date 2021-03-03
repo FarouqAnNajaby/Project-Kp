@@ -97,7 +97,7 @@
 
         text: function (dt) {
             return (
-                '<i class="far fa-file-excel"></i> ' +
+                '<i class="fad fa-file-excel"></i> ' +
                 dt.i18n("buttons.excel", "Excel")
             );
         },
@@ -147,11 +147,11 @@
     DataTable.ext.buttons.export = {
         extend: "collection",
 
-        className: "buttons-export",
+        className: "buttons-export btn-primary",
 
         text: function (dt) {
             return (
-                '<i class="fa fa-download"></i> ' +
+                '<i class="fas fa-file-export"></i> ' +
                 dt.i18n("buttons.export", "Export") +
                 '&nbsp;<span class="caret"/>'
             );
@@ -161,11 +161,11 @@
     };
 
     DataTable.ext.buttons.csv = {
-        className: "buttons-csv",
+        className: "buttons-csv btn-primary",
 
         text: function (dt) {
             return (
-                '<i class="fa fa-file-excel-o"></i> ' +
+                '<i class="fad fa-file-csv"></i> ' +
                 dt.i18n("buttons.csv", "CSV")
             );
         },
@@ -217,7 +217,7 @@
 
         text: function (dt) {
             return (
-                '<i class="far fa-file-pdf"></i> ' +
+                '<i class="fad fa-file-pdf"></i> ' +
                 dt.i18n("buttons.pdf", "PDF")
             );
         },
