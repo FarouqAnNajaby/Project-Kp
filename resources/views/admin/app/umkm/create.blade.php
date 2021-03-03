@@ -56,11 +56,8 @@
 								{!! Form::number('nomor_umkm', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
-
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
-							</label>
-							<div class="col-sm-12 col-md-7">
+							<div class="col-sm-12 col-md-9 offset-md-3">
 								<div class="custom-control custom-checkbox" style="c">
 									{!! Form::checkbox('syarat_ketentuan', false, false, ['class' => 'custom-control-input', 'id' => 'syarat_ketentuan']) !!}
 									<label class="custom-control-label" for="syarat_ketentuan">Dengan ini saya menyatakan <b>setuju</b> dengan <a href="">persyaratan & ketentuan </a></label>

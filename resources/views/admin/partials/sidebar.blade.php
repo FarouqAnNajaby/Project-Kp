@@ -21,8 +21,8 @@
 					<li class="{{ request()->routeIs('admin.umkm*') ? ' active' : null }}">
 						<a class="nav-link" href="{{ route('admin.umkm.index') }}">Data UMKM</a>
 					</li>
-					<li>
-						<a class="nav-link" href="javascript:;">Kategori UMKM</a>
+					<li class="{{ request()->routeIs('admin.umkm.kategori*') ? ' active' : null }}">
+						<a href="{{ route('admin.umkm.kategori.index') }}">Kategori UMKM</a>
 					</li>
 				</ul>
 			</li>
@@ -33,7 +33,9 @@
 				<ul class="dropdown-menu">
 					<li class="{{ request()->routeIs('admin.barang.index') ? ' active' : null }}"><a class=" nav-link" href="{{ route('admin.barang.index') }}">Data Barang</a></li>
 
-					<li class="{{ request()->routeIs('admin.barang.history*') ? ' active' : null }}"><a href="{{ route('admin.barang.history.index') }}">History Barang</a></li>
+					<li class="{{ request()->routeIs('admin.barang.history*') ? ' active' : null }}">
+						<a href="{{ route('admin.barang.history.index') }}">History Barang</a>
+					</li>
 				</ul>
 			</li>
 		</ul>
