@@ -6,3 +6,25 @@
  */
 
 /*# sourceMappingURL=custom.css.map */
+
+.table-action-column {
+    display: inline-block;
+    margin-left: 0.25rem;
+}
+
+a.dropdown-item:focus,
+a.dropdown-item:active,
+a.dropdown-item.active {
+    outline: none;
+    box-shadow: none;
+}
+
+.dt-button.btn-primary:not(:disabled):not(.disabled):active:focus,
+.dt-button.btn-success:not(:disabled):not(.disabled):active:focus,
+.dt-button.btn-danger:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+
+.dt-button.btn-primary {
+    color: #fff;
+}
