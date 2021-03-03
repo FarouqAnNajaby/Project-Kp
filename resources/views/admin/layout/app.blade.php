@@ -35,6 +35,8 @@
 
 	@include('admin.partials.js')
 
+	@include('sweet::alert')
+
 </body>
 
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\UMKMListDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\UMKM;
 use Illuminate\Http\Request;
 
 class UMKMController extends Controller
@@ -56,7 +57,7 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit()
+	public function edit(UMKM $uuid)
 	{
 		return view('admin.app.umkm.edit');
 	}
@@ -79,8 +80,13 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
+	public function destroy(UMKM $uuid)
 	{
-		//
+		alert()
+			->success('Data berhasil dihapus', 'Sukses!')
+			->persistent('Tutup')
+			->autoclose(3000);
+
+		return redirect()->route('admin.umkm.index');
 	}
 }

@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Form;
 
 class UMKMListDataTable extends DataTable
 {
@@ -21,7 +22,18 @@ class UMKMListDataTable extends DataTable
 	{
 		return datatables()
 			->eloquent($query)
-			->addIndexColumn();
+			->addColumn('opsi', function ($query) {
+				$opsi = '<a class="btn btn-icon btn-success" data-toggle="tooltip" title="Detail" href="' . route('admin.umkm.edit', $query->uuid) . '">
+							<i class="fas fa-pencil-alt"></i>
+						</a>';
+				$opsi .= Form::open(['route' => ['admin.umkm.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
+				$opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
+							<i class="fas fa-trash"></i>
+						</button>';
+				$opsi .= Form::close();
+				return $opsi;
+			})
+			->rawColumns(['opsi' => 'opsi']);
 	}
 
 	/**
@@ -77,6 +89,7 @@ class UMKMListDataTable extends DataTable
 			],
 			Column::make('nama'),
 			Column::make('email'),
+			Column::make('opsi')
 		];
 	}
 
