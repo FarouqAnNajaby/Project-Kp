@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\View\Components\Admin\Breadcrumb;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+		setLocale(LC_TIME, $this->app->getLocale());
 		Blade::component('admin-breadcrumb', Breadcrumb::class);
 	}
 }

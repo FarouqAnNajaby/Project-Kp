@@ -4,6 +4,7 @@ namespace App\DataTables\Admin\Barang;
 
 use App\Models\Admin\Barang\History;
 use App\Models\Barang;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -27,7 +28,16 @@ class HistoryDataTable extends DataTable
 							<i class="fas fa-eye"></i>
 						</a>';
 			})
-			->rawColumns(['action' => 'action']);
+			->rawColumns(['action' => 'action'])
+			->editColumn('created_at', function ($query) {
+				return $query->created_at->isoFormat('dddd, Do MMMM YYYY');
+			})
+			->editColumn('stok_awal', function ($query) {
+				return number_format($query->stok_awal, 0, '', '.');
+			})
+			->editColumn('harga', function ($query) {
+				return 'Rp' . number_format($query->harga, 2, ',', '.');
+			});
 	}
 
 	/**
@@ -55,7 +65,7 @@ class HistoryDataTable extends DataTable
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
 							"<\'row\'<\'col-sm-12\'tr>>" + 
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
-			->orderBy(1, 'asc')
+			->orderBy(4, 'desc')
 			->buttons(
 				Button::make('export'),
 				Button::make('print'),
@@ -78,9 +88,10 @@ class HistoryDataTable extends DataTable
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama')
 				->title('Nama Barang'),
+			Column::make('stok_awal'),
+			Column::make('harga')->title('Harga Satuan'),
 			Column::make('created_at')
 				->title('Tanggal Input'),
-			Column::make('stock_awal'),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)
