@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
 	 */
 	public function run()
 	{
-		// UMKM::factory(100)->create();
-		Barang::factory(100)->create();
+		UMKM::factory(10)->create();
+		Barang::factory(10)->create();
 	}
 }

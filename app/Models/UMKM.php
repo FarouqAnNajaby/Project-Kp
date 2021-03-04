@@ -15,7 +15,7 @@ class UMKM extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'umkm';
+	protected $table = 'tb_umkm';
 
 	/**
 	 * Indicates if the model should be timestamped.

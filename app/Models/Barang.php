@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Database\Factories\HistoryBarangFactory;
+use Database\Factories\BarangFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +16,7 @@ class Barang extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'barang';
+	protected $table = 'tb_barang';
 
 	/**
 	 * The primary key associated with the table.
@@ -53,6 +53,6 @@ class Barang extends Model
 	 */
 	protected static function newFactory()
 	{
-		return HistoryBarangFactory::new();
+		return BarangFactory::new();
 	}
 }
