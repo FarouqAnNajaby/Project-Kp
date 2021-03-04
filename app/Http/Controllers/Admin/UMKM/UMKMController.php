@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\UMKM;
 
-use App\DataTables\Admin\UMKMListDataTable;
+use App\DataTables\Admin\UMKM\UMKMListDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\UMKM;
 use Illuminate\Http\Request;
@@ -46,9 +46,10 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show($uuid)
 	{
-		//
+		$data = UMKM::findOrFail($uuid);
+		return view('admin.app.umkm.show', compact('data'));
 	}
 
 	/**

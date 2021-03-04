@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Database\Factories\BarangFactory;
-use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
-class Barang extends Model
+class Kategori extends Model
 {
 	use HasFactory, Uuid;
 
@@ -16,7 +15,14 @@ class Barang extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'tb_barang';
+	protected $table = 'tb_kategori';
+
+	/**
+	 * Indicates if the model should be timestamped.
+	 *
+	 * @var bool
+	 */
+	public $timestamps = false;
 
 	/**
 	 * The primary key associated with the table.
@@ -54,35 +60,5 @@ class Barang extends Model
 	public function getRouteKeyName()
 	{
 		return 'uuid';
-	}
-
-	/**
-	 * Get the barang harga.
-	 *
-	 * @return string
-	 */
-	public function getRpHargaAttribute()
-	{
-		return 'Rp' . number_format($this->harga, 2, ',', '.');
-	}
-
-	/**
-	 * Get the barang stok awal.
-	 *
-	 * @return string
-	 */
-	public function getStokAwalFormattedAttribute()
-	{
-		return number_format($this->stok_awal, 0, '', '.');
-	}
-
-	/**
-	 * Get the barang created_at.
-	 *
-	 * @return string
-	 */
-	public function getTanggalInputAttribute()
-	{
-		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
 	}
 }

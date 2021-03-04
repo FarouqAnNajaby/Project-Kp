@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin\UMKM;
 
+use App\DataTables\Admin\UMKM\KategoriDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -12,9 +14,9 @@ class KategoriController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(KategoriDataTable $dataTable)
 	{
-		return view('admin.app.umkm.kategori.index');
+		return $dataTable->render('admin.app.umkm.kategori.index');
 	}
 
 
@@ -58,7 +60,7 @@ class KategoriController extends Controller
 	 */
 	public function edit()
 	{
-		return view('admin.app.umkm.kategori.edit');
+		//
 	}
 
 	/**
@@ -79,8 +81,13 @@ class KategoriController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
+	public function destroy(Kategori $uuid)
 	{
-		//
+		alert()
+			->success('Data berhasil dihapus', 'Sukses!')
+			->persistent('Tutup')
+			->autoclose(3000);
+
+		return redirect()->route('admin.umkm.kategori.index');
 	}
 }

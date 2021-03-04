@@ -1,6 +1,7 @@
 @extends('admin.layout.app')
 
 @section('content')
+
 <section class="section">
 	<x-admin-breadcrumb addBtn=true title="Kategori" url="{{ route('admin.umkm.kategori.create') }}">
 		<x-slot name="breadcrumbItem">
@@ -16,31 +17,48 @@
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
-							<table class="table table-striped" id="table-1">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Nama Kategori</th>
-										<th>Hubungi</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>Pakaian</td>
-										<td>
-											<a class="btn btn-icon btn-success" data-toggle="tooltip" title="Ubah" href="{{ route('admin.kategori.edit') }}"><i class="fas fa-pencil-alt"></i></a>
-
-											<a class="btn btn-icon btn-danger" data-toggle="tooltip" title="Hapus" data-confirm="Anda yakin?|Data akan terhapus permanen, ingin melanjutkan?" data-confirm-yes="alert('Terhapus')"><i class="fas fa-trash"></i></a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							{!! $dataTable->table(['class' => 'table table-striped']) !!}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</section>
 
-	@endsection
+@endsection
+
+@push('stylesheet')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css" />
+@endpush
+
+@push('javascript')
+<script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+{{ $dataTable->scripts() }}
+<script>
+	$("table").on('draw.dt', function () {
+		$('.tooltip.fade.top.in').hide();
+		$('[data-toggle=tooltip]').tooltip({container: 'body'});
+		$('.delete').click(function(e) {
+			e.preventDefault();
+			let $this = $(this);
+			swal({
+				title: 'Apakah Anda yakin?',
+				text: 'Data Tidak Dapat Dikembalikan Setelah Anda Menghapus.',
+				icon: 'warning',
+				dangerMode: true,
+				buttons: true
+			})
+			.then((result) => {
+				if(result) {
+					$this.parent().submit();
+				}
+			})
+		});
+	})
+</script>
+@endpush
