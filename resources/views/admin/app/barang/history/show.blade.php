@@ -32,20 +32,26 @@
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="detail">
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-4">Nama Barang</label>
-							<label class="col-form-label col-12 col-md-8">Batik Sutra</label>
+							<label class="col-form-label text-md-right col-5 col-md-4">Nama Barang :</label>
+							<p class="col-form-label col-7 col-md-8">{{ $data->nama }}</p>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-4">Tanggal Input</label>
-							<label class="col-form-label col-12 col-md-8">12-10-1999</label>
+							<label class="col-form-label text-md-right col-5 col-md-4">Tanggal Input :</label>
+							<p class="col-form-label col-7 col-md-8">{{ $data->tanggal_input }}</p>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-4">Persediaan Awal</label>
-							<label class="col-form-label col-12 col-md-8">30</label>
+							<label class="col-form-label text-md-right col-5 col-md-4">Stok Awal :</label>
+							<p class="col-form-label col-7 col-md-8">{{ $data->stok_awal_formatted }}</p>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-4">Nama UMKM</label>
-							<label class="col-form-label col-12 col-md-8">Kamila Collection</label>
+							<label class="col-form-label text-md-right col-5 col-md-4">Harga Satuan :</label>
+							<p class="col-form-label col-7 col-md-8">{{ $data->rp_harga }}</p>
+						</div>
+						<div class="form-group row mb-4">
+							<label class="col-form-label text-md-right col-5 col-md-4">Nama UMKM :</label>
+							<p class="col-form-label col-7 col-md-8">
+								<a href="javascript:;">Kamila Collection</a>
+							</p>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="deskripsi">

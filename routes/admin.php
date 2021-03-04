@@ -46,7 +46,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 		Route::prefix('history')->group(function () {
 			Route::get('/', 'HistoryController@index')->name('admin.barang.history.index');
-			Route::get('detail', 'HistoryController@show')->name('admin.barang.history.show');
+			Route::get('{uuid}/show', 'HistoryController@show')->name('admin.barang.history.show');
 		});
 	});
 });
