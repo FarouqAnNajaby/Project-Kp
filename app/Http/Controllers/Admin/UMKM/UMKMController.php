@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\UMKM;
 
 use App\DataTables\Admin\UMKMListDataTable;
 use App\Http\Controllers\Controller;

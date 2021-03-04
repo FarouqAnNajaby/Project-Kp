@@ -17,30 +17,7 @@
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
-							<table class="table table-striped" id="table-2">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Nama Barang</th>
-										<th>Tanggal Input</th>
-										<th>Persediaan Awal</th>
-										<th>Nama UMKM</th>
-										<th>Opsi</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>Batik Sutra</td>
-										<td>12-02-2021</td>
-										<td>30</td>
-										<td>Kamila Collection</td>
-										<td>
-											<a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail" href="{{ route('admin.barang.history.show') }}"><i class="fas fa-eye"></i></a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							{!! $dataTable->table(['class' => 'table table-striped']) !!}
 						</div>
 					</div>
 				</div>
@@ -51,10 +28,21 @@
 
 @endsection
 
+@push('stylesheet')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css" />
+@endpush
+
 @push('javascript')
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-{{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+<script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
-{{ $dataTable->scripts() }} --}}
+{{ $dataTable->scripts() }}
+<script>
+	$("table").on('draw.dt', function () {
+		$('.tooltip.fade.top.in').hide();
+		$('[data-toggle=tooltip]').tooltip({container: 'body'});
+	})
+</script>
 @endpush

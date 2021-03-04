@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Barang;
 
+use App\DataTables\Admin\Barang\HistoryDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,9 @@ class HistoryController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(HistoryDataTable $dataTable)
 	{
-		return view('admin.app.barang.history.index');
+		return $dataTable->render('admin.app.barang.history.index');
 	}
 
 	/**

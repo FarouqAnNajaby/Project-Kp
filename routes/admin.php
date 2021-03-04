@@ -21,11 +21,15 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		return view('admin.app.login');
 	})->name('admin.login');
 
-	Route::prefix('umkm')->group(function () {
+	Route::namespace('UMKM')->prefix('umkm')->group(function () {
 		Route::get('/', 'UMKMController@index')->name('admin.umkm.index');
 		Route::get('create', 'UMKMController@create')->name('admin.umkm.create');
 		Route::get('{uuid}/edit', 'UMKMController@edit')->name('admin.umkm.edit');
 		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('admin.umkm.destroy');
+
+		Route::prefix('kategori')->group(function () {
+			Route::get('/', 'KategoriController@index')->name('admin.umkm.kategori.index');
+		});
 	});
 
 	Route::prefix('barang')->namespace('Barang')->group(function () {
