@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Barang;
 
 use App\DataTables\Admin\Barang\HistoryDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -42,12 +43,13 @@ class HistoryController extends Controller
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  char  $uuid
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show()
+	public function show($uuid)
 	{
-		return view('admin.app.barang.history.show');
+		$data = Barang::findOrFail($uuid);
+		return view('admin.app.barang.history.show', compact('data'));
 	}
 
 	/**

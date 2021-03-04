@@ -47,6 +47,16 @@ class Barang extends Model
 	protected $guarded = [];
 
 	/**
+	 * Get the route key for the model.
+	 *
+	 * @return string
+	 */
+	public function getRouteKeyName()
+	{
+		return 'uuid';
+	}
+
+	/**
 	 * Create a new factory instance for the model.
 	 *
 	 * @return \Illuminate\Database\Eloquent\Factories\Factory
@@ -54,5 +64,35 @@ class Barang extends Model
 	protected static function newFactory()
 	{
 		return BarangFactory::new();
+	}
+
+	/**
+	 * Get the barang harga.
+	 *
+	 * @return string
+	 */
+	public function getRpHargaAttribute()
+	{
+		return 'Rp' . number_format($this->harga, 2, ',', '.');
+	}
+
+	/**
+	 * Get the barang stok awal.
+	 *
+	 * @return string
+	 */
+	public function getStokAwalFormattedAttribute()
+	{
+		return number_format($this->stok_awal, 0, '', '.');
+	}
+
+	/**
+	 * Get the barang created_at.
+	 *
+	 * @return string
+	 */
+	public function getTanggalInputAttribute()
+	{
+		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
 	}
 }
