@@ -19,52 +19,41 @@
                         <h4>Input Barang</h4>
                     </div>
                     <div class="card-body">
+                        {!! Form::open() !!}
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kategori</label>
+                            {!! Form::label('kategori_transaksi', 'Kategori', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                <select class="form-control select2">
-                                    <option>Pilih</option>
-                                    <option>Pakaian</option>
-                                    <option>Makanan</option>
-                                    <option>Minuman</option>
-                                </select>
+                                {!! Form::select('kategori_transaksi', ['pakaian'=>'Pakaian', 'makanan'=>'Makanan', 'minuman'=>'Minumam'], null, ['placeholder'=>'Pilih', 'Class'=>'form-control select2']) !!}
                             </div>
                         </div>
 
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama Barang</label>
+                            {!! Form::label('nama_barang_transaksi', 'Nama Barang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                <select class="form-control select2">
-                                    <option>Option 1</option>
-                                    <option>Option 2</option>
-                                    <option>Option 3</option>
-                                </select>
+                                {!! Form::select('nama_barang_transaksi', ['Option 1'=>'Option 1', 'Option 2'=>'Option 2', 'Option 3'=>'Option 3'], null, ['placeholder'=>'Pilih', 'Class'=>'form-control select2']) !!}
                             </div>
                         </div>
 
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Warna</label>
+                            {!! Form::label('warna_transaksi', 'Warna', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                <select class="form-control selectric">
-                                    <option>Merah</option>
-                                    <option>Hijau</option>
-                                    <option>Kuning</option>
-                                </select>
+                                {!! Form::select('warna_transaksi', ['merah'=>'Merah', 'hijau'=>'Hijau', 'kuning'=>'Kuning'], null, ['placeholder'=>'Pilih', 'Class'=>'form-control selectric']) !!}
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Jumlah Barang</label>
+                            {!! Form::label('jumlah_barang_transaksi', 'Jumlah Barang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                <input type="number" class="form-control">
+                                {!! Form::number('jumlah_barang_transaksi', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                             <div class="col-sm-12 col-md-7">
-                                <button class="btn btn-primary">Kirim</button>
+                                {!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
                             </div>
                         </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
@@ -119,7 +108,7 @@
                                     </td>
                                     <td class="p-0 text-center">
                                         <a href="#" class="btn btn-danger" data-toggle="tooltip" title="Batal"><i class="fas fa-times"></i></a>
-                                        <button class="btn btn-primary" id="modal-5" data-toggle="tooltip" title="Ubah"><i class="fas fa-pen"></i></button>
+                                        <button class="btn btn-primary" data-toggle="tooltip" title="Ubah"><i class="fas fa-pen"></i></button>
                                     </td>
 
                                 </tr>
@@ -138,7 +127,7 @@
                                     </td>
                                     <td class="p-0 text-center">
                                         <a href="#" class="btn btn-danger" data-toggle="tooltip" title="Batal"><i class="fas fa-times"></i></a>
-                                        <button class="btn btn-primary" id="modal-5" data-toggle="tooltip" title="Ubah"><i class="fas fa-pen"></i></button>
+                                        <button class="btn btn-primary" data-toggle="tooltip" title="Ubah"><i class="fas fa-pen"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -154,23 +143,26 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Pembayaran</label>
-                                    <input type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Uang Kembalian</label>
-                                    <input disabled type="number" class="form-control">
-                                </div>
+                        {!! Form::open() !!}
+                        <div class="form-group row mb-4">
+                            {!! Form::label('pembayaran_transaksi', 'Pembayaran', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            <div class="col-sm-12 col-md-7">
+                                {!! Form::number('pembayaran_transaksi', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
-                        <div>
-                            <a href="#" class="btn btn-primary">Kirim</a>
+                        <div class="form-group row mb-4">
+                            {!! Form::label('uang_kembali_transaksi', 'Uang Kembalian', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            <div class="col-sm-12 col-md-7">
+                                {!! Form::number('uang_kembali_transaksi', null, ['class' => 'form-control', 'disabled' => 'true']) !!}
+                            </div>
                         </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                {!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
