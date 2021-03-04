@@ -60,7 +60,7 @@
 							<div class="col-sm-12 col-md-9 offset-md-3">
 								<div class="custom-control custom-checkbox" style="c">
 									{!! Form::checkbox('syarat_ketentuan', false, false, ['class' => 'custom-control-input', 'id' => 'syarat_ketentuan']) !!}
-									<label class="custom-control-label" for="syarat_ketentuan">Dengan ini saya menyatakan <b>setuju</b> dengan <a href="">persyaratan & ketentuan </a></label>
+									<label class="custom-control-label" for="syarat_ketentuan">Dengan ini saya menyatakan setuju dengan <a href=""><b> persyaratan & ketentuan</b></a></label>
 								</div>
 							</div>
 						</div>

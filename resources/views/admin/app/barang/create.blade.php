@@ -18,71 +18,70 @@
 						<h4>Formulir</h4>
 					</div>
 					<div class="card-body">
+						{!! Form::open() !!}
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Foto Barang</label>
+							{!! Form::label('logo_umkm', 'Logo UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
 								<div id="image-preview" class="image-preview">
-									<label for="image-upload" id="image-label">Pilih File</label>
-									<input type="file" name="image" id="image-upload" />
+									{!! Form::label('image-upload', 'Pilih File', ['id' => 'image-label']) !!}
+									{!! Form::file('logo_umkm', ['id' => 'image-upload', 'accept' => 'image/jpeg,
+									image/png']) !!}
 								</div>
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama Barang</label>
+							{!! Form::label('nama_barang', 'Nama Barang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="text" class="form-control">
+								{!! Form::text('nama_barang', null,
+								['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kategori</label>
+							{!! Form::label('kategori_umkm', 'Kategori UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<select class="form-control selectric">
-									<option>Pilih</option>
-									<option>Pakaian</option>
-									<option>Makanan</option>
-									<option>Minuman</option>
-								</select>
+								{{ Form::select('kategori_umkm', [
+									'pakaian' => 'Pakaian', 'makanan' => 'Makanan', 'minuman' => 'Minuman'
+									], null, ['placeholder' => 'Pilih', 'class' => 'form-control select2']) }}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Warna Pakaian</label>
+							{!! Form::label('warna_pakaian', 'Warna Pakaian', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<div class="form-group">
-									<select class="form-control select2" multiple="">
-										<option>Option 1</option>
-										<option>Option 2</option>
-										<option>Option 3</option>
-										<option>Option 4</option>
-										<option>Option 5</option>
-										<option>Option 6</option>
-									</select>
-								</div>
+								{{ Form::select('warna_pakaian', [
+									'merah' => 'Merah', 'kuning' => 'Kuning', 'biru' => 'Biru'
+									], null, ['placeholder' => 'Pilih', 'class' => 'form-control select2','multiple']) }}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama UMKM</label>
+							{!! Form::label('nama_umkm', 'Nama UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="text" class="form-control">
+								{!! Form::text('nama_umkm', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Harga</label>
+							{!! Form::label('harga_barang', 'Harga', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="number" class="form-control">
+								{!! Form::number('harga_barang', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Persediaan</label>
+							{!! Form::label('stock', 'Persediaan', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<input type="number" class="form-control">
+								{!! Form::number('stock', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+							{!! Form::label('deskripsi_barang', 'Deskripsi', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<button class="btn btn-primary">Kirim</button>
+								{!! Form::textarea('deskripsi_barang', null, ['class' => 'summernote-simple']) !!}
 							</div>
 						</div>
+						<div class="form-group row mb-4">
+							<div class="col-sm-12 col-md-9 offset-md-3">
+								{!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
+							</div>
+						</div>
+						{!! Form::close() !!}
 					</div>
 				</div>
 			</div>
@@ -94,8 +93,24 @@
 
 @push('stylesheet')
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/jquery-selectric/selectric.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/summernote/summernote-bs4.css') }}">
 @endpush
 
 @push('javascript')
-<script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/modules/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+<script src="{{ asset('assets/modules/summernote/summernote-bs4.js') }}"></script>
+@endpush
+
+@push('javascript-custom')
+<script>
+	$.uploadPreview({
+		input_field: "#image-upload",   // Default: .image-upload
+		preview_box: "#image-preview",  // Default: .image-preview
+		label_field: "#image-label",    // Default: .image-label
+		no_label: false,                // Default: false
+		success_callback: null          // Default: null
+	});
+</script>
 @endpush
