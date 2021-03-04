@@ -40,7 +40,7 @@
 							<div class="col-sm-12 col-md-7">
 								{{ Form::select('kategori_umkm', [
 									'pakaian' => 'Pakaian', 'makanan' => 'Makanan', 'minuman' => 'Minuman'
-									], null, ['placeholder' => 'Pilih', 'class' => 'form-control']) }}
+									], null, ['placeholder' => 'Pilih', 'class' => 'form-control','disabled' => 'true']) }}
 							</div>
 						</div>
 						<div class="form-group row mb-4">
