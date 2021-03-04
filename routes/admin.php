@@ -29,6 +29,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 		Route::prefix('kategori')->group(function () {
 			Route::get('/', 'KategoriController@index')->name('admin.umkm.kategori.index');
+			Route::get('create', 'KategoriController@create')->name('admin.umkm.kategori.create');
+			Route::get('edit', 'KategoriController@edit')->name('admin.umkm.kategori.edit');
 		});
 	});
 
