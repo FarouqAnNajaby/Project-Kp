@@ -12,6 +12,25 @@
 					<i class="fas fa-home"></i> <span>Beranda</span>
 				</a>
 			</li>
+			<li class="menu-header">Data Master</li>
+			<li class="dropdown{{ request()->routeIs('admin.umkm*') ? ' active' : null }}">
+				<a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
+					<i class="fas fa-database"></i><span>Master</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li class="{{ request()->routeIs('admin.umkm.index*') ? ' active' : null }}">
+						<a class="nav-link" href="{{ route('admin.umkm.index') }}">Data Warna</a>
+					</li>
+					<li class="{{ request()->routeIs('admin.umkm.kategori*') ? ' active' : null }}">
+						<a class="nav-link" href="{{ route('admin.umkm.kategori.index') }}">
+							Data Kategori
+						</a>
+					</li>
+					<li class="{{ request()->routeIs('admin.umkm.index*') ? ' active' : null }}">
+						<a class="nav-link" href="{{ route('admin.umkm.index') }}">Data Banner</a>
+					</li>
+				</ul>
+			</li>
 			<li class="menu-header">Data Umum</li>
 			<li class="dropdown{{ request()->routeIs('admin.umkm*') ? ' active' : null }}">
 				<a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
@@ -20,11 +39,6 @@
 				<ul class="dropdown-menu">
 					<li class="{{ request()->routeIs('admin.umkm.index*') ? ' active' : null }}">
 						<a class="nav-link" href="{{ route('admin.umkm.index') }}">Data UMKM</a>
-					</li>
-					<li class="{{ request()->routeIs('admin.umkm.kategori*') ? ' active' : null }}">
-						<a class="nav-link" href="{{ route('admin.umkm.kategori.index') }}">
-							Kategori UMKM
-						</a>
 					</li>
 				</ul>
 			</li>

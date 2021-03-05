@@ -51,4 +51,14 @@ class UMKM extends Model
 	 * @var array
 	 */
 	protected $guarded = [];
+
+	/**
+	 * Get the route key for the model.
+	 *
+	 * @return string
+	 */
+	public function getRouteKeyName()
+	{
+		return 'uuid';
+	}
 }
