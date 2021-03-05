@@ -28,21 +28,23 @@
 						<h4>Formulir</h4>
 					</div>
 					<div class="card-body">
+						{!! Form::open() !!}
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Foto Barang</label>
+							{!! Form::label('logo_umkm', 'Logo UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
 								<div id="image-preview" class="image-preview">
-									<label for="image-upload" id="image-label">Pilih File</label>
-									<input type="file" name="image" id="image-upload" />
+									{!! Form::label('image-upload', 'Pilih File', ['id' => 'image-label']) !!}
+									{!! Form::file('logo_umkm', ['id' => 'image-upload', 'accept' => 'image/jpeg,
+									image/png']) !!}
 								</div>
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-							<div class="col-sm-12 col-md-7">
-								<button class="btn btn-primary">Kirim</button>
+							<div class="col-sm-12 col-md-9 offset-md-3">
+								{!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
 							</div>
 						</div>
+						{!! Form::close() !!}
 					</div>
 				</div>
 			</div>
@@ -51,3 +53,19 @@
 </section>
 
 @endsection
+
+@push('javascript')
+<script src="{{ asset('assets/modules/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+@endpush
+
+@push('javascript-custom')
+<script>
+	$.uploadPreview({
+		input_field: "#image-upload",   // Default: .image-upload
+		preview_box: "#image-preview",  // Default: .image-preview
+		label_field: "#image-label",    // Default: .image-label
+		no_label: false,                // Default: false
+		success_callback: null          // Default: null
+	});
+</script>
+@endpush

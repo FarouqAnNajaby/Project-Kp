@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Barang;
-use App\Models\HistoryBarang;
 use App\Models\UMKM;
 use Illuminate\Database\Seeder;
 

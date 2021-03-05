@@ -26,9 +26,13 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('create', 'UMKMController@create')->name('admin.umkm.create');
 		Route::get('{uuid}/edit', 'UMKMController@edit')->name('admin.umkm.edit');
 		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('admin.umkm.destroy');
+		Route::get('{uuid}/show', 'UMKMController@show')->name('admin.umkm.show');
 
 		Route::prefix('kategori')->group(function () {
 			Route::get('/', 'KategoriController@index')->name('admin.umkm.kategori.index');
+			Route::get('create', 'KategoriController@create')->name('admin.umkm.kategori.create');
+			Route::get('{uuid}/show', 'KategoriController@show')->name('admin.umkm.kategori.show');
+			Route::delete('{uuid}/delete', 'Admin\KategoriController@destroy')->name('admin.umkm.kategori.destroy');
 		});
 	});
 
