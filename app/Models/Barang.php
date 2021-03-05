@@ -95,4 +95,12 @@ class Barang extends Model
 	{
 		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
 	}
+
+	/**
+	 * Get the history barang for barang
+	 */
+	public function historyBarangs()
+	{
+		return $this->hasMany(HistoryBarang::class, 'uuid_barang', 'uuid');
+	}
 }
