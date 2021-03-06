@@ -82,4 +82,12 @@ class Transaksi extends Model
     {
         return $this->belongsTo(User::class, 'uuid_user', 'uuid');
     }
+
+    /**
+     * Get the history barang for barang
+     */
+    public function TransaksiBarang()
+    {
+        return $this->hasMany(TransaksiBarang::class, 'uuid_transaksi', 'uuid');
+    }
 }

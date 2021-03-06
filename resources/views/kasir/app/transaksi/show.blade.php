@@ -44,54 +44,32 @@
                                     <div class="card-body p-0">
                                         <div class="table-responsive">
                                             <table class="table table-striped">
-                                                <tr>
-                                                    <th class="p-0 text-center">No</th>
-                                                    <th class="p-0 text-center">Name Barang</th>
-                                                    <th class="p-0 text-center">Jumlah</th>
-                                                    <th class="p-0 text-center">Harga</th>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        KUNYIT ASAM ANANDA
-                                                    </td>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td class="text-right">
-                                                        Rp. 5.000
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0 text-center">
-                                                        2
-                                                    </td>
-                                                    <td>
-                                                        COKLAT TURQY
-                                                    </td>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td class="text-right">
-                                                        Rp. 7.000
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0 text-center">
-                                                        3
-                                                    </td>
-                                                    <td>
-                                                        LE MINERAL 600 ML
-                                                    </td>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td class="text-right">
-                                                        Rp. 3.000
-                                                    </td>
-                                                </tr>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="p-0 text-center">No</th>
+                                                        <th class="p-0 text-center">Nama Barang</th>
+                                                        <th class="p-0 text-center">Jumlah</th>
+                                                        <th class="p-0 text-center">Harga</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($data->TransaksiBarang as $item)
+                                                    <tr>
+                                                        <td class="p-0 text-center">
+                                                            {{ $loop->iteration }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $item->Barang->nama }}
+                                                        </td>
+                                                        <td class="p-0 text-center">
+                                                            {{ $item->jumlah }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $item->rp_harga }}
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>

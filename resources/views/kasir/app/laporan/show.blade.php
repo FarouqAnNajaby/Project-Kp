@@ -23,43 +23,47 @@
                     <div class="card-header">
                         <div class="col-sm-8">
                             <h3>Laporan Transaksi</h3>
-                            <p class="mt-3"> Nama : Dwi Kumara Widyatna</p>
+                            @if ($data->jenis == 'online')
+                            <p class="mt-3"> Nama : {{ $data->User->name }}</p>
+                            @endif
                         </div>
                         <div class="col-sm-4 text-right">
-                            <h6>20/02/2021</h6>
+                            <h6>{{ $data->formatted_tanggal }}</h6>
                         </div>
                     </div>
                     <div class="card-body ">
                         <div class="table-responsive">
                             <table class="table table-striped">
-                                <tr>
-                                    <th data-width="40">No</th>
-                                    <th>Nama Barang</th>
-                                    <th class="text-center">Harga</th>
-                                    <th class="text-center">Jumlah</th>
-                                    <th class="text-right">Total</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>KUNYIT ASAM ANANDA</td>
-                                    <td class="text-center">Rp. 5.000</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">Rp. 5.000</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>COKLAT TURQY</td>
-                                    <td class="text-center">Rp. 7.000</td>
-                                    <td class="text-center">3</td>
-                                    <td class="text-right">Rp. 21.000</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>LE MINERAL 600 ML</td>
-                                    <td class="text-center">Rp. 3.000</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">Rp. 3.000</td>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th class="p-0 text-center">No</th>
+                                        <th class="p-0 text-center">Nama Barang</th>
+                                        <th class="p-0 text-center">Harga</th>
+                                        <th class="p-0 text-center">Jumlah</th>
+                                        <th class="p-0 text-center">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data->TransaksiBarang as $item)
+                                    <tr>
+                                        <td class="p-0 text-center">
+                                            {{ $loop->iteration }}
+                                        </td>
+                                        <td>
+                                            {{ $item->Barang->nama }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $item->rp_harga }}
+                                        </td>
+                                        <td class="p-0 text-center">
+                                            {{ $item->jumlah }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $item->total }}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                         <div class="row mt-4">
@@ -68,7 +72,7 @@
 
                                 <div class="invoice-detail-item mt-4">
                                     <div class="invoice-detail-name">Total</div>
-                                    <h4>Rp. 29.000</h4>
+                                    <h4>{{ $data->rp_total }}</h4>
                                 </div>
                             </div>
                         </div>

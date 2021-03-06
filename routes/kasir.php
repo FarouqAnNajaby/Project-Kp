@@ -25,6 +25,6 @@ Route::namespace('Kasir')->prefix('kasir')->group(function () {
 
     Route::prefix('laporan')->group(function () {
         Route::get('/', 'LaporanController@index')->name('kasir.laporan.index');
-        Route::get('show', 'LaporanController@show')->name('kasir.laporan.show');
+        Route::get('{uuid}/show', 'LaporanController@show')->name('kasir.laporan.show');
     });
 });
