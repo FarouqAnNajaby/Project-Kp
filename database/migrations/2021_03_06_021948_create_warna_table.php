@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBarangKategoriTable extends Migration
+class CreateWarnaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateBarangKategoriTable extends Migration
      */
     public function up()
     {
-        Schema::create('barang_kategori', function (Blueprint $table) {
+        Schema::create('warna', function (Blueprint $table) {
             $table->char('uuid', 36)->primary();
+            $table->string('slug', 50);
             $table->string('nama', 50);
-            $table->boolean('is_dropdown');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +29,6 @@ class CreateBarangKategoriTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('barang_kategori');
+        Schema::dropIfExists('warna');
     }
 }
