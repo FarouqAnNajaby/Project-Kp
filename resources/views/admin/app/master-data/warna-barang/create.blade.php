@@ -3,11 +3,11 @@
 @section('content')
 
 <section class="section">
-	<x-admin-breadcrumb backBtn=true title="Tambah Warna" url="{{ route('admin.master-data.warna.index') }}">
+	<x-admin-breadcrumb backBtn=true title="Tambah Warna Barang" url="{{ route('admin.master-data.warna-barang.index') }}">
 		<x-slot name="breadcrumbItem">
 			<div class="breadcrumb-item">Master Data</div>
-			<div class="breadcrumb-item"><a href="{{ route('admin.master-data.warna.index') }}">Data Warna</a></div>
-			<div class="breadcrumb-item"><a>Tambah Warna</a></div>
+			<div class="breadcrumb-item"><a href="{{ route('admin.master-data.warna-barang.index') }}">Data Warna Barang</a></div>
+			<div class="breadcrumb-item"><a>Tambah Warna Barang</a></div>
 		</x-slot>
 	</x-admin-breadcrumb>
 
@@ -19,7 +19,7 @@
 						<h4>Formulir</h4>
 					</div>
 					<div class="card-body">
-						{!! Form::open(['route' => 'admin.master-data.warna.store']) !!}
+						{!! Form::open(['route' => 'admin.master-data.warna-barang.store']) !!}
 						<div class="form-group row mb-4">
 							{!! Form::label('nama', 'Warna*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
@@ -36,10 +36,8 @@
 						</div>
 						{!! Form::close() !!}
 					</div>
-					<div class="card-footer">
-						<p>
-							<b>(*)</b> = Wajib diisi
-						</p>
+					<div class="card-footer bg-whitesmoke">
+						(<b>*</b>) = Wajib diisi
 					</div>
 				</div>
 			</div>

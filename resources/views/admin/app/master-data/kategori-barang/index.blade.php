@@ -3,10 +3,9 @@
 @section('content')
 
 <section class="section">
-	<x-admin-breadcrumb addBtn=true title="Warna" url="{{ route('admin.master-data.warna.create') }}">
+	<x-admin-breadcrumb addBtn=true title="Kategori Barang" url="{{ route('admin.master-data.kategori-barang.create') }}">
 		<x-slot name="breadcrumbItem">
-			<div class="breadcrumb-item">Master Data</div>
-			<div class="breadcrumb-item">Data Warna</div>
+			<div class="breadcrumb-item">Data Kategori Barang</div>
 		</x-slot>
 	</x-admin-breadcrumb>
 	<div class="section-body">
@@ -14,7 +13,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4>Data Warna</h4>
+						<h4>Data Kategori Barang</h4>
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">

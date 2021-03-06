@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Admin\MasterData;
 
-use App\DataTables\Admin\MasterData\WarnaDataTable;
+use App\DataTables\Admin\MasterData\KategoriBarangDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Warna;
+use App\Models\BarangKategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class WarnaController extends Controller
+class KategoriBarangController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(WarnaDataTable $dataTable)
+	public function index(KategoriBarangDataTable $dataTable)
 	{
-		return $dataTable->render('admin.app.master-data.warna.index');
+		return $dataTable->render('admin.app.master-data.kategori-barang.index');
 	}
+
 
 	/**
 	 * Show the form for creating a new resource.
@@ -26,7 +28,7 @@ class WarnaController extends Controller
 	 */
 	public function create()
 	{
-		return view('admin.app.master-data.warna.create');
+		return view('admin.app.master-data.kategori-barang.create');
 	}
 
 	/**
@@ -40,17 +42,26 @@ class WarnaController extends Controller
 		$request->validate([
 			'nama' => 'required|string|max:50'
 		], [], [
-			'nama' => 'Warna'
+			'nama' => 'Kategori Barang'
 		]);
 
-		Warna::create($request->all());
+		$slug = Str::slug($request->nama);
+
+		if (BarangKategori::where('slug', $slug)->exists()) {
+			return back()->withErrors(['nama' => 'Kategori barang sudah tersedia.'])->withInput();
+		}
+
+		BarangKategori::create([
+			'nama' => $request->nama,
+			'slug' => Str::slug($request->nama)
+		]);
 
 		alert()
 			->success('Data berhasil ditambahkan', 'Sukses!')
 			->persistent('Tutup')
 			->autoclose(3000);
 
-		return redirect()->route('admin.master-data.warna.create');
+		return redirect()->route('admin.master-data.kategori-barang.create');
 	}
 
 	/**
@@ -72,8 +83,8 @@ class WarnaController extends Controller
 	 */
 	public function edit($uuid)
 	{
-		$data = Warna::findOrFail($uuid);
-		return view('admin.app.master-data.warna.edit', compact('data'));
+		$data = BarangKategori::findOrFail($uuid);
+		return view('admin.app.master-data.kategori-barang.edit', compact('data'));
 	}
 
 	/**
@@ -85,22 +96,37 @@ class WarnaController extends Controller
 	 */
 	public function update(Request $request, $uuid)
 	{
-		$data = Warna::findOrFail($uuid);
+		$data = BarangKategori::findOrFail($uuid);
 
 		$request->validate([
-			'nama' => 'required|string|max:50'
+			'nama' => 'required|string|max:50',
+			'is_dropdown' => 'nullable|in:ya,tidak'
 		], [], [
-			'nama' => 'Warna'
+			'nama' => 'Kategori Barang',
+			'is_dropdown' => 'Dropdown E-Commerce'
 		]);
 
-		$data->update($request->all());
+		$slug = Str::slug($request->nama);
+		$slug_exists = BarangKategori::where('slug', $slug)->exists();
+
+		if ($slug != $data->slug && $slug_exists) {
+			return back()->withErrors(['nama' => 'Kategori barang sudah tersedia.'])->withInput();
+		}
+
+		$dropdown = $request->is_dropdown == 'ya' ? 1 : 0;
+
+		$data->update([
+			'nama' => $request->nama,
+			'slug' => $slug,
+			'is_dropdown' => $dropdown
+		]);
 
 		alert()
 			->success('Data berhasil diubah', 'Sukses!')
 			->persistent('Tutup')
 			->autoclose(3000);
 
-		return redirect()->route('admin.master-data.warna.edit', $uuid);
+		return redirect()->route('admin.master-data.kategori-barang.edit', $uuid);
 	}
 
 	/**
@@ -111,13 +137,13 @@ class WarnaController extends Controller
 	 */
 	public function destroy($uuid)
 	{
-		$data = Warna::findOrFail($uuid);
+		$data = BarangKategori::findOrFail($uuid);
 		$data->delete();
 		alert()
 			->success('Data berhasil dihapus', 'Sukses!')
 			->persistent('Tutup')
 			->autoclose(3000);
 
-		return redirect()->route('admin.master-data.warna.index');
+		return redirect()->route('admin.master-data.kategori-barang.index');
 	}
 }

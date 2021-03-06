@@ -5,24 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Kategori extends Model
+class BarangKategori extends Model
 {
-	use HasFactory, Uuid;
+	use HasFactory, Uuid, SoftDeletes;
 
 	/**
 	 * The table associated with the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'tb_kategori';
-
-	/**
-	 * Indicates if the model should be timestamped.
-	 *
-	 * @var bool
-	 */
-	public $timestamps = false;
+	protected $table = 'barang_kategori';
 
 	/**
 	 * The primary key associated with the table.

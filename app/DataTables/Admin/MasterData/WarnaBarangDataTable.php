@@ -1,16 +1,14 @@
 <?php
 
-namespace App\DataTables\Admin\UMKM;
+namespace App\DataTables\Admin\MasterData;
 
-use App\Models\Kategori;
-use Yajra\DataTables\Html\Button;
+use App\Models\Warna;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Form;
+use Yajra\DataTables\Html\Button;
 
-class KategoriDataTable extends DataTable
+class WarnaBarangDataTable extends DataTable
 {
 	/**
 	 * Build DataTable class.
@@ -23,7 +21,12 @@ class KategoriDataTable extends DataTable
 		return datatables()
 			->eloquent($query)
 			->addColumn('action', function ($query) {
-				$opsi = Form::open(['route' => ['admin.umkm.kategori.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
+
+				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.warna-barang.edit', $query->uuid) . '">
+							<i class="fas fa-pencil-alt"></i>
+						</a>';
+
+				$opsi .= Form::open(['route' => ['admin.master-data.warna-barang.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
 				$opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
 							<i class="fas fa-trash"></i>
 						</button>';
@@ -37,10 +40,10 @@ class KategoriDataTable extends DataTable
 	/**
 	 * Get query source of dataTable.
 	 *
-	 * @param \App\Models\Admin\UMKM\Kategori $model
+	 * @param \App\Models\Admin\MasterData\Warna $model
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function query(Kategori $model)
+	public function query(Warna $model)
 	{
 		return $model->newQuery();
 	}
@@ -53,18 +56,16 @@ class KategoriDataTable extends DataTable
 	public function html()
 	{
 		return $this->builder()
-			->setTableId('kategori-table')
+			->setTableId('warna-table')
 			->columns($this->getColumns())
 			->minifiedAjax()
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
-			"<\'row\'<\'col-sm-12\'tr>>" + 
-			"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
-			->orderBy(1, 'asc')
+							"<\'row\'<\'col-sm-12\'tr>>" + 
+							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->buttons(
-				Button::make('export'),
-				Button::make('print'),
 				Button::make('reload')
-			);
+			)
+			->orderBy(1, 'asc');
 	}
 
 	/**
@@ -95,6 +96,6 @@ class KategoriDataTable extends DataTable
 	 */
 	protected function filename()
 	{
-		return 'Admin-KategoriList-' . date('YmdHis');
+		return 'Admin-MasterData-Warna-' . date('YmdHis');
 	}
 }

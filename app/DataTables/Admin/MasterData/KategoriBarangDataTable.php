@@ -2,13 +2,15 @@
 
 namespace App\DataTables\Admin\MasterData;
 
-use App\Models\Warna;
+use App\Models\BarangKategori;
+use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Form;
-use Yajra\DataTables\Html\Button;
 
-class WarnaDataTable extends DataTable
+class KategoriBarangDataTable extends DataTable
 {
 	/**
 	 * Build DataTable class.
@@ -21,12 +23,10 @@ class WarnaDataTable extends DataTable
 		return datatables()
 			->eloquent($query)
 			->addColumn('action', function ($query) {
-
-				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.warna.edit', $query->uuid) . '">
+				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.kategori-barang.edit', $query->uuid) . '">
 							<i class="fas fa-pencil-alt"></i>
 						</a>';
-
-				$opsi .= Form::open(['route' => ['admin.master-data.warna.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
+				$opsi .= Form::open(['route' => ['admin.master-data.kategori-barang.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
 				$opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
 							<i class="fas fa-trash"></i>
 						</button>';
@@ -34,16 +34,20 @@ class WarnaDataTable extends DataTable
 
 				return $opsi;
 			})
+			->editColumn('dropdown', function ($query) {
+				return $query->is_dropdown ? '<span class="badge badge-success">Ya</span>' : 'Tidak';
+			})
+			->escapeColumns([])
 			->rawColumns(['action' => 'action']);
 	}
 
 	/**
 	 * Get query source of dataTable.
 	 *
-	 * @param \App\Models\Admin\MasterData\Warna $model
+	 * @param \App\Models\Admin\UMKM\Kategori $model
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function query(Warna $model)
+	public function query(BarangKategori $model)
 	{
 		return $model->newQuery();
 	}
@@ -56,16 +60,16 @@ class WarnaDataTable extends DataTable
 	public function html()
 	{
 		return $this->builder()
-			->setTableId('warna-table')
+			->setTableId('kategori-table')
 			->columns($this->getColumns())
 			->minifiedAjax()
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
 							"<\'row\'<\'col-sm-12\'tr>>" + 
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
+			->orderBy(2, 'desc')
 			->buttons(
 				Button::make('reload')
-			)
-			->orderBy(1, 'asc');
+			);
 	}
 
 	/**
@@ -82,6 +86,8 @@ class WarnaDataTable extends DataTable
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
+			Column::make('dropdown', 'is_dropdown')
+				->title('Dropdown E-Commerce <i class="fad fa-question-circle" data-toggle="tooltip" title="Kategori yang akan ditampilkan pada menu e-commerce."></i>'),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)
@@ -96,6 +102,6 @@ class WarnaDataTable extends DataTable
 	 */
 	protected function filename()
 	{
-		return 'Admin-MasterData-Warna-' . date('YmdHis');
+		return 'Admin-KategoriList-' . date('YmdHis');
 	}
 }

@@ -3,14 +3,15 @@
 @section('content')
 
 <section class="section">
-	<x-admin-breadcrumb backBtn=true title="Edit Warna" url="{{ route('admin.master-data.warna.index') }}">
+	<x-admin-breadcrumb backBtn=true title="Tambah Kategori Barang" url="{{ route('admin.master-data.kategori-barang.index') }}">
 		<x-slot name="breadcrumbItem">
 			<div class="breadcrumb-item">Master Data</div>
-			<div class="breadcrumb-item"><a href="{{ route('admin.master-data.warna.index') }}">Data Warna</a></div>
-			<div class="breadcrumb-item"><a>Edit Warna</a></div>
+			<div class="breadcrumb-item">
+				<a href="{{ route('admin.master-data.kategori-barang.index') }}">Data Kategori Barang</a>
+			</div>
+			<div class="breadcrumb-item">Tambah Kategori Barang</div>
 		</x-slot>
 	</x-admin-breadcrumb>
-
 	<div class="section-body">
 		<div class="row">
 			<div class="col-12">
@@ -19,9 +20,9 @@
 						<h4>Formulir</h4>
 					</div>
 					<div class="card-body">
-						{!! Form::model($data, ['route' => ['admin.master-data.warna.update', $data->uuid], 'method' => 'patch']) !!}
+						{!! Form::open(['route' => 'admin.master-data.kategori-barang.store']) !!}
 						<div class="form-group row mb-4">
-							{!! Form::label('nama', 'Warna*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('nama', 'Kategori Barang*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
 								{!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null), 'required']) !!}
 								@error('nama')
@@ -36,10 +37,8 @@
 						</div>
 						{!! Form::close() !!}
 					</div>
-					<div class="card-footer">
-						<p>
-							<b>(*)</b> = Wajib diisi
-						</p>
+					<div class="card-footer bg-whitesmoke">
+						(<b>*</b>) = Wajib diisi
 					</div>
 				</div>
 			</div>

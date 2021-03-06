@@ -22,13 +22,23 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 	})->name('admin.login');
 
 	Route::namespace('MasterData')->prefix('master-data')->group(function () {
-		Route::prefix('warna')->group(function () {
-			Route::get('/', 'WarnaController@index')->name('admin.master-data.warna.index');
-			Route::get('create', 'WarnaController@create')->name('admin.master-data.warna.create');
-			Route::post('store', 'WarnaController@store')->name('admin.master-data.warna.store');
-			Route::get('{uuid}/edit', 'WarnaController@edit')->name('admin.master-data.warna.edit');
-			Route::patch('{uuid}/update', 'WarnaController@update')->name('admin.master-data.warna.update');
-			Route::delete('{uuid}/destroy', 'WarnaController@destroy')->name('admin.master-data.warna.destroy');
+
+		Route::prefix('warna-barang')->group(function () {
+			Route::get('/', 'WarnaBarangController@index')->name('admin.master-data.warna-barang.index');
+			Route::get('create', 'WarnaBarangController@create')->name('admin.master-data.warna-barang.create');
+			Route::post('store', 'WarnaBarangController@store')->name('admin.master-data.warna-barang.store');
+			Route::get('{uuid}/edit', 'WarnaBarangController@edit')->name('admin.master-data.warna-barang.edit');
+			Route::patch('{uuid}/update', 'WarnaBarangController@update')->name('admin.master-data.warna-barang.update');
+			Route::delete('{uuid}/delete', 'WarnaBarangController@destroy')->name('admin.master-data.warna-barang.destroy');
+		});
+
+		Route::prefix('kategori-barang')->group(function () {
+			Route::get('/', 'KategoriBarangController@index')->name('admin.master-data.kategori-barang.index');
+			Route::get('create', 'KategoriBarangController@create')->name('admin.master-data.kategori-barang.create');
+			Route::post('store', 'KategoriBarangController@store')->name('admin.master-data.kategori-barang.store');
+			Route::get('{uuid}/edit', 'KategoriBarangController@edit')->name('admin.master-data.kategori-barang.edit');
+			Route::patch('{uuid}/update', 'KategoriBarangController@update')->name('admin.master-data.kategori-barang.update');
+			Route::delete('{uuid}/delete', 'KategoriBarangController@destroy')->name('admin.master-data.kategori-barang.destroy');
 		});
 	});
 
@@ -38,13 +48,6 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('{uuid}/edit', 'UMKMController@edit')->name('admin.umkm.edit');
 		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('admin.umkm.destroy');
 		Route::get('{uuid}/show', 'UMKMController@show')->name('admin.umkm.show');
-
-		Route::prefix('kategori')->group(function () {
-			Route::get('/', 'KategoriController@index')->name('admin.umkm.kategori.index');
-			Route::get('create', 'KategoriController@create')->name('admin.umkm.kategori.create');
-			Route::get('{uuid}/show', 'KategoriController@show')->name('admin.umkm.kategori.show');
-			Route::delete('{uuid}/delete', 'KategoriController@destroy')->name('admin.umkm.kategori.destroy');
-		});
 	});
 
 	Route::namespace('Barang')->prefix('barang')->group(function () {
