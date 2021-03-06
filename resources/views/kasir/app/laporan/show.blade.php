@@ -12,7 +12,7 @@
     <div class="section-body">
         <div class="row mb-3">
             <div class="col-md-6 col-12 text-right ml-auto">
-                <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                <button class="btn btn-icon btn-warning icon-left"><i class="fas fa-print"></i> Print</button>
             </div>
 
         </div>

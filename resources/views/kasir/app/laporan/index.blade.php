@@ -17,7 +17,7 @@
             <div class="col-sm">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-warning">
-                        <i class="far fa-user"></i>
+                        <i class="fas fa-hourglass-half"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
@@ -32,7 +32,7 @@
             <div class="col-sm">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-success">
-                        <i class="far fa-newspaper"></i>
+                        <i class="fas fa-clipboard-check"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
@@ -47,7 +47,7 @@
             <div class="col-sm">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-primary">
-                        <i class="far fa-file"></i>
+                        <i class="fas fa-clipboard-list"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
@@ -62,7 +62,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-md-6 col-12 text-right ml-auto">
-                <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                <button class="btn btn-icon btn-warning icon-left"><i class="fas fa-print"></i> Print</button>
             </div>
 
         </div>
@@ -95,7 +95,7 @@
                                     <td class="text-center">1</td>
                                     <td class="text-right">Rp. 5.000</td>
                                     <td class="text-center">
-                                        <a href="{{ route('kasir.laporan.show') }}" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('kasir.laporan.show') }}" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -104,7 +104,7 @@
                                     <td class="text-center">23/02/2021</td>
                                     <td class="text-center">1</td>
                                     <td class="text-right">Rp. 5.000</td>
-                                    <td class="text-center"><button href="#" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
+                                    <td class="text-center"><button href="#" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
@@ -112,7 +112,7 @@
                                     <td class="text-center">01/03/2021</td>
                                     <td class="text-center">1</td>
                                     <td class="text-right">Rp. 5.000</td>
-                                    <td class="text-center"><button href="#" class="btn btn-secondary" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
+                                    <td class="text-center"><button href="#" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
                                 </tr>
                             </table>
                         </div>
