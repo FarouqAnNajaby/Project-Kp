@@ -28,7 +28,7 @@
                                     <h4>Detail Pembelian</h4>
                                 </div>
                                 <div class="col-6">
-                                    <h6 class="text-right">20/02/2021</h6>
+                                    <h6 class="text-right">{{ $data->formatted_tanggal }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -37,8 +37,8 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div>
-                                            <p>Nama : Dwi Kumara Widyatna</p>
-                                            <p>Nomer Telp : 081330179352</p>
+                                            <p>Nama : {{ $data->User->name }}</p>
+                                            <p>Nomer Telp : {{ $data->User->nomor_telepon }}</p>
                                         </div>
                                     </div>
                                     <div class="card-body p-0">
@@ -106,7 +106,7 @@
                             <div class="col-lg-4 text-right d-flex flex-column justify-content-center">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Total</div>
-                                    <h4>Rp. 15.000</h4>
+                                    <h4>{{ $data->rp_total }}</h4>
                                 </div>
                             </div>
                         </div>
