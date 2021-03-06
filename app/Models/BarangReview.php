@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class UMKM extends Model
+class BarangReview extends Model
 {
 	use HasFactory, Uuid;
 
@@ -15,14 +15,7 @@ class UMKM extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'umkm';
-
-	/**
-	 * Indicates if the model should be timestamped.
-	 *
-	 * @var bool
-	 */
-	public $timestamps = false;
+	protected $table = 'barang_review';
 
 	/**
 	 * The primary key associated with the table.

@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class UMKM extends Model
+class HistoryBarang extends Model
 {
 	use HasFactory, Uuid;
 
@@ -15,14 +15,7 @@ class UMKM extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'umkm';
-
-	/**
-	 * Indicates if the model should be timestamped.
-	 *
-	 * @var bool
-	 */
-	public $timestamps = false;
+	protected $table = 'barang_history';
 
 	/**
 	 * The primary key associated with the table.
@@ -60,5 +53,34 @@ class UMKM extends Model
 	public function getRouteKeyName()
 	{
 		return 'uuid';
+	}
+
+	/**
+	 * Indicates if the model should be timestamped.
+	 *
+	 * @var bool
+	 */
+	public $timestamps = false;
+
+	/**
+	 * Get the related barang.
+	 */
+	public function barang()
+	{
+		return $this->belongsTo(Barang::class, 'uuid', 'uuid_barang');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		parent::boot();
+
+		static::creating(function ($model) {
+			$model->created_at = $model->freshTimestamp();
+		});
 	}
 }
