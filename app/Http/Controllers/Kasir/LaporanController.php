@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Kasir;
 
 use Illuminate\Http\Request;
+use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
+use App\DataTables\Kasir\LaporanTransaksiDataTable;
 
 class LaporanController extends Controller
 {
@@ -12,8 +14,11 @@ class LaporanController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(LaporanTransaksiDataTable $dataTable)
 	{
+		$pending = Transaksi::where('status', 'pending')->count();
+		$selesai = Transaksi::where('status', 'selesai')->count();
+		$total = Transaksi::count();
 		$bulan = [
 			'jan' => 'Januari',
 			'feb' => 'Februari',
@@ -33,7 +38,8 @@ class LaporanController extends Controller
 		for ($i = date('Y'); $i > date('Y') - 21; $i--) {
 			$tahun[$x++] = $i;
 		};
-		return view('kasir.app.laporan.index', compact('bulan', 'tahun'));
+		// return view('kasir.app.laporan.index', compact('bulan', 'tahun'));
+		return $dataTable->render('kasir.app.laporan.index', compact('bulan', 'tahun', 'pending', 'selesai', 'total'));
 	}
 
 	/**
@@ -62,9 +68,10 @@ class LaporanController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show()
+	public function show($uuid)
 	{
-		return view('kasir.app.laporan.show');
+		$data = Transaksi::findOrFail($uuid);
+		return view('kasir.app.laporan.show', compact('data'));
 	}
 
 	/**

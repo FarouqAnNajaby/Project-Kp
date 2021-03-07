@@ -1,9 +1,5 @@
 @extends('admin.layout.app')
 
-@push('stylesheet')
-<link rel="stylesheet" href="assets/modules/chocolat/dist/css/chocolat.css">
-@endpush
-
 @section('content')
 
 <section class="section">
@@ -21,82 +17,9 @@
                     </div>
                     <div class="card-body ">
                         <div class="table-responsive">
-                            <table class="table table-striped">
-                                <tr>
-                                    <th class="p-0 text-center">No</th>
-                                    <th class="p-0 text-center">Kode Transaksi</th>
-                                    <th class="p-0 text-center">Nama</th>
-                                    <th class="p-0 text-center">Tanggal</th>
-                                    <th class="p-0 text-center">Total Pembelian</th>
-                                    <th class="p-0 text-center">Action</th>
-                                </tr>
-                                <tr>
-                                    <td class="p-0 text-center">
-                                        1
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        AS001
-                                    </td>
-                                    <td>
-                                        Dwi Kumara Widyatna
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        20/02/2021
-                                    </td>
-                                    <td class="p-0 text-right">
-                                        Rp. 20.000
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        <a href="{{ route('kasir.transaksi.show') }}" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
-                                        <button href="#" class="btn btn-icon btn-success" data-toggle="tooltip" title="Terima"><i class="fas fa-check"></i></button>
-                                        <button href="#" class="btn btn-icon btn-danger" data-toggle="tooltip" title="Tolak"><i class="fas fa-times"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="p-0 text-center">
-                                        2
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        AS002
-                                    </td>
-                                    <td>
-                                        Farouq An Najaby
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        20/02/2021
-                                    </td>
-                                    <td class="p-0 text-right">
-                                        Rp. 20.000
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        <a href="{{ route('kasir.transaksi.show') }}" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
-                                        <button href="#" class="btn btn-icon btn-success" data-toggle="tooltip" title="Terima"><i class="fas fa-check"></i></button>
-                                        <button href="#" class="btn btn-icon btn-danger" data-toggle="tooltip" title="Tolak"><i class="fas fa-times"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="p-0 text-center">
-                                        3
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        AS003
-                                    </td>
-                                    <td>
-                                        Wildan Jerry
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        20/02/2021
-                                    </td>
-                                    <td class="p-0 text-right">
-                                        Rp. 20.000
-                                    </td>
-                                    <td class="p-0 text-center">
-                                        <a href="{{ route('kasir.transaksi.show') }}" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
-                                        <button href="#" class="btn btn-icon btn-success" data-toggle="tooltip" title="Terima"><i class="fas fa-check"></i></button>
-                                        <button href="#" class="btn btn-icon btn-danger" data-toggle="tooltip" title="Tolak"><i class="fas fa-times"></i></button>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="table-responsive">
+                                {!! $dataTable->table(['class' => 'table table-striped']) !!}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,3 +29,21 @@
 </section>
 
 @endsection
+
+@push('stylesheet')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css" />
+@endpush
+
+@push('javascript')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+{{ $dataTable->scripts() }}
+<script>
+    $("table").on('draw.dt', function () {
+		$('.tooltip.fade.top.in').hide();
+		$('[data-toggle=tooltip]').tooltip({container: 'body'});
+    });
+</script>
+@endpush

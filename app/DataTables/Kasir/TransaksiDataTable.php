@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataTables\Admin\UMKM;
+namespace App\DataTables\Kasir;
 
-use App\Models\UMKM;
+use App\Models\Transaksi;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -10,7 +10,7 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Form;
 
-class UMKMListDataTable extends DataTable
+class TransaksiDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,34 +24,42 @@ class UMKMListDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('action', function ($query) {
 
-                $opsi = '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Detail" href="' . route('admin.umkm.show', $query->uuid) . '">
+                $opsi = '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat" href="' . route('kasir.transaksi.show', $query->uuid) . '">
 						<i class="fas fa-eye"></i>
 					</a>';
 
-                $opsi .= '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.umkm.edit', $query->uuid) . '">
-							<i class="fas fa-pencil-alt"></i>
-						</a>';
+                $opsi .= Form::open(['method' => 'terima', 'class' => 'table-action-column']);
+                $opsi .= '<button class="btn btn-icon btn-success terima" data-toggle="tooltip" title="Terima">
+                            <i class="fas fa-check"></i>
+                            </button>';
 
-                $opsi .= Form::open(['route' => ['admin.umkm.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
-                $opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
-							<i class="fas fa-trash"></i>
-						</button>';
+                $opsi .= Form::open(['method' => 'tolak', 'class' => 'table-action-column']);
+                $opsi .= '<button class="btn btn-icon btn-danger tolak" data-toggle="tooltip" title="Tolak">
+                            <i class="fas fa-times"></i>
+                            </button>';
+
                 $opsi .= Form::close();
 
                 return $opsi;
             })
-            ->rawColumns(['action' => 'action']);
+            ->rawColumns(['action' => 'action'])
+            ->editColumn('created_at', function ($query) {
+                return $query->created_at->isoFormat('dddd, Do MMMM YYYY');
+            })
+            ->editColumn('total', function ($query) {
+                return 'Rp' . number_format($query->total, 2, ',', '.');
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Admin\UMKMList $model
+     * @param \App\Models\Kasir\Transaksi $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(UMKM $model)
+    public function query(Transaksi $model)
     {
-        return $model->newQuery();
+        return $model->with('user')->select('transaksi.*')->newQuery();
     }
 
     /**
@@ -62,15 +70,13 @@ class UMKMListDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('umkmlist-table')
+            ->setTableId('transaksi-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +
-							"<\'row\'<\'col-sm-12\'tr>>" +
-							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
+                                "<\'row\'<\'col-sm-12\'tr>>" +
+                                "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
             ->buttons(
-                Button::make('export'),
-                Button::make('print'),
                 Button::make('reload')
             )
             ->orderBy(1, 'asc');
@@ -85,12 +91,13 @@ class UMKMListDataTable extends DataTable
     {
         return [
             Column::computed('no', 'No')
-                ->printable(false)
                 ->exportable(false)
+                ->printable(false)
                 ->addClass('text-center')
                 ->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
-            Column::make('nama'),
-            Column::make('email'),
+            Column::make('user.name')->title('Nama'),
+            Column::make('created_at')->title('Tanggal'),
+            Column::make('total')->title('Total'),
             Column::computed('action', 'Opsi')
                 ->printable(false)
                 ->exportable(false)
@@ -105,6 +112,6 @@ class UMKMListDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Admin-UMKMList-' . date('YmdHis');
+        return 'Kasir\Transaksi_' . date('YmdHis');
     }
 }

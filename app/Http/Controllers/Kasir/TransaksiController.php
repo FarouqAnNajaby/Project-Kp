@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Kasir;
 
 use Illuminate\Http\Request;
+use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
+use App\DataTables\Kasir\TransaksiDataTable;
 
 class TransaksiController extends Controller
 {
@@ -12,9 +14,9 @@ class TransaksiController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(TransaksiDataTable $dataTable)
 	{
-		return view('kasir.app.transaksi.index');
+		return $dataTable->render('kasir.app.transaksi.index');
 	}
 
 	/**
@@ -44,9 +46,10 @@ class TransaksiController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show()
+	public function show($uuid)
 	{
-		return view('kasir.app.transaksi.show');
+		$data = Transaksi::findOrFail($uuid);
+		return view('kasir.app.transaksi.show', compact('data'));
 	}
 
 	/**
