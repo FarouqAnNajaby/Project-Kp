@@ -91,6 +91,8 @@ class UMKMListDataTable extends DataTable
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
 			Column::make('email'),
+			Column::make('nomor_telp')->title('No Telepon'),
+			Column::make('nama_pemilik')->title('Pemilik'),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)
