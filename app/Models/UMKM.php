@@ -18,13 +18,6 @@ class UMKM extends Model
 	protected $table = 'umkm';
 
 	/**
-	 * Indicates if the model should be timestamped.
-	 *
-	 * @var bool
-	 */
-	public $timestamps = false;
-
-	/**
 	 * The primary key associated with the table.
 	 *
 	 * @var string
@@ -60,5 +53,21 @@ class UMKM extends Model
 	public function getRouteKeyName()
 	{
 		return 'uuid';
+	}
+
+	/**
+	 * Get the list barang for umkm
+	 */
+	public function Barang()
+	{
+		return $this->hasMany(Barang::class, 'uuid', 'uuid_barang');
+	}
+
+	/**
+	 * Get the list barang for umkm
+	 */
+	public function Kategori()
+	{
+		return $this->belongsTo(UMKMKategori::class, 'uuid_umkm_kategori', 'uuid');
 	}
 }

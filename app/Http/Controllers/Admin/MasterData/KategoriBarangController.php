@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\MasterData;
 
-use App\DataTables\Admin\MasterData\KategoriBarangDataTable;
-use App\Http\Controllers\Controller;
-use App\Models\BarangKategori;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\BarangKategori;
+use App\Http\Controllers\Controller;
+use App\DataTables\Admin\MasterData\KategoriBarangDataTable;
 
 class KategoriBarangController extends Controller
 {
@@ -99,14 +99,14 @@ class KategoriBarangController extends Controller
 		$data = BarangKategori::findOrFail($uuid);
 
 		$request->validate([
-			'nama' => 'required|string|max:50',
+			'nama'        => 'required|string|max:50',
 			'is_dropdown' => 'nullable|in:ya,tidak'
 		], [], [
-			'nama' => 'Kategori Barang',
+			'nama'        => 'Kategori Barang',
 			'is_dropdown' => 'Dropdown E-Commerce'
 		]);
 
-		$slug = Str::slug($request->nama);
+		$slug        = Str::slug($request->nama);
 		$slug_exists = BarangKategori::where('slug', $slug)->exists();
 
 		if ($slug != $data->slug && $slug_exists) {
@@ -116,8 +116,8 @@ class KategoriBarangController extends Controller
 		$dropdown = $request->is_dropdown == 'ya' ? 1 : 0;
 
 		$data->update([
-			'nama' => $request->nama,
-			'slug' => $slug,
+			'nama'        => $request->nama,
+			'slug'        => $slug,
 			'is_dropdown' => $dropdown
 		]);
 

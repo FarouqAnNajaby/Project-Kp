@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\UMKM;
 
-use App\DataTables\Admin\UMKM\UMKMListDataTable;
-use App\Http\Controllers\Controller;
-use App\Models\UMKM;
 use Illuminate\Http\Request;
+use App\Models\UMKM;
+use App\Http\Controllers\Controller;
+use App\DataTables\Admin\UMKM\UMKMListDataTable;
 
 class UMKMController extends Controller
 {

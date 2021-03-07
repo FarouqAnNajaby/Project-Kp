@@ -2,18 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Barang;
+use App\Models\BarangKategori;
 use Bezhanov\Faker\Provider\Commerce;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-class BarangFactory extends Factory
+class BarangKategoriFactory extends Factory
 {
 	/**
 	 * The name of the factory's corresponding model.
 	 *
 	 * @var string
 	 */
-	protected $model = Barang::class;
+	protected $model = BarangKategori::class;
 
 	/**
 	 * Define the model's default state.
@@ -24,11 +25,9 @@ class BarangFactory extends Factory
 	{
 		$this->faker->addProvider(new Commerce($this->faker));
 		return [
-			'kode' => $this->faker->regexify('[A-Za-z0-9]{20}'),
-			'nama' => $this->faker->productName,
-			'stok' => rand(40, 100),
-			'harga' => rand(10000, 50000),
-			'deskripsi' => $this->faker->paragraph
+			'nama' => $slug = $this->faker->department,
+			'slug' => Str::slug($slug),
+			'is_dropdown' => rand(0, 1)
 		];
 	}
 }

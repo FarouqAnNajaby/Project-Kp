@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Kategori;
+use App\Models\UMKMKategori;
 use Bezhanov\Faker\Provider\Commerce;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class KategoriFactory extends Factory
+class UMKMKategoriFactory extends Factory
 {
 	/**
 	 * The name of the factory's corresponding model.
 	 *
 	 * @var string
 	 */
-	protected $model = Kategori::class;
+	protected $model = UMKMKategori::class;
 
 	/**
 	 * Define the model's default state.
@@ -24,8 +24,7 @@ class KategoriFactory extends Factory
 	{
 		$this->faker->addProvider(new Commerce($this->faker));
 		return [
-			'uuid' => $this->faker->uuid,
-			'nama' => $this->faker->department
+			'nama' => $this->faker->unique()->department
 		];
 	}
 }

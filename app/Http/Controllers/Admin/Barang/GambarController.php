@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Barang;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class GambarController extends Controller
 {

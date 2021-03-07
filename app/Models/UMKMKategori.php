@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
 class UMKMKategori extends Model
 {
@@ -53,5 +53,13 @@ class UMKMKategori extends Model
 	public function getRouteKeyName()
 	{
 		return 'uuid';
+	}
+
+	/**
+	 * Get the related umkm
+	 */
+	public function UMKM()
+	{
+		return $this->hasMany(UMKM::class, 'uuid_umkm_kategori', 'uuid');
 	}
 }

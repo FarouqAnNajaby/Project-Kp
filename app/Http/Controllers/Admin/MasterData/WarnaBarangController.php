@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin\MasterData;
 
-use App\DataTables\Admin\MasterData\WarnaBarangDataTable;
-use App\Http\Controllers\Controller;
-use App\Models\Warna;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Models\Warna;
+use App\Http\Controllers\Controller;
+use App\DataTables\Admin\MasterData\WarnaBarangDataTable;
 
 class WarnaBarangController extends Controller
 {

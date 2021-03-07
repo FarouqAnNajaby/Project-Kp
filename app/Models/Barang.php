@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Database\Factories\BarangFactory;
-use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
 class Barang extends Model
 {
@@ -16,7 +15,7 @@ class Barang extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'tb_barang';
+	protected $table = 'barang';
 
 	/**
 	 * The primary key associated with the table.

@@ -3,24 +3,24 @@
 @section('content')
 
 <section class="section">
-	<x-admin-breadcrumb title="History Barang">
-		<x-slot name="breadcrumbItem">
-			<div class="breadcrumb-item">History Barang</div>
-		</x-slot>
-	</x-admin-breadcrumb>
-	<div class="section-body">
-		<div class="row">
-			<div class="col-12">
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive">
-							{!! $dataTable->table(['class' => 'table table-striped']) !!}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <x-admin-breadcrumb title="History Barang">
+        <x-slot name="breadcrumbItem">
+            <div class="breadcrumb-item">History Barang</div>
+        </x-slot>
+    </x-admin-breadcrumb>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            {!! $dataTable->table(['class' => 'table table-striped']) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 @endsection
@@ -36,9 +36,11 @@
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts() }}
 <script>
-	$("table").on('draw.dt', function () {
-		$('.tooltip.fade.top.in').hide();
-		$('[data-toggle=tooltip]').tooltip({container: 'body'});
-	})
+    $("table").on('draw.dt', function() {
+        $('.tooltip.fade.top.in').hide();
+        $('[data-toggle=tooltip]').tooltip({
+            container: 'body'
+        });
+    })
 </script>
 @endpush

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Barang;
 
-use App\DataTables\Admin\Barang\HistoryDataTable;
-use App\Http\Controllers\Controller;
-use App\Models\Barang;
 use Illuminate\Http\Request;
+use App\Models\Barang;
+use App\Http\Controllers\Controller;
+use App\DataTables\Admin\Barang\HistoryDataTable;
 
 class HistoryController extends Controller
 {

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Barang;
 
-use App\Http\Controllers\Controller;
-use App\Models\Barang;
-use Bezhanov\Faker\Provider\Commerce;
 use Illuminate\Http\Request;
 use Faker\Factory as Faker;
+use Bezhanov\Faker\Provider\Commerce;
+use App\Models\Barang;
+use App\Http\Controllers\Controller;
 
 class BarangController extends Controller
 {

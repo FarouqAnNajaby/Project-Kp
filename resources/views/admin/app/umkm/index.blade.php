@@ -3,27 +3,27 @@
 @section('content')
 
 <section class="section">
-	<x-admin-breadcrumb addBtn=true title="UMKM" url="{{ route('admin.umkm.create') }}">
-		<x-slot name="breadcrumbItem">
-			<div class="breadcrumb-item">Data UMKM</div>
-		</x-slot>
-	</x-admin-breadcrumb>
-	<div class="section-body">
-		<div class="row">
-			<div class="col-12">
-				<div class="card">
-					<div class="card-header">
-						<h4>Data UMKM</h4>
-					</div>
-					<div class="card-body">
-						<div class="table-responsive">
-							{!! $dataTable->table(['class' => 'table table-striped']) !!}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <x-admin-breadcrumb addBtn=true title="UMKM" url="{{ route('admin.umkm.create') }}">
+        <x-slot name="breadcrumbItem">
+            <div class="breadcrumb-item">Data UMKM</div>
+        </x-slot>
+    </x-admin-breadcrumb>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Data UMKM</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            {!! $dataTable->table(['class' => 'table table-striped']) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 @endsection
@@ -39,25 +39,27 @@
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts() }}
 <script>
-	$("table").on('draw.dt', function () {
-		$('.tooltip.fade.top.in').hide();
-		$('[data-toggle=tooltip]').tooltip({container: 'body'});
-		$('.delete').click(function(e) {
-			e.preventDefault();
-			let $this = $(this);
-			swal({
-				title: 'Apakah Anda yakin?',
-				text: 'Data Tidak Dapat Dikembalikan Setelah Anda Menghapus.',
-				icon: 'warning',
-				dangerMode: true,
-				buttons: true
-			})
-			.then((result) => {
-				if(result) {
-					$this.parent().submit();
-				}
-			})
-		});
-	})
+    $("table").on('draw.dt', function() {
+        $('.tooltip.fade.top.in').hide();
+        $('[data-toggle=tooltip]').tooltip({
+            container: 'body'
+        });
+        $('.delete').click(function(e) {
+            e.preventDefault();
+            let $this = $(this);
+            swal({
+                    title: 'Apakah Anda yakin?'
+                    , text: 'Data Tidak Dapat Dikembalikan Setelah Anda Menghapus.'
+                    , icon: 'warning'
+                    , dangerMode: true
+                    , buttons: true
+                })
+                .then((result) => {
+                    if (result) {
+                        $this.parent().submit();
+                    }
+                })
+        });
+    })
 </script>
 @endpush
