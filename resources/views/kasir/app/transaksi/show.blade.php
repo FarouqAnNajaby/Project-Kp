@@ -28,7 +28,7 @@
                                     <h4>Detail Pembelian</h4>
                                 </div>
                                 <div class="col-6">
-                                    <h6 class="text-right">20/02/2021</h6>
+                                    <h6 class="text-right">{{ $data->formatted_tanggal }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -37,61 +37,39 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div>
-                                            <p>Nama : Dwi Kumara Widyatna</p>
-                                            <p>Nomer Telp : 081330179352</p>
+                                            <p>Nama : {{ $data->User->name }}</p>
+                                            <p>Nomer Telp : {{ $data->User->nomor_telepon }}</p>
                                         </div>
                                     </div>
                                     <div class="card-body p-0">
                                         <div class="table-responsive">
                                             <table class="table table-striped">
-                                                <tr>
-                                                    <th class="p-0 text-center">No</th>
-                                                    <th class="p-0 text-center">Name Barang</th>
-                                                    <th class="p-0 text-center">Jumlah</th>
-                                                    <th class="p-0 text-center">Harga</th>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        KUNYIT ASAM ANANDA
-                                                    </td>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td class="text-right">
-                                                        Rp. 5.000
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0 text-center">
-                                                        2
-                                                    </td>
-                                                    <td>
-                                                        COKLAT TURQY
-                                                    </td>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td class="text-right">
-                                                        Rp. 7.000
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0 text-center">
-                                                        3
-                                                    </td>
-                                                    <td>
-                                                        LE MINERAL 600 ML
-                                                    </td>
-                                                    <td class="p-0 text-center">
-                                                        1
-                                                    </td>
-                                                    <td class="text-right">
-                                                        Rp. 3.000
-                                                    </td>
-                                                </tr>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="p-0 text-center">No</th>
+                                                        <th class="p-0 text-center">Nama Barang</th>
+                                                        <th class="p-0 text-center">Jumlah</th>
+                                                        <th class="p-0 text-center">Harga</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($data->TransaksiBarang as $item)
+                                                    <tr>
+                                                        <td class="p-0 text-center">
+                                                            {{ $loop->iteration }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $item->Barang->nama }}
+                                                        </td>
+                                                        <td class="p-0 text-center">
+                                                            {{ $item->jumlah }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $item->rp_harga }}
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -106,7 +84,7 @@
                             <div class="col-lg-4 text-right d-flex flex-column justify-content-center">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Total</div>
-                                    <h4>Rp. 15.000</h4>
+                                    <h4>{{ $data->rp_total }}</h4>
                                 </div>
                             </div>
                         </div>

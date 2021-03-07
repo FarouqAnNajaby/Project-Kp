@@ -144,23 +144,22 @@
                             </table>
                         </div>
                         {!! Form::open() !!}
-                        <div class="form-group row mb-4">
-                            {!! Form::label('pembayaran_transaksi', 'Pembayaran', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
-                            <div class="col-sm-12 col-md-7">
-                                {!! Form::number('pembayaran_transaksi', null, ['class' => 'form-control']) !!}
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    {!! Form::label('pembayaran_transaksi', 'Pembayaran') !!}
+                                    {!! Form::number('pembayaran_transaksi', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    {!! Form::label('uang_kembali_transaksi', 'Uang Kembalian') !!}
+                                    {!! Form::number('uang_kembali_transaksi', null, ['class' => 'form-control', 'disabled' => 'true']) !!}
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row mb-4">
-                            {!! Form::label('uang_kembali_transaksi', 'Uang Kembalian', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
-                            <div class="col-sm-12 col-md-7">
-                                {!! Form::number('uang_kembali_transaksi', null, ['class' => 'form-control', 'disabled' => 'true']) !!}
-                            </div>
-                        </div>
-                        <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                            <div class="col-sm-12 col-md-7">
-                                {!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
-                            </div>
+                        <div class="d-grid gap-2">
+                            {!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
                         </div>
                         {!! Form::close() !!}
                     </div>

@@ -24,7 +24,7 @@
                             <h4>Transaksi Pending</h4>
                         </div>
                         <div class="card-body">
-                            10
+                            {{ number_format($pending, 0, '', '.') }}
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                             <h4>Transaksi Selesai</h4>
                         </div>
                         <div class="card-body">
-                            42
+                            {{ number_format($selesai, 0, '', '.') }}
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                             <h4>Total Transaksi</h4>
                         </div>
                         <div class="card-body">
-                            1,201
+                            {{ number_format($total, 0, '', '.') }}
                         </div>
                     </div>
                 </div>
@@ -79,42 +79,9 @@
                     </div>
                     <div class="card-body ">
                         <div class="table-responsive">
-                            <table class="table table-striped">
-                                <tr>
-                                    <th data-width="40">No</th>
-                                    <th>Kode Transaksi</th>
-                                    <th class="text-center">Tanggal</th>
-                                    <th class="text-center">Jumlah</th>
-                                    <th class="text-center">Total</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>AS001</td>
-                                    <td class="text-center">20/02/2021</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">Rp. 5.000</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('kasir.laporan.show') }}" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>AS002</td>
-                                    <td class="text-center">23/02/2021</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">Rp. 5.000</td>
-                                    <td class="text-center"><button href="#" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>AS003</td>
-                                    <td class="text-center">01/03/2021</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">Rp. 5.000</td>
-                                    <td class="text-center"><button href="#" class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat"><i class="fas fa-eye"></i></button></td>
-                                </tr>
-                            </table>
+                            <div class="table-responsive">
+                                {!! $dataTable->table(['class' => 'table table-striped']) !!}
+                            </div>
                         </div>
 
                     </div>
@@ -128,6 +95,21 @@
 
 @endsection
 
+@push('stylesheet')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css" />
+@endpush
+
 @push('javascript')
 <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+{{ $dataTable->scripts() }}
+<script>
+    $("table").on('draw.dt', function () {
+		$('.tooltip.fade.top.in').hide();
+		$('[data-toggle=tooltip]').tooltip({container: 'body'});
+    });
+</script>
 @endpush

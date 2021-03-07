@@ -65,8 +65,8 @@ class UMKMListDataTable extends DataTable
 			->setTableId('umkmlist-table')
 			->columns($this->getColumns())
 			->minifiedAjax()
-			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
-							"<\'row\'<\'col-sm-12\'tr>>" + 
+			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +
+							"<\'row\'<\'col-sm-12\'tr>>" +
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->buttons(
 				Button::make('export'),
