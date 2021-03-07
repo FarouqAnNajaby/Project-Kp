@@ -2,14 +2,10 @@
 
 namespace App\DataTables\Admin\Barang;
 
-use App\Models\Admin\Barang\History;
-use App\Models\Barang;
-use Carbon\Carbon;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Button;
+use App\Models\Barang;
 
 class HistoryDataTable extends DataTable
 {
