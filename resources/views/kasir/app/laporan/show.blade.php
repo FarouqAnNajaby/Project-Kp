@@ -2,6 +2,7 @@
 
 @section('content')
 <section class="section">
+
     <x-admin-breadcrumb backBtn=true title="Detail Laporan Transaksi" url="{{ route('kasir.laporan.index') }}">
         <x-slot name="breadcrumbItem">
             <div class="breadcrumb-item"><a href="{{ route('kasir.laporan.index') }}">Laporan Transaksi</a></div>
@@ -14,9 +15,7 @@
             <div class="col-md-6 col-12 text-right ml-auto">
                 <button class="btn btn-icon btn-warning icon-left"><i class="fas fa-print"></i> Print</button>
             </div>
-
         </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -25,6 +24,8 @@
                             <h3>Laporan Transaksi</h3>
                             @if ($data->jenis == 'online')
                             <p class="mt-3"> Nama : {{ $data->User->name }}</p>
+                            <p class="mt-3"> Nomor Telp : {{ $data->User->nomor_telepon }}</p>
+                            <p class="mt-3"> Alamat : {{ $data->alamat }}</p>
                             @endif
                         </div>
                         <div class="col-sm-4 text-right">
@@ -67,25 +68,19 @@
                             </table>
                         </div>
                         <div class="row mt-4">
-
                             <div class="col-lg-4 text-right ml-auto">
-
                                 <div class="invoice-detail-item mt-4">
                                     <div class="invoice-detail-name">Total</div>
                                     <h4>{{ $data->rp_total }}</h4>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </section>
-
 @endsection
 
 @push('javascript')
