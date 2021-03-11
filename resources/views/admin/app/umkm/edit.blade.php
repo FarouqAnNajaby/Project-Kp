@@ -18,53 +18,72 @@
 						<h4>Formulir</h4>
 					</div>
 					<div class="card-body">
-						{!! Form::open() !!}
+						{!! Form::model($data, ['route' => ['admin.umkm.update', $data->uuid], 'method' => 'patch', 'files' => true]) !!}
 						<div class="form-group row mb-4">
-							{!! Form::label('logo_umkm', 'Logo UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('logo', 'Logo UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								<div id="image-preview" class="image-preview">
+								<div id="image-preview" class="image-preview" @if ($data->logo) style="background-image:url({{ asset('storage/logo-umkm/'.$data->logo) }}); background-size:cover; background-position:center center;"@endif>
 									{!! Form::label('image-upload', 'Pilih File', ['id' => 'image-label']) !!}
-									{!! Form::file('logo_umkm', ['id' => 'image-upload', 'accept' => 'image/jpeg,
+									{!! Form::file('logo', ['id' => 'image-upload', 'accept' => 'image/jpeg,
 									image/png']) !!}
 								</div>
+								@error('logo')
+								<div class="invalid-feedback d-block">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							{!! Form::label('nama_umkm', 'Nama UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('nama', 'Nama UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								{!! Form::text('nama_umkm', null, ['class' => 'form-control']) !!}
+								{!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null)]) !!}
+								@error('nama')
+								<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							{!! Form::label('kategori_umkm', 'Kategori UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('kategori', 'Kategori UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								{{ Form::select('kategori_umkm', [
-									'pakaian' => 'Pakaian', 'makanan' => 'Makanan', 'minuman' => 'Minuman'
-									], null, ['placeholder' => 'Pilih', 'class' => 'form-control','disabled' => 'true']) }}
+								{{ Form::select('kategori', $kategori, $data->uuid_umkm_kategori, ['placeholder' => 'Pilih', 'class' => 'form-control' . ($errors->has('kategori') ? ' is-invalid' : null)]) }}
+								@error('kategori')
+								<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							{!! Form::label('alamat_umkm', 'Alamat UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('nama_pemilik', 'Nama Pemilik UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								{!! Form::text('alamat', null, ['class' => 'form-control']) !!}
+								{!! Form::text('nama_pemilik', null, ['class' => 'form-control' . ($errors->has('nama_pemilik') ? ' is-invalid' : null)]) !!}
+								@error('nama_pemilik')
+								<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							{!! Form::label('nama_pemilik_umkm', 'Nama Pemilik UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('email', 'Email UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								{!! Form::text('nama_pemilik_umkm', null, ['class' => 'form-control']) !!}
+								{!! Form::text('email', null, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : null)]) !!}
+								@error('email')
+								<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							{!! Form::label('email_umkm', 'Email UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('nomor_telp', 'Nomor Telepon', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								{!! Form::text('email_umkm', null, ['class' => 'form-control']) !!}
+								{!! Form::text('nomor_telp', null, ['class' => 'form-control' . ($errors->has('nomor_telp') ? ' is-invalid' : null)]) !!}
+								@error('nomor_telp')
+								<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-4">
-							{!! Form::label('nomor_umkm', 'Nomor Telepon', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+							{!! Form::label('alamat', 'Alamat UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
 							<div class="col-sm-12 col-md-7">
-								{!! Form::number('nomor_umkm', null, ['class' => 'form-control']) !!}
+								{!! Form::text('alamat', null, ['class' => 'form-control' . ($errors->has('alamat') ? ' is-invalid' : null)]) !!}
+								@error('alamat')
+								<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-4">

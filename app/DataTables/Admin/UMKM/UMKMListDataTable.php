@@ -51,7 +51,7 @@ class UMKMListDataTable extends DataTable
 	 */
 	public function query(UMKM $model)
 	{
-		return $model->newQuery();
+		return $model->with('umkm_kategori')->select('umkm.*')->newQuery();
 	}
 
 	/**
@@ -90,7 +90,7 @@ class UMKMListDataTable extends DataTable
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
-			Column::make('email'),
+			Column::make('umkm_kategori.nama')->title('Kategori'),
 			Column::make('nomor_telp')->title('No Telepon'),
 			Column::make('nama_pemilik')->title('Pemilik'),
 			Column::computed('action', 'Opsi')

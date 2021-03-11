@@ -45,9 +45,11 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 	Route::namespace('UMKM')->prefix('umkm')->group(function () {
 		Route::get('/', 'UMKMController@index')->name('admin.umkm.index');
 		Route::get('create', 'UMKMController@create')->name('admin.umkm.create');
-		Route::get('{uuid}/edit', 'UMKMController@edit')->name('admin.umkm.edit');
-		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('admin.umkm.destroy');
+		Route::post('store', 'UMKMController@store')->name('admin.umkm.store');
 		Route::get('{uuid}/show', 'UMKMController@show')->name('admin.umkm.show');
+		Route::get('{uuid}/edit', 'UMKMController@edit')->name('admin.umkm.edit');
+		Route::patch('{uuid}/update', 'UMKMController@update')->name('admin.umkm.update');
+		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('admin.umkm.destroy');
 	});
 
 	Route::namespace('Barang')->prefix('barang')->group(function () {

@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin\UMKM;
 use App\DataTables\Admin\UMKM\UMKMListDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\UMKM;
+use App\Models\UMKMKategori;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class UMKMController extends Controller
 {
@@ -26,7 +30,8 @@ class UMKMController extends Controller
 	 */
 	public function create()
 	{
-		return view('admin.app.umkm.create');
+		$kategori = UMKMKategori::pluck('nama', 'uuid');
+		return view('admin.app.umkm.create', compact('kategori'));
 	}
 
 	/**
@@ -37,7 +42,48 @@ class UMKMController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		$kategori = UMKMKategori::pluck('uuid');
+		$decode_kategori = json_decode($kategori);
+		if ($kategori->count() > 1) {
+
+			$kategori = implode(',', $decode_kategori);
+		} else {
+			$kategori = $decode_kategori[0];
+		}
+
+		$request->validate([
+			'nama' => 'required|max:100',
+			'kategori' => 'required|in:' . $kategori,
+			'nama_pemilik' => 'required|max:50',
+			'email' => 'required|email',
+			'nomor_telp' => 'required|numeric',
+			'alamat' => 'required',
+			'syarat_ketentuan' => 'required'
+		], [
+			'syarat_ketentuan.required' => ':Attribute wajib dicentang.',
+			'kategori.required' => ':Attribute wajib dipilih.'
+		], [
+			'nama' => 'Nama UMKM',
+			'kategori' => 'Kategori UMKM',
+			'nama_pemilik' => 'Nama Pemilik UMKM',
+			'email' => 'Email UMKM',
+			'nomor_telp' => 'Nomor Telepon',
+			'alamat' => 'Alamat UMKM',
+			'syarat_ketentuan' => 'Syarat dan Ketentuan'
+		]);
+
+		$data = UMKM::create($request->except('kategori', 'syarat_ketentuan') + [
+			'uuid_umkm_kategori' => $request->kategori
+		]);
+
+		// $data = UMKM::create($request->all());
+
+		alert()
+			->success('Data berhasil ditambahkan, Harap unggah logo UMKM.', 'Sukses!')
+			->persistent('Tutup')
+			->autoclose(3000);
+
+		return redirect()->route('admin.umkm.edit', $data->uuid);
 	}
 
 	/**
@@ -58,9 +104,11 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(UMKM $uuid)
+	public function edit($uuid)
 	{
-		return view('admin.app.umkm.edit');
+		$kategori = UMKMKategori::pluck('nama', 'uuid');
+		$data = UMKM::findOrFail($uuid);
+		return view('admin.app.umkm.edit', compact('data', 'kategori'));
 	}
 
 	/**
@@ -70,9 +118,57 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update(Request $request, $uuid)
 	{
-		//
+		$data = UMKM::findOrFail($uuid);
+		$kategori = UMKMKategori::pluck('uuid');
+		$decode_kategori = json_decode($kategori);
+		if ($kategori->count() > 1) {
+
+			$kategori = implode(',', $decode_kategori);
+		} else {
+			$kategori = $decode_kategori[0];
+		}
+
+		$request->validate([
+			'logo' => 'required|mimes:jpg,jpeg,png|image|max:3072',
+			'nama' => 'required|max:100',
+			'kategori' => 'required|in:' . $kategori,
+			'nama_pemilik' => 'required|max:50',
+			'email' => 'required|email',
+			'nomor_telp' => 'required|numeric',
+			'alamat' => 'required'
+		], [
+			'kategori.required' => ':Attribute wajib dipilih.'
+		], [
+			'nama' => 'Nama UMKM',
+			'kategori' => 'Kategori UMKM',
+			'nama_pemilik' => 'Nama Pemilik UMKM',
+			'email' => 'Email UMKM',
+			'nomor_telp' => 'Nomor Telepon',
+			'alamat' => 'Alamat UMKM'
+		]);
+
+		$logo = Image::make($request->file('logo'))->fit(215)->encode('jpg', 75);
+		$nama_file = Str::random(50) . ".jpg";
+
+		if ($data->logo && Storage::disk('logo-umkm')->exists($data->logo)) {
+			Storage::disk('logo-umkm')->delete($data->logo);
+		}
+
+		$data->update($request->except('kategori', 'logo') + [
+			'uuid_umkm_kategori' => $request->kategori,
+			'logo' => $nama_file
+		]);
+
+		Storage::disk('logo-umkm')->put($nama_file, $logo);
+
+		alert()
+			->success('Data berhasil diubah', 'Sukses!')
+			->persistent('Tutup')
+			->autoclose(3000);
+
+		return redirect()->route('admin.umkm.edit', $uuid);
 	}
 
 	/**
