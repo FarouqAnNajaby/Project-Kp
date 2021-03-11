@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Kasir;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,15 @@ class TransaksiController extends Controller
 	 */
 	public function index(TransaksiDataTable $dataTable)
 	{
-		return $dataTable->render('kasir.app.transaksi.index');
+		$bulan = [];
+		for ($i = 1; $i <= 12; $i++) {
+			$bulan[$i] = strftime('%B', mktime(0, 0, 0, $i));
+		}
+		$tahun = Transaksi::select(DB::raw('YEAR(created_at) year'))
+			->groupBy('year')
+			->pluck('year', 'year');
+
+		return $dataTable->render('kasir.app.transaksi.index', compact('bulan', 'tahun'));
 	}
 
 	/**

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Barang;
 use Illuminate\Http\Request;
 use Faker\Factory as Faker;
 use Bezhanov\Faker\Provider\Commerce;
+use App\Models\UMKM;
+use App\Models\BarangKategori;
 use App\Models\Barang;
 use App\Http\Controllers\Controller;
 
@@ -17,23 +19,13 @@ class BarangController extends Controller
 	 */
 	public function index()
 	{
-		$faker = Faker::create();
-		$faker->addProvider(new Commerce($faker));
-		$barang = Barang::create([
-			'nama' => $faker->productName,
-			'stok_awal' => $stok_awal = rand(40, 100),
-			'stok_sekarang' => $stok_awal - rand(1, 20),
-			'harga' => rand(10000, 50000),
-			'uuid_umkm' => $faker->uuid,
-		]);
-		$barang->historyBarangs()->create();
-		// $kategori = [
-		// 	'pakaian' => 'Pakaian',
-		// 	'minuman' => 'Minuman',
-		// 	'makanan' => 'Makanan'
-		// ];
+		$kategori = [
+			'pakaian' => 'Pakaian',
+			'minuman' => 'Minuman',
+			'makanan' => 'Makanan'
+		];
 
-		// return view('admin.app.barang.index', compact('kategori'));
+		return view('admin.app.barang.index', compact('kategori'));
 	}
 
 	/**
@@ -43,7 +35,10 @@ class BarangController extends Controller
 	 */
 	public function create()
 	{
-		return view('admin.app.barang.create');
+
+		$umkm = UMKM::pluck('nama', 'uuid');
+		$kategori = BarangKategori::pluck('nama', 'uuid');
+		return view('admin.app.barang.create', compact('umkm', 'kategori'));
 	}
 
 	/**

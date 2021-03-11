@@ -5,6 +5,7 @@ namespace App\DataTables\Kasir;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
+use Illuminate\Support\Str;
 use Collective\Html\FormFacade as Form;
 use App\Models\Transaksi;
 
@@ -40,13 +41,22 @@ class TransaksiDataTable extends DataTable
 
 				return $opsi;
 			})
-			->rawColumns(['action' => 'action'])
-			->editColumn('created_at', function ($query) {
-				return $query->created_at->isoFormat('dddd, Do MMMM YYYY');
+			->editColumn('user.nama', function ($query) {
+				return Str::limit($query->user->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->user->nama . '">...</p>');
 			})
 			->editColumn('total', function ($query) {
 				return 'Rp' . number_format($query->total, 2, ',', '.');
-			});
+			})
+			->editColumn('created_at', function ($query) {
+				return $query->created_at->isoFormat('dddd, Do MMMM YYYY');
+			})
+			->filterColumn('total', function ($query, $keyword) {
+				$keyword = preg_replace("/[^0-9]/", "", trim($keyword, 0));
+				if (filter_var($keyword, FILTER_VALIDATE_INT)) {
+					$query->where('total', 'LIKE', "%$keyword%");
+				}
+			})
+			->rawColumns(['action', 'user.nama']);
 	}
 
 	/**
@@ -57,7 +67,19 @@ class TransaksiDataTable extends DataTable
 	 */
 	public function query(Transaksi $model)
 	{
-		return $model->with('user')->select('transaksi.*')->newQuery();
+		$model = $model->where('jenis', 'online')
+			->where('status', 'pending')
+			->with('user')
+			->select('transaksi.*')
+			->newQuery();
+
+		if ($bulan = $this->request()->get('bulan')) {
+			$model->whereMonth('transaksi.created_at', $bulan);
+		}
+		if ($tahun = $this->request()->get('tahun')) {
+			$model->whereYear('transaksi.created_at', $tahun);
+		}
+		return $model;
 	}
 
 	/**
@@ -70,10 +92,15 @@ class TransaksiDataTable extends DataTable
 		return $this->builder()
 			->setTableId('transaksi-table')
 			->columns($this->getColumns())
-			->minifiedAjax()
+			->ajax([
+				'data' => "function(data) {
+					data.bulan = $('select[name=bulan]').val();
+					data.tahun = $('select[name=tahun]').val();
+				}"
+			])
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +
-                                "<\'row\'<\'col-sm-12\'tr>>" +
-                                "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
+							"<\'row\'<\'col-sm-12\'tr>>" +
+							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->buttons(
 				Button::make('reload')
 			)
@@ -93,9 +120,12 @@ class TransaksiDataTable extends DataTable
 				->printable(false)
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
-			Column::make('user.name')->title('Nama'),
-			Column::make('created_at')->title('Tanggal'),
+			Column::make('kode')->title('Kode Transaksi'),
+			Column::make('user.nama')->title('Nama Pembeli'),
 			Column::make('total')->title('Total'),
+			Column::make('created_at')
+				->title('Tanggal')
+				->searchable(false),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)

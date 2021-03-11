@@ -10,59 +10,69 @@ use Illuminate\Support\Facades\Route;
 *					  Contoh lain, di dalam route group prefix ada route group prefix lagi,
 *					  prefix('barang') = http://website.com/umkm/barang/edit (Edit hanya contoh)
 *
-* ->name			: Alias atau shortcut untuk memanggil route. Contoh: name('admin.index),
-*					  di controller/blade bisa dipanggil dengan route('admin.index'), yang mana
+* ->name			: Alias atau shortcut untuk memanggil route. Contoh: name('index),
+*					  di controller/blade bisa dipanggil dengan route('index'), yang mana
 *					  nanti hasilnya di url = http://website.com/admin
 */
 
-Route::namespace('Admin')->prefix('admin')->group(function () {
-	Route::get('/', 'HomeController@index')->name('admin.index');
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+	Route::get('/', 'HomeController@index')->name('index');
 	Route::get('login', function () {
-		return view('admin.app.login');
-	})->name('admin.login');
+		return view('app.login');
+	})->name('login');
 
-	Route::namespace('MasterData')->prefix('master-data')->group(function () {
+	Route::namespace('MasterData')->prefix('master-data')->name('master-data.')->group(function () {
 
-		Route::prefix('warna-barang')->group(function () {
-			Route::get('/', 'WarnaBarangController@index')->name('admin.master-data.warna-barang.index');
-			Route::get('create', 'WarnaBarangController@create')->name('admin.master-data.warna-barang.create');
-			Route::post('store', 'WarnaBarangController@store')->name('admin.master-data.warna-barang.store');
-			Route::get('{uuid}/edit', 'WarnaBarangController@edit')->name('admin.master-data.warna-barang.edit');
-			Route::patch('{uuid}/update', 'WarnaBarangController@update')->name('admin.master-data.warna-barang.update');
-			Route::delete('{uuid}/delete', 'WarnaBarangController@destroy')->name('admin.master-data.warna-barang.destroy');
+		Route::prefix('warna-barang')->name('warna-barang.')->group(function () {
+			Route::get('/', 'WarnaBarangController@index')->name('index');
+			Route::get('create', 'WarnaBarangController@create')->name('create');
+			Route::post('store', 'WarnaBarangController@store')->name('store');
+			Route::get('{uuid}/edit', 'WarnaBarangController@edit')->name('edit');
+			Route::patch('{uuid}/update', 'WarnaBarangController@update')->name('update');
+			Route::delete('{uuid}/delete', 'WarnaBarangController@destroy')->name('destroy');
 		});
 
-		Route::prefix('kategori-barang')->group(function () {
-			Route::get('/', 'KategoriBarangController@index')->name('admin.master-data.kategori-barang.index');
-			Route::get('create', 'KategoriBarangController@create')->name('admin.master-data.kategori-barang.create');
-			Route::post('store', 'KategoriBarangController@store')->name('admin.master-data.kategori-barang.store');
-			Route::get('{uuid}/edit', 'KategoriBarangController@edit')->name('admin.master-data.kategori-barang.edit');
-			Route::patch('{uuid}/update', 'KategoriBarangController@update')->name('admin.master-data.kategori-barang.update');
-			Route::delete('{uuid}/delete', 'KategoriBarangController@destroy')->name('admin.master-data.kategori-barang.destroy');
+		Route::prefix('kategori-barang')->name('kategori-barang.')->group(function () {
+			Route::get('/', 'KategoriBarangController@index')->name('index');
+			Route::get('create', 'KategoriBarangController@create')->name('create');
+			Route::post('store', 'KategoriBarangController@store')->name('store');
+			Route::get('{uuid}/edit', 'KategoriBarangController@edit')->name('edit');
+			Route::patch('{uuid}/update', 'KategoriBarangController@update')->name('update');
+			Route::delete('{uuid}/delete', 'KategoriBarangController@destroy')->name('destroy');
+		});
+
+		Route::prefix('kategori-umkm')->name('kategori-umkm.')->group(function () {
+			Route::get('/', 'KategoriUMKMController@index')->name('index');
+			Route::get('create', 'KategoriUMKMController@create')->name('create');
+			Route::post('store', 'KategoriUMKMController@store')->name('store');
+			Route::get('{uuid}/edit', 'KategoriUMKMController@edit')->name('edit');
+			Route::patch('{uuid}/update', 'KategoriUMKMController@update')->name('update');
+			Route::delete('{uuid}/delete', 'KategoriUMKMController@destroy')->name('destroy');
 		});
 	});
 
-	Route::namespace('UMKM')->prefix('umkm')->group(function () {
-		Route::get('/', 'UMKMController@index')->name('admin.umkm.index');
-		Route::get('create', 'UMKMController@create')->name('admin.umkm.create');
-		Route::get('{uuid}/edit', 'UMKMController@edit')->name('admin.umkm.edit');
-		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('admin.umkm.destroy');
-		Route::get('{uuid}/show', 'UMKMController@show')->name('admin.umkm.show');
+	Route::namespace('UMKM')->prefix('umkm')->name('umkm.')->group(function () {
+		Route::get('/', 'UMKMController@index')->name('index');
+		Route::get('create', 'UMKMController@create')->name('create');
+		Route::get('{uuid}/edit', 'UMKMController@edit')->name('edit');
+		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('destroy');
+		Route::get('{uuid}/show', 'UMKMController@show')->name('show');
 	});
 
-	Route::namespace('Barang')->prefix('barang')->group(function () {
-		Route::get('/', 'BarangController@index')->name('admin.barang.index');
-		Route::get('create', 'BarangController@create')->name('admin.barang.create');
-		Route::get('edit', 'BarangController@edit')->name('admin.barang.edit');
+	Route::namespace('Barang')->prefix('barang')->name('barang.')->group(function () {
+		Route::get('/', 'BarangController@index')->name('index');
+		Route::get('create', 'BarangController@create')->name('create');
+		Route::post('store', 'BarangController@store')->name('store');
+		Route::get('edit', 'BarangController@edit')->name('edit');
 
-		Route::prefix('gambar')->group(function () {
-			Route::get('/', 'GambarController@index')->name('admin.barang.gambar.index');
-			Route::get('create', 'GambarController@create')->name('admin.barang.gambar.create');
+		Route::prefix('gambar')->name('gambar.')->group(function () {
+			Route::get('/', 'GambarController@index')->name('index');
+			Route::get('create', 'GambarController@create')->name('create');
 		});
 
-		Route::prefix('history')->group(function () {
-			Route::get('/', 'HistoryController@index')->name('admin.barang.history.index');
-			Route::get('{uuid}/show', 'HistoryController@show')->name('admin.barang.history.show');
+		Route::prefix('history')->name('history.')->group(function () {
+			Route::get('/', 'HistoryController@index')->name('index');
+			Route::get('{uuid}/show', 'HistoryController@show')->name('show');
 		});
 	});
 });

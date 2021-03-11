@@ -15,9 +15,14 @@
             <li class="menu-header">Data Master</li>
             <li class="dropdown{{ request()->segment(2) == 'master-data' ? ' active' : null }}">
                 <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fas fa-database"></i><span>Master</span>
+                    <i class="fas fa-database"></i><span>Master Data</span>
                 </a>
                 <ul class="dropdown-menu">
+                    <li class="{{ request()->segment(3) == 'banner-ecommerce' ? ' active' : null }}">
+                        <a class="nav-link" href="{{ route('admin.umkm.index') }}">
+                            Data Banner E-Commerce
+                        </a>
+                    </li>
                     <li class="{{ request()->segment(3) == 'warna-barang' ? ' active' : null }}">
                         <a class="nav-link" href="{{ route('admin.master-data.warna-barang.index') }}">
                             Data Warna Barang
@@ -28,23 +33,18 @@
                             Data Kategori Barang
                         </a>
                     </li>
-                    <li class="{{ request()->routeIs('admin.umkm.index*') ? ' active' : null }}">
-                        <a class="nav-link" href="{{ route('admin.umkm.index') }}">
-                            Data Banner E-Commerce
+                    <li class="{{ request()->segment(3) == 'kategori-umkm' ? ' active' : null }}">
+                        <a class="nav-link" href="{{ route('admin.master-data.kategori-umkm.index') }}">
+                            Data Kategori UMKM
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="menu-header">Data Umum</li>
-            <li class="dropdown{{ request()->routeIs('admin.umkm*') ? ' active' : null }}">
-                <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fas fa-store"></i><span>UMKM</span>
+            <li class="{{ request()->segment(2) == 'umkm' ? 'active' : null }}">
+                <a class="nav-link" href="{{ route('admin.umkm.index') }}">
+                    <i class="fas fa-store"></i> <span>UMKM</span>
                 </a>
-                <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('admin.umkm.index*') ? ' active' : null }}">
-                        <a class="nav-link" href="{{ route('admin.umkm.index') }}">Data UMKM</a>
-                    </li>
-                </ul>
             </li>
             <li class="dropdown{{ request()->routeIs('admin.barang*') ? ' active' : null }}">
                 <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">

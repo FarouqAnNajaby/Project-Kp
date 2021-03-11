@@ -110,13 +110,13 @@ class WarnaBarangController extends Controller
 
 		if ($slug != $data->slug && $slug_exists) {
 			return back()->withErrors(['nama' => 'Warna sudah tersedia.'])->withInput();
+		} else if ($slug != $data && !$slug_exists) {
+
+			$data->update([
+				'nama' => $request->nama,
+				'slug' => $slug
+			]);
 		}
-
-		$data->update([
-			'nama' => $request->nama,
-			'slug' => $slug
-		]);
-
 		alert()
 			->success('Data berhasil diubah', 'Sukses!')
 			->persistent('Tutup')

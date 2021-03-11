@@ -12,18 +12,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4>Formulir</h4>
-                    </div>
                     <div class="card-body">
-                        {!! Form::open() !!}
+                        {!! Form::open(['route' => 'admin.barang.store']) !!}
                         <div class="form-group row mb-4">
-                            {!! Form::label('logo_umkm', 'Logo UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('umkm', 'UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                <div id="image-preview" class="image-preview">
-                                    {!! Form::label('image-upload', 'Pilih File', ['id' => 'image-label']) !!}
-                                    {!! Form::file('logo_umkm', ['id' => 'image-upload', 'accept' => 'image/jpeg, image/png']) !!}
-                                </div>
+                                {!! Form::select('umkm', $umkm, null, ['placeholder' => 'Pilih', 'class' => 'form-control select2']) !!}
                             </div>
                         </div>
                         <div class="form-group row mb-4">
@@ -33,33 +27,21 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('kategori_umkm', 'Kategori UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('kategori', 'Kategori Barang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {{ Form::select('kategori_umkm', ['pakaian' => 'Pakaian', 'makanan' => 'Makanan', 'minuman' => 'Minuman'], nul, ['placeholder' => 'Pilih', 'class' => 'form-control select2']) }}
+                                {!! Form::select('kategori', $kategori, null, ['placeholder' => 'Pilih', 'class' => 'form-control select2']) !!}
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('warna_pakaian', 'Warna Pakaian', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('stock', 'Stok', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {{ Form::select('warna_pakaian', ['merah' => 'Merah', 'kuning' => 'Kuning', 'biru' => 'Biru'], null, ['placeholder' => 'Pilih', 'class' => 'form-control select2','multiple']) }}
-                            </div>
-                        </div>
-                        <div class="form-group row mb-4">
-                            {!! Form::label('nama_umkm', 'Nama UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
-                            <div class="col-sm-12 col-md-7">
-                                {!! Form::text('nama_umkm', null, ['class' => 'form-control']) !!}
+                                {!! Form::number('stock', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="form-group row mb-4">
                             {!! Form::label('harga_barang', 'Harga', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
                                 {!! Form::number('harga_barang', null, ['class' => 'form-control']) !!}
-                            </div>
-                        </div>
-                        <div class="form-group row mb-4">
-                            {!! Form::label('stock', 'Persediaan', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
-                            <div class="col-sm-12 col-md-7">
-                                {!! Form::number('stock', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="form-group row mb-4">
@@ -84,24 +66,10 @@
 
 @push('stylesheet')
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/modules/jquery-selectric/selectric.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/summernote/summernote-bs4.css') }}">
 @endpush
 
 @push('javascript')
-<script type="text/javascript" src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('assets/modules/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+<script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/modules/summernote/summernote-bs4.js') }}"></script>
-@endpush
-
-@push('javascript-custom')
-<script>
-    $.uploadPreview({
-        input_field: "#image-upload", // Default: .image-upload
-        preview_box: "#image-preview", // Default: .image-preview
-        label_field: "#image-label", // Default: .image-label
-        no_label: false, // Default: false
-        success_callback: null // Default: null
-    });
-</script>
 @endpush

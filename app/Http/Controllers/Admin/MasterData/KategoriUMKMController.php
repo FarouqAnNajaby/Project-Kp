@@ -4,22 +4,21 @@ namespace App\Http\Controllers\Admin\MasterData;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\BarangKategori;
+use App\Models\UMKMKategori;
 use App\Http\Controllers\Controller;
-use App\DataTables\Admin\MasterData\KategoriBarangDataTable;
+use App\DataTables\Admin\MasterData\KategoriUMKMDataTable;
 
-class KategoriBarangController extends Controller
+class KategoriUMKMController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(KategoriBarangDataTable $dataTable)
+	public function index(KategoriUMKMDataTable $dataTable)
 	{
-		return $dataTable->render('admin.app.master-data.kategori-barang.index');
+		return $dataTable->render('admin.app.master-data.kategori-umkm.index');
 	}
-
 
 	/**
 	 * Show the form for creating a new resource.
@@ -28,7 +27,7 @@ class KategoriBarangController extends Controller
 	 */
 	public function create()
 	{
-		return view('admin.app.master-data.kategori-barang.create');
+		return view('admin.app.master-data.kategori-umkm.create');
 	}
 
 	/**
@@ -42,18 +41,18 @@ class KategoriBarangController extends Controller
 		$request->validate([
 			'nama' => 'required|string|max:50'
 		], [], [
-			'nama' => 'Kategori Barang'
+			'nama' => 'Kategori UMKM'
 		]);
 
 		$slug = Str::slug($request->nama);
 
-		if (BarangKategori::where('slug', $slug)->exists()) {
-			return back()->withErrors(['nama' => 'Kategori barang sudah tersedia.'])->withInput();
+		if (UMKMKategori::where('slug', $slug)->exists()) {
+			return back()->withErrors(['nama' => 'Kategori UMKM sudah tersedia.'])->withInput();
 		}
 
-		BarangKategori::create([
+		UMKMKategori::create([
 			'nama' => $request->nama,
-			'slug' => Str::slug($request->nama)
+			'slug' => $slug
 		]);
 
 		alert()
@@ -61,7 +60,7 @@ class KategoriBarangController extends Controller
 			->persistent('Tutup')
 			->autoclose(3000);
 
-		return redirect()->route('admin.master-data.kategori-barang.create');
+		return redirect()->route('admin.master-data.kategori-umkm.create');
 	}
 
 	/**
@@ -83,8 +82,8 @@ class KategoriBarangController extends Controller
 	 */
 	public function edit($uuid)
 	{
-		$data = BarangKategori::findOrFail($uuid);
-		return view('admin.app.master-data.kategori-barang.edit', compact('data'));
+		$data = UMKMKategori::findOrFail($uuid);
+		return view('admin.app.master-data.kategori-umkm.edit', compact('data'));
 	}
 
 	/**
@@ -96,29 +95,23 @@ class KategoriBarangController extends Controller
 	 */
 	public function update(Request $request, $uuid)
 	{
-		$data = BarangKategori::findOrFail($uuid);
+		$data = UMKMKategori::findOrFail($uuid);
 
 		$request->validate([
-			'nama'        => 'required|string|max:50',
-			'is_dropdown' => 'nullable|in:ya,tidak'
+			'nama' => 'required|string|max:50'
 		], [], [
-			'nama'        => 'Kategori Barang',
-			'is_dropdown' => 'Dropdown E-Commerce'
+			'nama' => 'Kategori UMKM'
 		]);
 
-		$slug        = Str::slug($request->nama);
-		$slug_exists = BarangKategori::where('slug', $slug)->exists();
+		$slug = Str::slug($request->nama);
+		$slug_exists = UMKMKategori::where('slug', $slug)->exists();
 
 		if ($slug != $data->slug && $slug_exists) {
-
-			return back()->withErrors(['nama' => 'Kategori barang sudah tersedia.'])->withInput();
+			return back()->withErrors(['nama' => 'Kategori UMKM sudah tersedia.'])->withInput();
 		} else if ($slug != $data && !$slug_exists) {
-
-			$dropdown = $request->is_dropdown == 'ya' ? 1 : 0;
 			$data->update([
-				'nama'        => $request->nama,
-				'slug'        => $slug,
-				'is_dropdown' => $dropdown
+				'nama' => $request->nama,
+				'slug' => $slug
 			]);
 		}
 		alert()
@@ -126,7 +119,7 @@ class KategoriBarangController extends Controller
 			->persistent('Tutup')
 			->autoclose(3000);
 
-		return redirect()->route('admin.master-data.kategori-barang.edit', $uuid);
+		return redirect()->route('admin.master-data.kategori-umkm.edit', $uuid);
 	}
 
 	/**
@@ -137,13 +130,18 @@ class KategoriBarangController extends Controller
 	 */
 	public function destroy($uuid)
 	{
-		$data = BarangKategori::findOrFail($uuid);
-		$data->delete();
-		alert()
-			->success('Data berhasil dihapus', 'Sukses!')
-			->persistent('Tutup')
-			->autoclose(3000);
-
-		return redirect()->route('admin.master-data.kategori-barang.index');
+		$data = UMKMKategori::findOrFail($uuid);
+		if ($data->UMKM()->count() > 0) {
+			alert()
+				->error('Terdapat UMKM dengan kategori tersebut.', 'Gagal!')
+				->persistent('Tutup');
+		} else {
+			$data->delete();
+			alert()
+				->success('Data berhasil dihapus', 'Sukses!')
+				->persistent('Tutup')
+				->autoclose(3000);
+		}
+		return redirect()->route('admin.master-data.kategori-umkm.index');
 	}
 }

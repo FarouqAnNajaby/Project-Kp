@@ -1,8 +1,5 @@
 @extends('admin.layout.app')
 
-@push('stylesheet')
-<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
-@endpush
 @section('content')
 
 <section class="section">
@@ -60,43 +57,45 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-md-6 col-12 text-right ml-auto">
-                <button class="btn btn-icon btn-warning icon-left"><i class="fas fa-print"></i> Print</button>
-            </div>
-
-        </div>
-
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Laporan Transaksi</h4>
-                        <div class="card-header-form">
-                            {!! Form::select('bulan', $bulan, null, ['placeholder' => 'Bulan', 'class' => 'form-control select2']) !!}
-                            {!! Form::select('tahun', $tahun, null, ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
-                        </div>
                     </div>
                     <div class="card-body ">
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                {!! Form::select('status', ['pending' => 'Pending', 'selesai' => 'Selesai'], null, ['placeholder' => 'Status', 'class' => 'form-control select2']) !!}
+                            </div>
+                            <div class="col-md-4 offset-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {!! Form::select('bulan', $bulan, null, ['placeholder' => 'Bulan', 'class' => 'form-control select2']) !!}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {!! Form::select('tahun', $tahun, date('Y'), ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <div class="table-responsive">
                                 {!! $dataTable->table(['class' => 'table table-striped']) !!}
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css" />
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css" />
 @endpush
 
 @push('javascript')
@@ -106,10 +105,20 @@
 <script src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts() }}
+@endpush
+
+@push('javascript-custom')
 <script>
-    $("table").on('draw.dt', function () {
-		$('.tooltip.fade.top.in').hide();
-		$('[data-toggle=tooltip]').tooltip({container: 'body'});
+    $("table").on('draw.dt', function() {
+        $('.tooltip.fade.top.in').hide();
+        $('[data-toggle=tooltip]').tooltip({
+            container: 'body'
+        });
     });
+    $(document).ready(function() {
+        $("select[name=bulan], select[name=tahun], select[name=status]").on('change', function() {
+            $('#laporantransaksi-table').DataTable().draw();
+        })
+    })
 </script>
 @endpush

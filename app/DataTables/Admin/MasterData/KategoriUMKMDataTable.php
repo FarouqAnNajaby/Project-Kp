@@ -6,9 +6,9 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
 use Collective\Html\FormFacade as Form;
-use App\Models\Warna;
+use App\Models\UMKMKategori;
 
-class WarnaBarangDataTable extends DataTable
+class KategoriUMKMDataTable extends DataTable
 {
 	/**
 	 * Build DataTable class.
@@ -22,11 +22,11 @@ class WarnaBarangDataTable extends DataTable
 			->eloquent($query)
 			->addColumn('action', function ($query) {
 
-				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.warna-barang.edit', $query->uuid) . '">
+				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.kategori-umkm.edit', $query->uuid) . '">
 							<i class="fas fa-pencil-alt"></i>
 						</a>';
 
-				$opsi .= Form::open(['route' => ['admin.master-data.warna-barang.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
+				$opsi .= Form::open(['route' => ['admin.master-data.kategori-umkm.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
 				$opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
 							<i class="fas fa-trash"></i>
 						</button>';
@@ -34,16 +34,19 @@ class WarnaBarangDataTable extends DataTable
 
 				return $opsi;
 			})
+			->addColumn('jumlah', function ($query) {
+				return number_format($query->UMKM()->count(), 0, '', '.');
+			})
 			->rawColumns(['action']);
 	}
 
 	/**
 	 * Get query source of dataTable.
 	 *
-	 * @param \App\Models\Admin\MasterData\Warna $model
+	 * @param \App\Models\Admin\MasterData\KategoriUMKM $model
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function query(Warna $model)
+	public function query(UMKMKategori $model)
 	{
 		return $model->newQuery();
 	}
@@ -56,7 +59,7 @@ class WarnaBarangDataTable extends DataTable
 	public function html()
 	{
 		return $this->builder()
-			->setTableId('warna-table')
+			->setTableId('kategori-umkm-table')
 			->columns($this->getColumns())
 			->minifiedAjax()
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
@@ -65,7 +68,7 @@ class WarnaBarangDataTable extends DataTable
 			->buttons(
 				Button::make('reload')
 			)
-			->orderBy(1, 'asc');
+			->orderBy(2, 'asc');
 	}
 
 	/**
@@ -82,6 +85,8 @@ class WarnaBarangDataTable extends DataTable
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
+			Column::make('jumlah')
+				->title('Jumlah UMKM'),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)
@@ -96,6 +101,6 @@ class WarnaBarangDataTable extends DataTable
 	 */
 	protected function filename()
 	{
-		return 'Admin-MasterData-Warna-' . date('YmdHis');
+		return 'Admin-Master Data-Kategori UMKM-' . date('YmdHis');
 	}
 }

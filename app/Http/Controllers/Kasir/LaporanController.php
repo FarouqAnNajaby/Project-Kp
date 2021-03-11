@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Kasir;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
 use App\DataTables\Kasir\LaporanTransaksiDataTable;
@@ -19,26 +21,15 @@ class LaporanController extends Controller
 		$pending = Transaksi::where('status', 'pending')->count();
 		$selesai = Transaksi::where('status', 'selesai')->count();
 		$total = Transaksi::count();
-		$bulan = [
-			'jan' => 'Januari',
-			'feb' => 'Februari',
-			'mar' => 'Maret',
-			'apr' => 'April',
-			'mei' => 'Mei',
-			'jun' => 'Juni',
-			'jul' => 'Juli',
-			'agu' => 'Agustus',
-			'sep' => 'September',
-			'okt' => 'Oktober',
-			'nov' => 'November',
-			'des' => 'Desember'
-		];
-		$tahun = [];
-		$x = 0;
-		for ($i = date('Y'); $i > date('Y') - 21; $i--) {
-			$tahun[$x++] = $i;
-		};
-		// return view('kasir.app.laporan.index', compact('bulan', 'tahun'));
+
+		$bulan = [];
+		for ($i = 1; $i <= 12; $i++) {
+			$bulan[$i] = strftime('%B', mktime(0, 0, 0, $i));
+		}
+		$tahun = Transaksi::select(DB::raw('YEAR(created_at) year'))
+			->groupBy('year')
+			->pluck('year', 'year');
+
 		return $dataTable->render('kasir.app.laporan.index', compact('bulan', 'tahun', 'pending', 'selesai', 'total'));
 	}
 
