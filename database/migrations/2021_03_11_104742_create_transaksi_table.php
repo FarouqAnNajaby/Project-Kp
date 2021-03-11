@@ -15,7 +15,9 @@ class CreateTransaksiTable extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->char('uuid', 36)->primary();
+            $table->string('kode', 10);
             $table->enum('jenis', ['offline', 'online'])->default('online');
+            $table->enum('kurir', ['ya', 'tidak']);
             $table->enum('status', ['pending', 'selesai']);
             $table->text('alamat');
             $table->bigInteger('total');

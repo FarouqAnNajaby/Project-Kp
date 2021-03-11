@@ -15,6 +15,7 @@ class CreateUmkmKategoriTable extends Migration
     {
         Schema::create('umkm_kategori', function (Blueprint $table) {
             $table->char('uuid', 36)->primary();
+            $table->string('slug', 50);
             $table->string('nama', 50);
             $table->timestamps();
             $table->softDeletes();
