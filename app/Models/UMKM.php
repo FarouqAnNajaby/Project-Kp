@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use App\Models\UMKMKategori;
 
 class UMKM extends Model
 {
@@ -64,9 +65,20 @@ class UMKM extends Model
 	}
 
 	/**
-	 * Get the list barang for umkm
+	 *  Get the UMKM created_at.
+	 *
+	 * @return string
 	 */
-	public function Kategori()
+	public function getTanggalInputAttribute()
+	{
+		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
+	}
+
+
+	/**
+	 * Get the kategori umkm for umkm
+	 */
+	public function UMKM_Kategori()
 	{
 		return $this->belongsTo(UMKMKategori::class, 'uuid_umkm_kategori', 'uuid');
 	}
