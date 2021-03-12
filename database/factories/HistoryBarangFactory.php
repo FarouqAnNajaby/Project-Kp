@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Barang;
-use App\Models\HistoryBarang;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\BarangHistory;
+use App\Models\Barang;
 
 class HistoryBarangFactory extends Factory
 {
@@ -13,7 +13,7 @@ class HistoryBarangFactory extends Factory
 	 *
 	 * @var string
 	 */
-	protected $model = HistoryBarang::class;
+	protected $model = BarangHistory::class;
 
 	/**
 	 * Define the model's default state.

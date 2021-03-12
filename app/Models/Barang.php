@@ -90,6 +90,6 @@ class Barang extends Model
 	 */
 	public function historyBarangs()
 	{
-		return $this->hasMany(HistoryBarang::class, 'uuid_barang', 'uuid');
+		return $this->hasMany(BarangHistory::class, 'uuid_barang', 'uuid');
 	}
 }
