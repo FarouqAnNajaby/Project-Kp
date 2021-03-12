@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Admin\UMKM;
 
-use App\Models\Admin\UMKM\DaftarBarang;
+use App\Models\Barang;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -22,10 +22,17 @@ class DaftarBarangDataTable extends DataTable
 		return datatables()
 			->eloquent($query)
 			->addColumn('action', function ($query) {
-				$opsi = '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Detail" href="' . route('admin.umkm.show', $query->uuid) . '">
+				$opsi = '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Detail" 			href="' . route('admin.umkm.show', $query->uuid) . '">
 						<i class="fas fa-eye"></i>
-					</a>';
-			});
+						</a>';
+
+				$opsi = '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Detail" 			href="' . route('admin.umkm.show', $query->uuid) . '">
+						<i class="far fa-images"></i>
+						</a>';
+
+				return $opsi;
+			})
+			->rawColumns(['action']);
 	}
 
 	/**
@@ -34,7 +41,7 @@ class DaftarBarangDataTable extends DataTable
 	 * @param \App\Models\Admin\UMKM\DaftarBarang $model
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function query(DaftarBarang $model)
+	public function query(Barang $model)
 	{
 		return $model->newQuery();
 	}
@@ -47,16 +54,16 @@ class DaftarBarangDataTable extends DataTable
 	public function html()
 	{
 		return $this->builder()
-			->setTableId('admin\umkm\daftarbarang-table')
+			->setTableId('daftar-barang-umkm-table')
 			->columns($this->getColumns())
 			->minifiedAjax()
-			->dom('Bfrtip')
+			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
+			"<\'row\'<\'col-sm-12\'tr>>" + 
+			"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->orderBy(1)
 			->buttons(
-				Button::make('create'),
 				Button::make('export'),
 				Button::make('print'),
-				Button::make('reset'),
 				Button::make('reload')
 			);
 	}
@@ -69,15 +76,20 @@ class DaftarBarangDataTable extends DataTable
 	protected function getColumns()
 	{
 		return [
-			Column::computed('action')
-				->exportable(false)
+			Column::computed('no', 'No')
 				->printable(false)
-				->width(60)
+				->exportable(false)
+				->addClass('text-center')
+				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
+			Column::make('kode')
+				->title('Kode Barang'),
+			Column::make('nama')
+				->title('Nama Barang'),
+			Column::make('Harga'),
+			Column::computed('action', 'Opsi')
+				->printable(false)
+				->exportable(false)
 				->addClass('text-center'),
-			Column::make('id'),
-			Column::make('add your columns'),
-			Column::make('created_at'),
-			Column::make('updated_at'),
 		];
 	}
 
@@ -88,6 +100,6 @@ class DaftarBarangDataTable extends DataTable
 	 */
 	protected function filename()
 	{
-		return 'Admin\UMKM\DaftarBarang_' . date('YmdHis');
+		return 'Admin-UMKM-DaftarBarang' . date('YmdHis');
 	}
 }

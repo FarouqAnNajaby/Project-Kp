@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\UMKM;
 
+use App\DataTables\Admin\UMKM\DaftarBarangDataTable;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -92,10 +93,10 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($uuid)
+	public function show(DaftarBarangDataTable $dataTable, $uuid)
 	{
 		$data = UMKM::findOrFail($uuid);
-		return view('admin.app.umkm.show', compact('data'));
+		return $dataTable->render('admin.app.umkm.show', compact('data'));
 	}
 
 	/**
