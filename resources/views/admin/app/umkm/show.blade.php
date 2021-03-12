@@ -61,7 +61,7 @@
 					</div>
 					<div class="tab-pane fade" id="deskripsi">
 						<p class="text-justify">
-							{!! $dataTable->table(['class' => 'table table-striped']) !!}
+							{{-- {!! $dataTable->table(['class' => 'table table-striped']) !!} --}}
 						</p>
 					</div>
 				</div>

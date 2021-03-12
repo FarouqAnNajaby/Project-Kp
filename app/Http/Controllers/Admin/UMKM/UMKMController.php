@@ -177,8 +177,10 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(UMKM $uuid)
+	public function destroy($uuid)
 	{
+		$data = UMKM::findOrFail($uuid);
+		$data->delete();
 		alert()
 			->success('Data berhasil dihapus', 'Sukses!')
 			->persistent('Tutup')
