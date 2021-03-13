@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin\UMKM;
 
-use App\DataTables\Admin\UMKM\DaftarBarangDataTable;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\UMKMKategori;
 use App\Models\UMKM;
+use App\Http\Requests\Admin\UMKMRequest;
 use App\Http\Controllers\Controller;
 use App\DataTables\Admin\UMKM\UMKMListDataTable;
+use App\DataTables\Admin\UMKM\DaftarBarangDataTable;
 
 class UMKMController extends Controller
 {
@@ -41,43 +43,15 @@ class UMKMController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(UMKMRequest $request)
 	{
-		$kategori = UMKMKategori::pluck('uuid');
-		$decode_kategori = json_decode($kategori);
-		if ($kategori->count() > 1) {
 
-			$kategori = implode(',', $decode_kategori);
-		} else {
-			$kategori = $decode_kategori[0];
-		}
+		$validated = $request->validated();
 
-		$request->validate([
-			'nama' => 'required|max:100',
-			'kategori' => 'required|in:' . $kategori,
-			'nama_pemilik' => 'required|max:50',
-			'email' => 'required|email',
-			'nomor_telp' => 'required|numeric',
-			'alamat' => 'required',
-			'syarat_ketentuan' => 'required'
-		], [
-			'syarat_ketentuan.required' => ':Attribute wajib dicentang.',
-			'kategori.required' => ':Attribute wajib dipilih.'
-		], [
-			'nama' => 'Nama UMKM',
-			'kategori' => 'Kategori UMKM',
-			'nama_pemilik' => 'Nama Pemilik UMKM',
-			'email' => 'Email UMKM',
-			'nomor_telp' => 'Nomor Telepon',
-			'alamat' => 'Alamat UMKM',
-			'syarat_ketentuan' => 'Syarat dan Ketentuan'
-		]);
+		$validated = Arr::except($validated, ['syarat_ketentuan', 'kategori']);
+		$validated = Arr::add($validated, 'uuid_umkm_kategori', $request->kategori);
 
-		$data = UMKM::create($request->except('kategori', 'syarat_ketentuan') + [
-			'uuid_umkm_kategori' => $request->kategori
-		]);
-
-		// $data = UMKM::create($request->all());
+		$data = UMKM::create($validated);
 
 		alert()
 			->success('Data berhasil ditambahkan, Harap unggah logo UMKM.', 'Sukses!')
@@ -93,9 +67,8 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(DaftarBarangDataTable $dataTable, $uuid)
+	public function show(DaftarBarangDataTable $dataTable, UMKM $data)
 	{
-		$data = UMKM::findOrFail($uuid);
 		return $dataTable->render('admin.app.umkm.show', compact('data'));
 	}
 
@@ -105,10 +78,16 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($uuid)
+	public function edit(UMKM $data)
 	{
 		$kategori = UMKMKategori::pluck('nama', 'uuid');
-		$data = UMKM::findOrFail($uuid);
+
+		if (!$data->logo) {
+			$data->logo = 'assets/img/umkm-default.png';
+		} else {
+			$data->logo = 'storage/logo-umkm/' . $data->logo;
+		}
+
 		return view('admin.app.umkm.edit', compact('data', 'kategori'));
 	}
 
@@ -119,57 +98,35 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $uuid)
+	public function update(UMKMRequest $request, UMKM $data)
 	{
-		$data = UMKM::findOrFail($uuid);
-		$kategori = UMKMKategori::pluck('uuid');
-		$decode_kategori = json_decode($kategori);
-		if ($kategori->count() > 1) {
+		$validated = $request->validated();
 
-			$kategori = implode(',', $decode_kategori);
-		} else {
-			$kategori = $decode_kategori[0];
+		$validated = Arr::except($validated, ['kategori', 'logo']);
+		$validated = Arr::add($validated, 'uuid_umkm_kategori', $request->kategori);
+
+		if ($request->hasFile('logo')) {
+			$logo = Image::make($request->file('logo'))->fit(215)->encode('jpg', 75);
+			$nama_file = Str::random(50) . ".jpg";
+			$validated = Arr::add($validated, 'logo', $nama_file);
+
+			if ($data->logo && Storage::disk('logo-umkm')->exists($data->logo)) {
+				Storage::disk('logo-umkm')->delete($data->logo);
+			}
 		}
 
-		$request->validate([
-			'logo' => 'required|mimes:jpg,jpeg,png|image|max:3072',
-			'nama' => 'required|max:100',
-			'kategori' => 'required|in:' . $kategori,
-			'nama_pemilik' => 'required|max:50',
-			'email' => 'required|email',
-			'nomor_telp' => 'required|numeric',
-			'alamat' => 'required'
-		], [
-			'kategori.required' => ':Attribute wajib dipilih.'
-		], [
-			'nama' => 'Nama UMKM',
-			'kategori' => 'Kategori UMKM',
-			'nama_pemilik' => 'Nama Pemilik UMKM',
-			'email' => 'Email UMKM',
-			'nomor_telp' => 'Nomor Telepon',
-			'alamat' => 'Alamat UMKM'
-		]);
+		$data->update($validated);
 
-		$logo = Image::make($request->file('logo'))->fit(215)->encode('jpg', 75);
-		$nama_file = Str::random(50) . ".jpg";
-
-		if ($data->logo && Storage::disk('logo-umkm')->exists($data->logo)) {
-			Storage::disk('logo-umkm')->delete($data->logo);
+		if ($request->hasFile('logo')) {
+			Storage::disk('logo-umkm')->put($nama_file, $logo);
 		}
-
-		$data->update($request->except('kategori', 'logo') + [
-			'uuid_umkm_kategori' => $request->kategori,
-			'logo' => $nama_file
-		]);
-
-		Storage::disk('logo-umkm')->put($nama_file, $logo);
 
 		alert()
 			->success('Data berhasil diubah', 'Sukses!')
 			->persistent('Tutup')
 			->autoclose(3000);
 
-		return redirect()->route('admin.umkm.edit', $uuid);
+		return redirect()->route('admin.umkm.edit', $data->uuid);
 	}
 
 	/**
@@ -178,9 +135,8 @@ class UMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($uuid)
+	public function destroy(UMKM $data)
 	{
-		$data = UMKM::findOrFail($uuid);
 		$data->delete();
 		alert()
 			->success('Data berhasil dihapus', 'Sukses!')

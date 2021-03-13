@@ -28,3 +28,12 @@ a.dropdown-item.active {
 .dt-button.btn-primary {
     color: #fff;
 }
+
+.preview-image {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border: 2px dashed #ddd;
+    border-radius: 3px;
+}

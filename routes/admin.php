@@ -55,10 +55,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 		Route::get('/', 'UMKMController@index')->name('index');
 		Route::get('create', 'UMKMController@create')->name('create');
 		Route::post('store', 'UMKMController@store')->name('store');
-		Route::get('{uuid}/show', 'UMKMController@show')->name('show');
-		Route::get('{uuid}/edit', 'UMKMController@edit')->name('edit');
-		Route::patch('{uuid}/update', 'UMKMController@update')->name('update');
-		Route::delete('{uuid}/delete', 'UMKMController@destroy')->name('destroy');
+		Route::get('{data:uuid}/show', 'UMKMController@show')->name('show');
+		Route::get('{data:uuid}/edit', 'UMKMController@edit')->name('edit');
+		Route::patch('{data:uuid}/update', 'UMKMController@update')->name('update');
+		Route::delete('{data:uuid}/delete', 'UMKMController@destroy')->name('destroy');
 	});
 
 	Route::namespace('Barang')->prefix('barang')->name('barang.')->group(function () {

@@ -5,6 +5,7 @@ namespace App\DataTables\Admin\UMKM;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
+use Illuminate\Support\Str;
 use Collective\Html\FormFacade as Form;
 use App\Models\UMKM;
 
@@ -38,7 +39,13 @@ class UMKMListDataTable extends DataTable
 
 				return $opsi;
 			})
-			->rawColumns(['action' => 'action']);
+			->editColumn('nama', function ($query) {
+				return Str::limit($query->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->nama . '">...</p>');
+			})
+			->editColumn('nama_pemilik', function ($query) {
+				return Str::limit($query->nama_pemilik, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->nama_pemilik . '">...</p>');
+			})
+			->rawColumns(['action', 'nama_pemilik', 'nama']);
 	}
 
 	/**

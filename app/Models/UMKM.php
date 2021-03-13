@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
@@ -9,7 +10,7 @@ use App\Models\UMKMKategori;
 
 class UMKM extends Model
 {
-	use HasFactory, Uuid;
+	use HasFactory, Uuid, SoftDeletes;
 
 	/**
 	 * The table associated with the model.
@@ -57,14 +58,6 @@ class UMKM extends Model
 	}
 
 	/**
-	 * Get the list barang for umkm
-	 */
-	public function Barang()
-	{
-		return $this->hasMany(Barang::class, 'uuid', 'uuid_barang');
-	}
-
-	/**
 	 *  Get the UMKM created_at.
 	 *
 	 * @return string
@@ -74,6 +67,13 @@ class UMKM extends Model
 		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
 	}
 
+	/**
+	 * Get the list barang for umkm
+	 */
+	public function Barang()
+	{
+		return $this->hasMany(Barang::class, 'uuid', 'uuid_barang');
+	}
 
 	/**
 	 * Get the kategori umkm for umkm

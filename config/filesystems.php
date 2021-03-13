@@ -45,7 +45,6 @@ return [
 		'logo-umkm' => [
 			'driver' => 'local',
 			'root' => storage_path('app/public/logo-umkm'),
-			'url' => env('APP_URL') . '/storage',
 		],
 
 		's3' => [
