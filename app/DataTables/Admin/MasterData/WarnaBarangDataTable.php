@@ -2,11 +2,11 @@
 
 namespace App\DataTables\Admin\MasterData;
 
-use App\Models\Warna;
-use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
-use Form;
+use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
+use Collective\Html\FormFacade as Form;
+use App\Models\Warna;
 
 class WarnaBarangDataTable extends DataTable
 {
@@ -34,7 +34,7 @@ class WarnaBarangDataTable extends DataTable
 
 				return $opsi;
 			})
-			->rawColumns(['action' => 'action']);
+			->rawColumns(['action']);
 	}
 
 	/**

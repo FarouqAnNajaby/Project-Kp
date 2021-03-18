@@ -24,14 +24,11 @@ class BarangFactory extends Factory
 	{
 		$this->faker->addProvider(new Commerce($this->faker));
 		return [
-			'uuid' => $this->faker->uuid,
+			'kode' => $this->faker->regexify('[A-Za-z0-9]{20}'),
 			'nama' => $this->faker->productName,
-			'stok_awal' => $stok_awal = rand(40, 100),
-			'stok_sekarang' => $stok_awal - rand(1, 20),
+			'stok' => rand(40, 100),
 			'harga' => rand(10000, 50000),
-			'uuid_umkm' => $this->faker->uuid,
-			'created_at' => $this->faker->dateTimeBetween('-1 week', 'now'),
-			'updated_at' => now()
+			'deskripsi' => $this->faker->paragraph
 		];
 	}
 }

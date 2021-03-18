@@ -1,9 +1,9 @@
 /**
- *
- * You can write your CSS code here, DO NOT touch the default JavaScript file
- * because it will make it harder for you to update.
- * 
- */
+*
+* You can write your CSS code here, DO NOT touch the default JavaScript file
+* because it will make it harder for you to update.
+* 
+*/
 
 /*# sourceMappingURL=custom.css.map */
 
@@ -27,4 +27,42 @@ a.dropdown-item.active {
 
 .dt-button.btn-primary {
     color: #fff;
+}
+
+.preview-image {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border: 2px dashed #ddd;
+    border-radius: 3px;
+}
+
+textarea.is-invalid ~ .note-editor,
+select.is-invalid ~ .select2-container .select2-selection--multiple,
+select.is-invalid ~ .select2-container .select2-selection--single {
+    border-color: #dc3545;
+}
+
+.note-editor.card {
+    margin-bottom: 0;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+select[readonly].select2-hidden-accessible
+    + .select2-container
+    .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+select[readonly].select2-hidden-accessible
+    + .select2-container
+    .select2-selection__arrow,
+select[readonly].select2-hidden-accessible
+    + .select2-container
+    .select2-selection__clear {
+    display: none;
 }

@@ -2,13 +2,11 @@
 
 namespace App\DataTables\Admin\MasterData;
 
-use App\Models\BarangKategori;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-use Form;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Button;
+use Collective\Html\FormFacade as Form;
+use App\Models\BarangKategori;
 
 class KategoriBarangDataTable extends DataTable
 {

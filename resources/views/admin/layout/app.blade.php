@@ -2,40 +2,40 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-	<title>Admin Lamongan Mart</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Admin Lamongan Mart</title>
 
-	@include('admin.partials.stylesheet')
+    @include('admin.partials.stylesheet')
 </head>
 
 <body>
 
-	<div class="main-wrapper main-wrapper-1">
+    <div class="main-wrapper main-wrapper-1">
 
-		@include('admin.partials.navbar')
+        @include('admin.partials.navbar')
 
-		@if(request()->routeIs('admin*'))
+        @if(request()->routeIs('admin*'))
 
-		@include('admin.partials.sidebar')
+        @include('admin.partials.sidebar')
 
-		@else
+        @else
 
-		@include('kasir.partials.sidebar')
+        @include('kasir.partials.sidebar')
 
-		@endif
+        @endif
 
-		<!-- Main Content -->
-		<div class="main-content">
-			@yield('content')
-		</div>
-	</div>
+        <!-- Main Content -->
+        <div class="main-content">
+            @yield('content')
+        </div>
+    </div>
 
-	@include('admin.partials.footer')
+    @include('admin.partials.footer')
 
-	@include('admin.partials.js')
+    @include('admin.partials.js')
 
-	@include('sweet::alert')
+    @include('sweet::alert')
 
 </body>
 

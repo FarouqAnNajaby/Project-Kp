@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use App\Models\UMKMKategori;
 
 class UMKM extends Model
 {
-	use HasFactory, Uuid;
+	use HasFactory, Uuid, SoftDeletes;
 
 	/**
 	 * The table associated with the model.
@@ -16,13 +18,6 @@ class UMKM extends Model
 	 * @var string
 	 */
 	protected $table = 'umkm';
-
-	/**
-	 * Indicates if the model should be timestamped.
-	 *
-	 * @var bool
-	 */
-	public $timestamps = false;
 
 	/**
 	 * The primary key associated with the table.
@@ -60,5 +55,31 @@ class UMKM extends Model
 	public function getRouteKeyName()
 	{
 		return 'uuid';
+	}
+
+	/**
+	 *  Get the UMKM created_at.
+	 *
+	 * @return string
+	 */
+	public function getTanggalInputAttribute()
+	{
+		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
+	}
+
+	/**
+	 * Get the list barang for umkm
+	 */
+	public function Barang()
+	{
+		return $this->hasMany(Barang::class, 'uuid_barang', 'uuid');
+	}
+
+	/**
+	 * Get the kategori umkm for umkm
+	 */
+	public function UMKM_Kategori()
+	{
+		return $this->belongsTo(UMKMKategori::class, 'uuid_umkm_kategori', 'uuid');
 	}
 }

@@ -22,9 +22,12 @@ class UMKMFactory extends Factory
 	public function definition()
 	{
 		return [
-			'uuid' => $this->faker->uuid,
-			'nama' => $this->faker->company,
+			'nama' => $this->faker->unique()->company,
+			'alamat' => $this->faker->unique()->address,
+			'nama_pemilik' => $this->faker->unique()->name,
 			'email' => $this->faker->unique()->safeEmail,
+			'nomor_telp' => $this->faker->unique()->phoneNumber,
+			'foto' => 'foto.jpg',
 		];
 	}
 }

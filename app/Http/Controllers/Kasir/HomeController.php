@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Kasir;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        return view('kasir.app.kasir.index');
-    }
+	public function index()
+	{
+		return view('kasir.app.kasir.index');
+	}
 }

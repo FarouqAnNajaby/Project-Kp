@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin\MasterData;
 
-use App\DataTables\Admin\MasterData\WarnaBarangDataTable;
-use App\Http\Controllers\Controller;
-use App\Models\Warna;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Models\Warna;
+use App\Http\Controllers\Controller;
+use App\DataTables\Admin\MasterData\WarnaBarangDataTable;
 
 class WarnaBarangController extends Controller
 {
@@ -110,13 +110,13 @@ class WarnaBarangController extends Controller
 
 		if ($slug != $data->slug && $slug_exists) {
 			return back()->withErrors(['nama' => 'Warna sudah tersedia.'])->withInput();
+		} else if ($slug != $data && !$slug_exists) {
+
+			$data->update([
+				'nama' => $request->nama,
+				'slug' => $slug
+			]);
 		}
-
-		$data->update([
-			'nama' => $request->nama,
-			'slug' => $slug
-		]);
-
 		alert()
 			->success('Data berhasil diubah', 'Sukses!')
 			->persistent('Tutup')
