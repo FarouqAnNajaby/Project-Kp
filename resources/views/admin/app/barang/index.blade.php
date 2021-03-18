@@ -10,41 +10,52 @@
     </x-admin-breadcrumb>
     <div class="section-body">
         <div class="row">
+            @if($outOfStock->count())
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Persediaan Hampir Habis !</h4>
+                        <h4>Stok Hampir Habis !</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="table-1">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Nama Barang</th>
-                                        <th>Persediaan</th>
-                                        <th>UMKM</th>
-                                        <th>Hubungi</th>
+                                        <th class="text-center">No</th>
+                                        <th class="text-center">Nama Barang</th>
+                                        <th class="text-center">Kategori</th>
+                                        <th class="text-center">Stok</th>
+                                        <th class="text-center">Harga</th>
+                                        <th class="text-center">UMKM</th>
+                                        <th class="text-center">Hubungi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($outOfStock as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Batik Katun</td>
-                                        <td>5</td>
-                                        <td>Kamila Collection</td>
-                                        <td>
-                                            <a class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Whatsapp" href="edit_umkm.php"><i class="fab fa-whatsapp"></i></a>
+                                        <td class="text-center">
+                                            {{ ($outOfStock->currentPage() - 1) * $outOfStock->perPage() + $loop->iteration }}
+                                        </td>
+                                        <td>{!! $data->name_limitted !!}</td>
+                                        <td class="text-center">{{ $data->Kategori->nama }}</td>
+                                        <td class="text-center">{{ $data->stok }}</td>
+                                        <td class="text-center">{{ $data->rp_harga }}</td>
+                                        <td class="text-center">{!! $data->umkm_limitted !!}</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-success btn-icon" data-toggle="tooltip" title="Whatsapp" href="{{ route('admin.barang.send-whatsapp', $data->uuid) }}" target="_blank">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
+                        {{ $outOfStock->links('vendor.pagination.bootstrap-4') }}
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+            @endif
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -55,34 +66,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="table-2">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Barang</th>
-                                        <th>Harga</th>
-                                        <th>Persediaan</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Batik Sutra</td>
-                                        <td>120.000</td>
-                                        <td>30</td>
-                                        <td>
-                                            <a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Foto" href="{{ route('admin.barang.gambar.index') }}"><i class="far fa-images"></i></a>
-
-                                            <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Ubah" href="{{ route('admin.barang.edit') }}"><i class="fas fa-pencil-alt"></i></a>
-
-                                            <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Anda yakin?|Data akan terhapus permanen, ingin melanjutkan?" data-confirm-yes="alert('Terhapus')"><i class="fas fa-trash"></i></a>
-
-                                            <a class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            {!! $dataTable->table(['class' => 'table table-striped']) !!}
                         </div>
                     </div>
                 </div>
@@ -95,13 +79,48 @@
 
 @push('stylesheet')
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.24/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/datatables/Buttons-1.7.0/css/buttons.bootstrap4.min.css') }}">
 @endpush
 
 @push('javascript')
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
-{{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+<script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/DataTables-1.10.24/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/DataTables-1.10.24/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/Buttons-1.7.0/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/Buttons-1.7.0/js/buttons.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
-{{ $dataTable->scripts() }} --}}
+{{ $dataTable->scripts() }}
+@endpush
+
+@push('javascript-custom')
+<script>
+    $(document).ready(function() {
+        $("select[name=kategori]").on('change', function() {
+            $('#list-barang-table').DataTable().draw();
+        })
+    })
+    $("table").on('draw.dt', function() {
+        $('.tooltip.fade.top.in').hide();
+        $('[data-toggle=tooltip]').tooltip({
+            container: 'body'
+        });
+        $('.delete').click(function(e) {
+            e.preventDefault();
+            let $this = $(this);
+            swal({
+                    title: 'Apakah Anda yakin?'
+                    , text: 'Data Tidak Dapat Dikembalikan Setelah Anda Menghapus.'
+                    , icon: 'warning'
+                    , dangerMode: true
+                    , buttons: true
+                })
+                .then((result) => {
+                    if (result) {
+                        $this.parent().submit();
+                    }
+                })
+        });
+    })
+</script>
 @endpush

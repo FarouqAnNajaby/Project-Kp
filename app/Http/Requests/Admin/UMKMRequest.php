@@ -29,12 +29,12 @@ class UMKMRequest extends FormRequest
 		$kategori = implode(',', json_decode($kategori));
 
 		$rules = [
-			'nama' => 'required|max:100',
-			'kategori' => 'required|in:' . $kategori,
+			'nama'         => 'required|max:100',
+			'kategori'     => 'required|in:' . $kategori,
 			'nama_pemilik' => 'required|max:50',
-			'email' => 'required|email:dns,spoof',
-			'nomor_telp' => 'required|phone:ID',
-			'alamat' => 'required',
+			'email'        => 'required|email:dns,spoof',
+			'nomor_telp'   => 'required|phone:ID',
+			'alamat'       => 'required',
 		];
 		if ($this->method() == 'POST') {
 			$rules = Arr::add($rules, 'syarat_ketentuan', 'required');
@@ -52,12 +52,12 @@ class UMKMRequest extends FormRequest
 	public function attributes()
 	{
 		return [
-			'nama' => 'Nama UMKM',
-			'kategori' => 'Kategori UMKM',
-			'nama_pemilik' => 'Nama Pemilik UMKM',
-			'email' => 'Email UMKM',
-			'nomor_telp' => 'Nomor Telepon',
-			'alamat' => 'Alamat UMKM',
+			'nama'             => 'Nama UMKM',
+			'kategori'         => 'Kategori UMKM',
+			'nama_pemilik'     => 'Nama Pemilik UMKM',
+			'email'            => 'Email UMKM',
+			'nomor_telp'       => 'Nomor Telepon',
+			'alamat'           => 'Alamat UMKM',
 			'syarat_ketentuan' => 'Syarat dan Ketentuan'
 		];
 	}
@@ -70,8 +70,8 @@ class UMKMRequest extends FormRequest
 	public function messages()
 	{
 		return [
-			'syarat_ketentuan.required' => ':Attribute wajib dicentang.',
-			'kategori.required' => ':Attribute wajib dipilih.'
+			'kategori.required'         => ':Attribute wajib dipilih.',
+			'syarat_ketentuan.required' => ':Attribute wajib dicentang.'
 		];
 	}
 }

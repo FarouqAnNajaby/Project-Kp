@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Kasir;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
 use App\DataTables\Kasir\LaporanTransaksiDataTable;

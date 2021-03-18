@@ -51,7 +51,11 @@ class TransaksiDataTable extends DataTable
 				return $query->created_at->isoFormat('dddd, Do MMMM YYYY');
 			})
 			->filterColumn('total', function ($query, $keyword) {
-				$keyword = preg_replace("/[^0-9]/", "", trim($keyword, 0));
+				$keyword = preg_replace("/[^0-9,]/", "", $keyword);
+				if (strpos($keyword, ',')) {
+					$keyword = trim($keyword, 0);
+				}
+				$keyword = filter_var($keyword, FILTER_SANITIZE_NUMBER_INT);
 				if (filter_var($keyword, FILTER_VALIDATE_INT)) {
 					$query->where('total', 'LIKE', "%$keyword%");
 				}

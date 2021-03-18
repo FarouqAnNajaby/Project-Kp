@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use App\Observers\Admin\BarangObserver;
 
 class Barang extends Model
 {
-	use HasFactory, Uuid;
+	use HasFactory, Uuid, SoftDeletes;
 
 	/**
 	 * The table associated with the model.
@@ -66,30 +69,62 @@ class Barang extends Model
 	}
 
 	/**
-	 * Get the barang stok awal.
+	 * Get the limitted nama barang text.
 	 *
 	 * @return string
 	 */
-	public function getStokAwalFormattedAttribute()
+	public function getNameLimittedAttribute()
 	{
-		return number_format($this->stok_awal, 0, '', '.');
+		return Str::limit($this->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $this->nama . '">...</p>');
 	}
 
 	/**
-	 * Get the barang created_at.
+	 * Get the limitted umkm text.
 	 *
 	 * @return string
 	 */
-	public function getTanggalInputAttribute()
+	public function getUmkmLimittedAttribute()
 	{
-		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
+		return Str::limit($this->UMKM->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $this->UMKM->nama . '">...</p>');
 	}
 
 	/**
-	 * Get the history barang for barang
+	 * Get the log barang for barang
 	 */
-	public function historyBarangs()
+	public function Log()
 	{
-		return $this->hasMany(BarangHistory::class, 'uuid_barang', 'uuid');
+		return $this->hasMany(BarangLog::class, 'uuid_barang', 'uuid');
+	}
+
+	/**
+	 * Get the log barang for barang
+	 */
+	public function UMKM()
+	{
+		return $this->belongsTo(UMKM::class, 'uuid_umkm', 'uuid')->withTrashed();
+	}
+
+	/**
+	 * Get the log barang for barang
+	 */
+	public function Kategori()
+	{
+		return $this->belongsTo(BarangKategori::class, 'uuid_barang_kategori', 'uuid');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		parent::boot();
+
+		Barang::observe(BarangObserver::class);
+
+		static::creating(function ($model) {
+			$model->kode = Str::upper(Str::random(20));
+		});
 	}
 }

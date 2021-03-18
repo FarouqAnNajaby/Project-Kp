@@ -72,7 +72,7 @@ class UMKM extends Model
 	 */
 	public function Barang()
 	{
-		return $this->hasMany(Barang::class, 'uuid', 'uuid_barang');
+		return $this->hasMany(Barang::class, 'uuid_barang', 'uuid');
 	}
 
 	/**

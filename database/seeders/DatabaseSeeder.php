@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\UMKM;
-use App\Models\UMKMKategori;
 use Illuminate\Database\Seeder;
+use App\Models\UMKMKategori;
+use App\Models\UMKM;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 			// 		->create()))
 			->create();
 		// Barang::factory(10)
-		// 	->has(HistoryBarang::factory(1))
+		// 	->has(BarangLog::factory(1))
 		// 	->create();
 	}
 }

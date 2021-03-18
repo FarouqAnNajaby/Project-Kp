@@ -45,7 +45,6 @@ class UMKMController extends Controller
 	 */
 	public function store(UMKMRequest $request)
 	{
-
 		$validated = $request->validated();
 
 		$validated = Arr::except($validated, ['syarat_ketentuan', 'kategori']);

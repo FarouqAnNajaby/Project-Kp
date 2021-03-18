@@ -54,27 +54,31 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 	Route::namespace('UMKM')->prefix('umkm')->name('umkm.')->group(function () {
 		Route::get('/', 'UMKMController@index')->name('index');
 		Route::get('create', 'UMKMController@create')->name('create');
-		Route::post('store', 'UMKMController@store')->name('store');
+		Route::post('create', 'UMKMController@store')->name('store');
 		Route::get('{data:uuid}/show', 'UMKMController@show')->name('show');
 		Route::get('{data:uuid}/edit', 'UMKMController@edit')->name('edit');
-		Route::patch('{data:uuid}/update', 'UMKMController@update')->name('update');
+		Route::patch('{data:uuid}/edit', 'UMKMController@update')->name('update');
 		Route::delete('{data:uuid}/delete', 'UMKMController@destroy')->name('destroy');
 	});
 
 	Route::namespace('Barang')->prefix('barang')->name('barang.')->group(function () {
 		Route::get('/', 'BarangController@index')->name('index');
 		Route::get('create', 'BarangController@create')->name('create');
-		Route::post('store', 'BarangController@store')->name('store');
-		Route::get('edit', 'BarangController@edit')->name('edit');
+		Route::post('create', 'BarangController@store')->name('store');
+		Route::get('{data:uuid}/edit', 'BarangController@edit')->name('edit');
+		Route::patch('{data:uuid}/edit', 'BarangController@update')->name('update');
+		Route::delete('{data:uuid}/delete', 'BarangController@destroy')->name('destroy');
+		Route::get('{data:uuid}/send-whatsapp', 'BarangController@sendWhatsapp')->name('send-whatsapp');
 
-		Route::prefix('gambar')->name('gambar.')->group(function () {
-			Route::get('/', 'GambarController@index')->name('index');
-			Route::get('create', 'GambarController@create')->name('create');
+		Route::prefix('{data:uuid}/foto')->name('foto.')->group(function () {
+			Route::get('/', 'FotoController@index')->name('index');
+			Route::get('create', 'FotoController@create')->name('create');
+			Route::post('create', 'FotoController@store')->name('store');
 		});
 
-		Route::prefix('history')->name('history.')->group(function () {
-			Route::get('/', 'HistoryController@index')->name('index');
-			Route::get('{uuid}/show', 'HistoryController@show')->name('show');
+		Route::prefix('log')->name('log.')->group(function () {
+			Route::get('/', 'LogController@index')->name('index');
+			Route::get('{data:uuid}/show', 'LogController@show')->name('show');
 		});
 	});
 });
