@@ -74,6 +74,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::get('/', 'FotoController@index')->name('index');
 			Route::get('create', 'FotoController@create')->name('create');
 			Route::post('create', 'FotoController@store')->name('store');
+			Route::delete('{uuid}/delete', 'FotoController@destroy')->name('destroy');
 		});
 
 		Route::prefix('log')->name('log.')->group(function () {

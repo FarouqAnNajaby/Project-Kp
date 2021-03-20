@@ -47,6 +47,16 @@ return [
 			'root' => storage_path('app/public/logo-umkm'),
 		],
 
+		'barang' => [
+			'driver' => 'local',
+			'root' => storage_path('app/public/barang'),
+		],
+
+		'banner' => [
+			'driver' => 'local',
+			'root' => storage_path('app/public/banner'),
+		],
+
 		's3' => [
 			'driver' => 's3',
 			'key' => env('AWS_ACCESS_KEY_ID'),
