@@ -2,13 +2,13 @@
 
 namespace App\DataTables\Admin\MasterData;
 
-use App\Models\Banner;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Button;
 use Collective\Html\FormFacade as Form;
+use App\Models\Warna;
 
-class BannerDataTable extends DataTable
+class WarnaBarangDataTable extends DataTable
 {
 	/**
 	 * Build DataTable class.
@@ -21,10 +21,12 @@ class BannerDataTable extends DataTable
 		return datatables()
 			->eloquent($query)
 			->addColumn('action', function ($query) {
-				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.banner.edit', $query->uuid) . '">
+
+				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.warna-barang.edit', $query->uuid) . '">
 							<i class="fas fa-pencil-alt"></i>
 						</a>';
-				$opsi .= Form::open(['route' => ['admin.master-data.banner.destroy', 			$query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
+
+				$opsi .= Form::open(['route' => ['admin.master-data.warna-barang.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
 				$opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
 							<i class="fas fa-trash"></i>
 						</button>';
@@ -32,19 +34,16 @@ class BannerDataTable extends DataTable
 
 				return $opsi;
 			})
-			->editColumn('foto', function ($query) {
-				return '<img src="' . asset('storage/banner/' . $query->foto) . '" width="40px">';
-			})
-			->rawColumns(['action', 'foto']);
+			->rawColumns(['action']);
 	}
 
 	/**
 	 * Get query source of dataTable.
 	 *
-	 * @param \App\Models\Admin\MasterData\Banner $model
+	 * @param \App\Models\Admin\MasterData\Warna $model
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function query(Banner $model)
+	public function query(Warna $model)
 	{
 		return $model->newQuery();
 	}
@@ -57,16 +56,16 @@ class BannerDataTable extends DataTable
 	public function html()
 	{
 		return $this->builder()
-			->setTableId('admin-banner-table')
+			->setTableId('warna-table')
 			->columns($this->getColumns())
 			->minifiedAjax()
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
-						"<\'row\'<\'col-sm-12\'tr>>" + 
-						"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
-			->orderBy(1)
+							"<\'row\'<\'col-sm-12\'tr>>" + 
+							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->buttons(
 				Button::make('reload')
-			);
+			)
+			->orderBy(1, 'asc');
 	}
 
 	/**
@@ -82,10 +81,7 @@ class BannerDataTable extends DataTable
 				->exportable(false)
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
-			Column::make('foto')
-				->title('Foto')
-				->sortable(false),
-			Column::make('judul'),
+			Column::make('nama'),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)
@@ -100,6 +96,6 @@ class BannerDataTable extends DataTable
 	 */
 	protected function filename()
 	{
-		return 'Admin-MasterData-Banner-' . date('YmdHis');
+		return 'Admin-MasterData-Warna-' . date('YmdHis');
 	}
 }
