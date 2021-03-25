@@ -37,7 +37,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div>
-                                            <p>Nama : {{ $data->User->name }}</p>
+                                            <p>Nama : {{ $data->User->nama }}</p>
                                             <p>Nomer Telp : {{ $data->User->nomor_telepon }}</p>
                                         </div>
                                     </div>

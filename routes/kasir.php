@@ -23,6 +23,11 @@ Route::namespace('Kasir')->prefix('kasir')->group(function () {
         Route::get('{uuid}/show', 'TransaksiController@show')->name('kasir.transaksi.show');
     });
 
+    Route::prefix('laporan_umkm')->group(function () {
+        Route::get('/', 'LaporanUMKMController@index')->name('kasir.laporan_umkm.index');
+        Route::get('{uuid}/show', 'LaporanController@show')->name('kasir.laporan_umkm.show');
+    });
+
     Route::prefix('laporan')->group(function () {
         Route::get('/', 'LaporanController@index')->name('kasir.laporan.index');
         Route::get('{uuid}/show', 'LaporanController@show')->name('kasir.laporan.show');
