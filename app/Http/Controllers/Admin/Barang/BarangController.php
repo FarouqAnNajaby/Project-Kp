@@ -112,7 +112,10 @@ class BarangController extends Controller
 
 		$data->update($validated);
 		if ($request->stok != $stok_awal) {
-			$data->log()->create(['stok' => $stok]);
+			$data->log()->create([
+				'stok'  => $stok,
+				'harga' => $harga
+			]);
 		}
 
 		alert()

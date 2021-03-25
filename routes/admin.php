@@ -23,6 +23,15 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 	Route::namespace('MasterData')->prefix('master-data')->name('master-data.')->group(function () {
 
+		Route::prefix('banner')->name('banner.')->group(function () {
+			Route::get('/', 'BannerController@index')->name('index');
+			Route::get('create', 'BannerController@create')->name('create');
+			Route::post('store', 'BannerController@store')->name('store');
+			Route::get('{data:uuid}/edit', 'BannerController@edit')->name('edit');
+			Route::patch('{data:uuid}/update', 'BannerController@update')->name('update');
+			Route::delete('{data:uuid}/delete', 'BannerController@destroy')->name('destroy');
+		});
+
 		Route::prefix('warna-barang')->name('warna-barang.')->group(function () {
 			Route::get('/', 'WarnaBarangController@index')->name('index');
 			Route::get('create', 'WarnaBarangController@create')->name('create');
@@ -74,6 +83,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::get('/', 'FotoController@index')->name('index');
 			Route::get('create', 'FotoController@create')->name('create');
 			Route::post('create', 'FotoController@store')->name('store');
+			Route::delete('{uuid}/delete', 'FotoController@destroy')->name('destroy');
 		});
 
 		Route::prefix('log')->name('log.')->group(function () {
