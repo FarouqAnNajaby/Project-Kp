@@ -66,3 +66,69 @@ select[readonly].select2-hidden-accessible
     .select2-selection__clear {
     display: none;
 }
+
+.blockOverlay {
+    background-color: #fff;
+    opacity: 0.8;
+    transition: opacity 0.25s;
+}
+
+.blockMsg {
+    display: block !important;
+    left: unset !important;
+    top: unset !important;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.8;
+}
+
+.blockMsg .ui-widget-content {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border: 0;
+    padding: 0.5em 1em;
+    background: none;
+    overflow: auto;
+}
+
+.blockMsg .ui-widget-content:before {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent #228ae6 #228ae6;
+    position: absolute;
+    top: calc(50% - 75px);
+    left: calc(50% - 75px);
+    will-change: transform;
+    animation: spin 0.75s infinite ease-in-out;
+}
+
+.blockMsg .ui-widget-content:after {
+    content: "Loading";
+    display: block;
+    max-width: 125px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-family: sans-serif;
+    color: #343a40;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@keyframes spin {
+    0% {
+        transform: translateZ(0) rotate(0);
+    }
+    100% {
+        transform: translateZ(0) rotate(360deg);
+    }
+}

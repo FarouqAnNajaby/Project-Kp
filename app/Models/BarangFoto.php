@@ -54,4 +54,12 @@ class BarangFoto extends Model
 	{
 		return 'uuid';
 	}
+
+	/**
+	 * Get the related barang
+	 */
+	public function Barang()
+	{
+		return $this->belongsTo(Barang::class, 'uuid_barang', 'uuid');
+	}
 }

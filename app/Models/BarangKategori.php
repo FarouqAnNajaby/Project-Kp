@@ -55,4 +55,12 @@ class BarangKategori extends Model
 	{
 		return 'uuid';
 	}
+
+	/**
+	 * Get the related barang
+	 */
+	public function Barang()
+	{
+		return $this->hasMany(Barang::class, 'uuid_barang_kategori', 'uuid');
+	}
 }

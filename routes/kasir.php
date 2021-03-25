@@ -16,15 +16,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Kasir')->prefix('kasir')->group(function () {
-    Route::get('/', 'HomeController@index')->name('kasir.index');
+	Route::get('/', 'HomeController@index')->name('kasir.index');
 
-    Route::prefix('transaksi')->group(function () {
-        Route::get('/', 'TransaksiController@index')->name('kasir.transaksi.index');
-        Route::get('{uuid}/show', 'TransaksiController@show')->name('kasir.transaksi.show');
-    });
+	Route::prefix('transaksi')->group(function () {
+		Route::get('/', 'TransaksiController@index')->name('kasir.transaksi.index');
+		Route::get('{uuid}/show', 'TransaksiController@show')->name('kasir.transaksi.show');
+	});
 
-    Route::prefix('laporan')->group(function () {
-        Route::get('/', 'LaporanController@index')->name('kasir.laporan.index');
-        Route::get('{uuid}/show', 'LaporanController@show')->name('kasir.laporan.show');
-    });
+	Route::prefix('laporan')->group(function () {
+		Route::get('/', 'LaporanController@index')->name('kasir.laporan.index');
+		Route::get('{uuid}/show', 'LaporanController@show')->name('kasir.laporan.show');
+	});
+
+	Route::prefix('ajax')->name('ajax.')->group(function () {
+		Route::get('{uuid}/getBarangByKategori', 'AjaxController@getBarangByKategori')->name('getBarangByKategori');
+		Route::get('{uuid}/getDetailBarang', 'AjaxController@getDetailBarang')->name('getDetailBarang');
+	});
 });
