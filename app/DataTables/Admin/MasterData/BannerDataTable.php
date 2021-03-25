@@ -2,11 +2,11 @@
 
 namespace App\DataTables\Admin\MasterData;
 
-use App\Models\Banner;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Button;
 use Collective\Html\FormFacade as Form;
+use App\Models\Banner;
 
 class BannerDataTable extends DataTable
 {
@@ -84,7 +84,7 @@ class BannerDataTable extends DataTable
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('foto')
 				->title('Foto')
-				->sortable(false),
+				->orderable(false),
 			Column::make('judul'),
 			Column::computed('action', 'Opsi')
 				->printable(false)

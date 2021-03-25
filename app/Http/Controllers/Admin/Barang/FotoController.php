@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin\Barang;
 
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
-use App\DataTables\Admin\Barang\FotoDataTable;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Barang;
-use App\Models\BarangFoto;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Models\BarangFoto;
+use App\Models\Barang;
+use App\Http\Controllers\Controller;
+use App\DataTables\Admin\Barang\FotoDataTable;
 
 class FotoController extends Controller
 {
@@ -104,16 +104,22 @@ class FotoController extends Controller
 	 */
 	public function destroy(Barang $data, $uuid)
 	{
-		$foto = $data->Foto()->findOrFail($uuid);
-		$foto->delete();
+		if ($data->Foto()->count() > 1) {
+			$foto = $data->Foto()->findOrFail($uuid);
+			$foto->delete();
 
-		Storage::disk('barang')->delete($foto->file);
+			Storage::disk('barang')->delete($foto->file);
 
-		alert()
-			->success('Data berhasil dihapus', 'Sukses!')
-			->persistent('Tutup')
-			->autoclose(3000);
-
+			alert()
+				->success('Data berhasil dihapus', 'Sukses!')
+				->persistent('Tutup')
+				->autoclose(3000);
+		} else {
+			alert()
+				->error('Minimal terdapat 1 foto', 'Gagal')
+				->persistent('Tutup')
+				->autoclose(3000);
+		}
 		return redirect()->route('admin.barang.foto.index', $data->uuid);
 	}
 }

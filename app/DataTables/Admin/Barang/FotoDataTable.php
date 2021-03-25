@@ -2,14 +2,14 @@
 
 namespace App\DataTables\Admin\Barang;
 
-use App\Models\Barang;
-use App\Models\BarangFoto;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Button;
 use Collective\Html\FormFacade as Form;
+use App\Models\BarangFoto;
+use App\Models\Barang;
 
 class FotoDataTable extends DataTable
 {
@@ -85,7 +85,8 @@ class FotoDataTable extends DataTable
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('file')
 				->title('Foto')
-				->sortable(false),
+				->orderable(false)
+				->searchable(false),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)
