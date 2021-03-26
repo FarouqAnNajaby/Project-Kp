@@ -26,36 +26,27 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 		Route::prefix('banner')->name('banner.')->group(function () {
 			Route::get('/', 'BannerController@index')->name('index');
 			Route::get('create', 'BannerController@create')->name('create');
-			Route::post('store', 'BannerController@store')->name('store');
+			Route::post('create', 'BannerController@store')->name('store');
 			Route::get('{data:uuid}/edit', 'BannerController@edit')->name('edit');
-			Route::patch('{data:uuid}/update', 'BannerController@update')->name('update');
+			Route::patch('{data:uuid}/edit', 'BannerController@update')->name('update');
 			Route::delete('{data:uuid}/delete', 'BannerController@destroy')->name('destroy');
-		});
-
-		Route::prefix('warna-barang')->name('warna-barang.')->group(function () {
-			Route::get('/', 'WarnaBarangController@index')->name('index');
-			Route::get('create', 'WarnaBarangController@create')->name('create');
-			Route::post('store', 'WarnaBarangController@store')->name('store');
-			Route::get('{uuid}/edit', 'WarnaBarangController@edit')->name('edit');
-			Route::patch('{uuid}/update', 'WarnaBarangController@update')->name('update');
-			Route::delete('{uuid}/delete', 'WarnaBarangController@destroy')->name('destroy');
 		});
 
 		Route::prefix('kategori-barang')->name('kategori-barang.')->group(function () {
 			Route::get('/', 'KategoriBarangController@index')->name('index');
 			Route::get('create', 'KategoriBarangController@create')->name('create');
-			Route::post('store', 'KategoriBarangController@store')->name('store');
-			Route::get('{uuid}/edit', 'KategoriBarangController@edit')->name('edit');
-			Route::patch('{uuid}/update', 'KategoriBarangController@update')->name('update');
-			Route::delete('{uuid}/delete', 'KategoriBarangController@destroy')->name('destroy');
+			Route::post('create', 'KategoriBarangController@store')->name('store');
+			Route::get('{data:uuid}/edit', 'KategoriBarangController@edit')->name('edit');
+			Route::patch('{data:uuid}/edit', 'KategoriBarangController@update')->name('update');
+			Route::delete('{data:uuid}/delete', 'KategoriBarangController@destroy')->name('destroy');
 		});
 
 		Route::prefix('kategori-umkm')->name('kategori-umkm.')->group(function () {
 			Route::get('/', 'KategoriUMKMController@index')->name('index');
 			Route::get('create', 'KategoriUMKMController@create')->name('create');
-			Route::post('store', 'KategoriUMKMController@store')->name('store');
+			Route::post('create', 'KategoriUMKMController@store')->name('store');
 			Route::get('{uuid}/edit', 'KategoriUMKMController@edit')->name('edit');
-			Route::patch('{uuid}/update', 'KategoriUMKMController@update')->name('update');
+			Route::patch('{uuid}/edit', 'KategoriUMKMController@update')->name('update');
 			Route::delete('{uuid}/delete', 'KategoriUMKMController@destroy')->name('destroy');
 		});
 	});
