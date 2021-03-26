@@ -23,7 +23,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 	Route::namespace('MasterData')->prefix('master-data')->name('master-data.')->group(function () {
 
-		Route::prefix('banner')->name('banner.')->group(function () {
+		Route::prefix('banner-ecommerce')->name('banner.')->group(function () {
 			Route::get('/', 'BannerController@index')->name('index');
 			Route::get('create', 'BannerController@create')->name('create');
 			Route::post('create', 'BannerController@store')->name('store');
