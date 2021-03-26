@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Admin\MasterData;
 
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
-use App\DataTables\Admin\MasterData\BannerDataTable;
-use App\Http\Controllers\Controller;
-use App\Models\Banner;
-use App\Rules\Deskripsi;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use App\Models\Banner;
+use App\Http\Controllers\Controller;
 
 class BannerController extends Controller
 {
@@ -19,9 +17,10 @@ class BannerController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(BannerDataTable $dataTable)
+	public function index()
 	{
-		return $dataTable->render('admin.app.master-data.banner.index');
+		$data = Banner::paginate();
+		return view('admin.app.master-data.banner.index', compact('data'));
 	}
 
 	/**
@@ -42,27 +41,33 @@ class BannerController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$request->validate([
-			'foto' => 'required|mimes:jpg,jpeg,png|image|max:3072',
-			'judul' => 'required|string|max:20',
-			'deskripsi' => 'required|string|max:100'
-		]);
+		if (Banner::count() < 5) {
+			$request->validate([
+				'foto' => 'required|mimes:jpg,jpeg,png|image|max:3072|dimensions:width=1900,height=700',
+				'judul' => 'required|string|min:5|max:20',
+				'deskripsi' => 'required|string|min:10|max:100'
+			]);
 
-		$logo = Image::make($request->file('foto'))->fit(800)->encode('jpg', 75);
-		$nama_file = Str::random(50) . ".jpg";
 
-		Banner::create([
-			'foto' => $nama_file,
-			'judul' => $request->judul,
-			'deskripsi' => $request->deskripsi
-		]);
+			$logo = Image::make($request->file('foto'))->encode('jpg', 100);
+			$nama_file = Str::random(50) . ".jpg";
 
-		Storage::disk('banner')->put($nama_file, $logo);
+			$arr = $request->only('judul', 'deskripsi');
+			$arr = Arr::prepend($arr, $nama_file, 'foto');
 
-		alert()
-			->success('Data berhasil ditambahkan', 'Sukses!')
-			->persistent('Tutup')
-			->autoclose(3000);
+			Banner::create($arr);
+			Storage::disk('banner')->put($nama_file, $logo);
+
+			alert()
+				->success('Data berhasil ditambahkan', 'Sukses!')
+				->persistent('Tutup')
+				->autoclose(3000);
+		} else {
+			alert()
+				->error('Maksimal hanya boleh 5 banner.<br/>Harap hapus banner lainnya terlebih dahulu.', 'Gagal!')
+				->html()
+				->persistent('Tutup');
+		}
 
 		return redirect()->route('admin.master-data.banner.create');
 	}
@@ -101,15 +106,15 @@ class BannerController extends Controller
 	public function update(Request $request, Banner $data)
 	{
 		$request->validate([
-			'foto' => 'sometimes|mimes:jpg,jpeg,png|image|max:3072',
-			'judul' => 'required|string|max:20',
-			'deskripsi' => 'required|string|max:100'
+			'foto' => 'sometimes|mimes:jpg,jpeg,png|image|max:3072|dimensions:width=1900,height=700',
+			'judul' => 'required|string|min:5|max:20',
+			'deskripsi' => 'required|string|min:10|max:100'
 		]);
 
 		$arr = $request->only('judul', 'deskripsi');
 
 		if ($request->hasFile('foto')) {
-			$foto = Image::make($request->file('foto'))->fit(800)->encode('jpg', 75);
+			$foto = Image::make($request->file('foto'))->encode('jpg', 100);
 			$nama_file = Str::random(50) . ".jpg";
 			$arr = Arr::add($arr, 'foto', $nama_file);
 
@@ -119,11 +124,9 @@ class BannerController extends Controller
 		}
 
 		$data->update($arr);
-
 		if ($request->hasFile('foto')) {
 			Storage::disk('banner')->put($nama_file, $foto);
 		}
-
 		alert()
 			->success('Data berhasil diubah', 'Sukses!')
 			->persistent('Tutup')
@@ -140,14 +143,21 @@ class BannerController extends Controller
 	 */
 	public function destroy(Banner $data)
 	{
-		$data->delete();
+		if (Banner::count() > 1) {
 
-		Storage::disk('banner')->delete($data->foto);
+			$data->delete();
 
-		alert()
-			->success('Data berhasil dihapus', 'Sukses!')
-			->persistent('Tutup')
-			->autoclose(3000);
+			Storage::disk('banner')->delete($data->foto);
+
+			alert()
+				->success('Data berhasil dihapus', 'Sukses!')
+				->persistent('Tutup')
+				->autoclose(3000);
+		} else {
+			alert()
+				->error('Minimal terdapat 1 foto banner', 'Gagal!')
+				->persistent('Tutup');
+		}
 
 		return redirect()->route('admin.master-data.banner.index');
 	}

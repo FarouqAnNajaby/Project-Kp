@@ -29,7 +29,7 @@
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.23/b-1.6.5/datatables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.23/b-1.6.5/datatables.min.css" />
 @endpush
 
 @push('javascript')

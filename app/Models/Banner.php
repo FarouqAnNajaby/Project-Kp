@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Carbon\Carbon;
 
 class Banner extends Model
 {
@@ -61,6 +62,16 @@ class Banner extends Model
 	public function getRouteKeyName()
 	{
 		return 'uuid';
+	}
+
+	/**
+	 * Get the formatted created_at.
+	 *
+	 * @return string
+	 */
+	public function getTanggalInputAttribute()
+	{
+		return Carbon::parse($this->created_at)->isoFormat('dddd, Do MMMM YYYY');
 	}
 
 	/**
