@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Support\Arr;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\HumanName;
 use App\Models\UMKMKategori;
 
 class UMKMRequest extends FormRequest
@@ -29,9 +30,9 @@ class UMKMRequest extends FormRequest
 		$kategori = implode(',', json_decode($kategori));
 
 		$rules = [
-			'nama'         => 'required|max:100',
+			'nama'         => 'required|string|min:3|max:100',
 			'kategori'     => 'required|in:' . $kategori,
-			'nama_pemilik' => 'required|max:50',
+			'nama_pemilik' => ['required', new HumanName(), 'max:50'],
 			'email'        => 'required|email:dns,spoof',
 			'nomor_telp'   => 'required|phone:ID',
 			'alamat'       => 'required',

@@ -23,7 +23,7 @@ class UMKMListDataTable extends DataTable
 			->eloquent($query)
 			->addColumn('action', function ($query) {
 
-				$opsi = '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Detail" href="' . route('admin.umkm.show', $query->uuid) . '">
+				$opsi = '<a class="btn btn-icon btn-info mr-1" data-toggle="tooltip" title="Detail" target="_blank" href="' . route('admin.umkm.show', $query->uuid) . '">
 						<i class="fas fa-eye"></i>
 					</a>';
 
@@ -56,7 +56,13 @@ class UMKMListDataTable extends DataTable
 	 */
 	public function query(UMKM $model)
 	{
-		return $model->with('umkm_kategori')->select('umkm.*')->newQuery();
+		$model = $model->with('umkm_kategori')
+			->select('umkm.*')
+			->newQuery();
+		if ($kategori = $this->request()->get('kategori')) {
+			$model->where('uuid_umkm_kategori', $kategori);
+		}
+		return $model;
 	}
 
 	/**
@@ -69,7 +75,11 @@ class UMKMListDataTable extends DataTable
 		return $this->builder()
 			->setTableId('umkmlist-table')
 			->columns($this->getColumns())
-			->minifiedAjax()
+			->ajax([
+				'data' => "function(data) {
+					data.kategori = $('select[name=kategori]').val();
+				}"
+			])
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +
 							"<\'row\'<\'col-sm-12\'tr>>" +
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
@@ -112,6 +122,6 @@ class UMKMListDataTable extends DataTable
 	 */
 	protected function filename()
 	{
-		return 'Admin-UMKMList-' . date('YmdHis');
+		return 'Admin-Daftar UMKM-' . date('YmdHis');
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\UMKM;
 
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -9,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\UMKMKategori;
 use App\Models\UMKM;
+use App\Models\BarangKategori;
 use App\Http\Requests\Admin\UMKMRequest;
 use App\Http\Controllers\Controller;
 use App\DataTables\Admin\UMKM\UMKMListDataTable;
@@ -23,7 +25,8 @@ class UMKMController extends Controller
 	 */
 	public function index(UMKMListDataTable $dataTable)
 	{
-		return $dataTable->render('admin.app.umkm.index');
+		$kategori = UMKMKategori::pluck('nama', 'uuid');
+		return $dataTable->render('admin.app.umkm.index', compact('kategori'));
 	}
 
 	/**
@@ -47,15 +50,17 @@ class UMKMController extends Controller
 	{
 		$validated = $request->validated();
 
-		$validated = Arr::except($validated, ['syarat_ketentuan', 'kategori']);
+		$nomor_telp = PhoneNumber::make($request->nomor_telp, 'ID')->formatE164();
+
+		$validated = Arr::except($validated, ['nomor_telp', 'syarat_ketentuan', 'kategori']);
 		$validated = Arr::add($validated, 'uuid_umkm_kategori', $request->kategori);
+		$validated = Arr::add($validated, 'nomor_telp', $nomor_telp);
 
 		$data = UMKM::create($validated);
 
 		alert()
 			->success('Data berhasil ditambahkan, Harap unggah logo UMKM.', 'Sukses!')
-			->persistent('Tutup')
-			->autoclose(3000);
+			->persistent('Tutup');
 
 		return redirect()->route('admin.umkm.edit', $data->uuid);
 	}
@@ -68,7 +73,17 @@ class UMKMController extends Controller
 	 */
 	public function show(DaftarBarangDataTable $dataTable, UMKM $data)
 	{
-		return $dataTable->render('admin.app.umkm.show', compact('data'));
+		$kategori = BarangKategori::pluck('nama', 'uuid');
+		if (!$data->logo) {
+			$data->logo = 'assets/img/umkm-default.png';
+		} else {
+			$data->logo = 'storage/logo-umkm/' . $data->logo;
+		}
+		return $dataTable
+			->with([
+				'uuid' => $data->uuid
+			])
+			->render('admin.app.umkm.show', compact('data', 'kategori'));
 	}
 
 	/**
@@ -101,11 +116,14 @@ class UMKMController extends Controller
 	{
 		$validated = $request->validated();
 
-		$validated = Arr::except($validated, ['kategori', 'logo']);
+		$nomor_telp = PhoneNumber::make($request->nomor_telp, 'ID')->formatE164();
+
+		$validated = Arr::except($validated, ['nomor_telp', 'kategori', 'logo']);
 		$validated = Arr::add($validated, 'uuid_umkm_kategori', $request->kategori);
+		$validated = Arr::add($validated, 'nomor_telp', $nomor_telp);
 
 		if ($request->hasFile('logo')) {
-			$logo = Image::make($request->file('logo'))->fit(215)->encode('jpg', 75);
+			$logo = Image::make($request->file('logo'))->resize(215, null)->encode('jpg', 75);
 			$nama_file = Str::random(50) . ".jpg";
 			$validated = Arr::add($validated, 'logo', $nama_file);
 
@@ -137,6 +155,7 @@ class UMKMController extends Controller
 	public function destroy(UMKM $data)
 	{
 		$data->delete();
+		$data->Barang()->delete();
 		alert()
 			->success('Data berhasil dihapus', 'Sukses!')
 			->persistent('Tutup')

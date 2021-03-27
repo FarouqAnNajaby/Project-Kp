@@ -3,10 +3,14 @@
 @section('content')
 
 <section class="section">
-    <x-admin-breadcrumb backBtn=true title="Ubah UMKM" url="{{ route('admin.umkm.index') }}">
+    <x-admin-breadcrumb backBtn=true title="Ubah UMKM" backUrl="{{ route('admin.umkm.index') }}">
         <x-slot name="breadcrumbItem">
-            <div class="breadcrumb-item"><a href="{{ route('admin.umkm.index') }}">Data UMKM</a></div>
-            <div class="breadcrumb-item"><a>Ubah UMKM</a></div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.umkm.index') }}">Data UMKM</a>
+            </div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.umkm.edit', $data->uuid) }}">Ubah UMKM</a>
+            </div>
         </x-slot>
     </x-admin-breadcrumb>
 
@@ -33,54 +37,54 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('nama', 'Nama UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('nama', 'Nama UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null)]) !!}
+                                {!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('nama')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('kategori', 'Kategori UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('kategori', 'Kategori UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {{ Form::select('kategori', $kategori, $data->uuid_umkm_kategori, ['placeholder' => 'Pilih', 'class' => 'form-control' . ($errors->has('kategori') ? ' is-invalid' : null)]) }}
+                                {{ Form::select('kategori', $kategori, $data->uuid_umkm_kategori, ['placeholder' => 'Pilih', 'class' => 'form-control select2' . ($errors->has('kategori') ? ' is-invalid' : null), 'required']) }}
                                 @error('kategori')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('nama_pemilik', 'Nama Pemilik UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('nama_pemilik', 'Nama Pemilik UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('nama_pemilik', null, ['class' => 'form-control' . ($errors->has('nama_pemilik') ? ' is-invalid' : null)]) !!}
+                                {!! Form::text('nama_pemilik', null, ['class' => 'form-control' . ($errors->has('nama_pemilik') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('nama_pemilik')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('email', 'Email UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('email', 'Email UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('email', null, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : null)]) !!}
+                                {!! Form::text('email', null, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('nomor_telp', 'Nomor Telepon', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('nomor_telp', 'Nomor Telepon* <i class="fas fa-info-circle" data-toggle="tooltip" title="Agar dapat dihubungi ketika persediaan barang menipis. Pastikan nomor telepon adalah nomor aktif."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('nomor_telp', null, ['class' => 'form-control' . ($errors->has('nomor_telp') ? ' is-invalid' : null)]) !!}
+                                {!! Form::text('nomor_telp', null, ['class' => 'form-control phone-number' . ($errors->has('nomor_telp') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('nomor_telp')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('alamat', 'Alamat UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('alamat', 'Alamat UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('alamat', null, ['class' => 'form-control' . ($errors->has('alamat') ? ' is-invalid' : null)]) !!}
+                                {!! Form::text('alamat', null, ['class' => 'form-control' . ($errors->has('alamat') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('alamat')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -93,6 +97,9 @@
                         </div>
                         {!! Form::close() !!}
                     </div>
+                    <div class="card-footer bg-whitesmoke">
+                        (<b>*</b>) = Wajib diisi
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,8 +107,17 @@
 </section>
 @endsection
 
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('assets/modules/freezeui/freeze-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+@endpush
+
 @push('javascript')
 <script src="{{ asset('assets/modules/bs-custom-file-input/dist/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('assets/modules/freezeui/freeze-ui.min.js') }}"></script>
+<script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
+<script src="{{ asset('assets/modules/cleave-js/dist/addons/cleave-phone.id.js') }}"></script>
 @endpush
 
 @push('javascript-custom')
@@ -153,6 +169,18 @@
                 defaultLogo()
             }
         })
+        new Cleave('.phone-number', {
+            phone: true
+            , phoneRegionCode: 'id'
+        })
+    })
+    $('form').on('submit', function(e) {
+        FreezeUI({
+            selector: 'form'
+        })
+        $('input.form-control').attr('readonly', true)
+        $('input[type=submit]').attr('disabled', true)
+        $('.select2').attr("readonly", true)
     })
 </script>
 @endpush

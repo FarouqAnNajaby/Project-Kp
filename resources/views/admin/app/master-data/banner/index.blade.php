@@ -38,7 +38,7 @@
                                             <div class="chocolat-parent">
                                                 <a href="{{ asset('storage/banner/' . $banner->foto) }}" class="chocolat-image" title="{{ $banner->judul }}">
                                                     <div>
-                                                        <img alt="image" src="{{ asset('storage/banner/' . $banner->foto) }}" class="img-fluid" width="100px">
+                                                        <img alt="image" src="{{ asset('storage/banner/' . $banner->foto) }}" class="img-thumbnail" width="100px">
                                                     </div>
                                                 </a>
                                             </div>
