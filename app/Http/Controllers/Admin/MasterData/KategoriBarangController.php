@@ -82,9 +82,8 @@ class KategoriBarangController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($uuid)
+	public function edit(BarangKategori $data)
 	{
-		$data = BarangKategori::findOrFail($uuid);
 		return view('admin.app.master-data.kategori-barang.edit', compact('data'));
 	}
 
@@ -95,10 +94,8 @@ class KategoriBarangController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $uuid)
+	public function update(Request $request, BarangKategori $data)
 	{
-		$data = BarangKategori::findOrFail($uuid);
-
 		$request->validate([
 			'nama'        => 'required|string|max:50',
 			'is_dropdown' => 'required|in:ya,tidak'

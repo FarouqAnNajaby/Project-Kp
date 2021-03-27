@@ -45,9 +45,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::get('/', 'KategoriUMKMController@index')->name('index');
 			Route::get('create', 'KategoriUMKMController@create')->name('create');
 			Route::post('create', 'KategoriUMKMController@store')->name('store');
-			Route::get('{uuid}/edit', 'KategoriUMKMController@edit')->name('edit');
-			Route::patch('{uuid}/edit', 'KategoriUMKMController@update')->name('update');
-			Route::delete('{uuid}/delete', 'KategoriUMKMController@destroy')->name('destroy');
+			Route::get('{data:uuid}/edit', 'KategoriUMKMController@edit')->name('edit');
+			Route::patch('{data:uuid}/edit', 'KategoriUMKMController@update')->name('update');
+			Route::delete('{data:uuid}/delete', 'KategoriUMKMController@destroy')->name('destroy');
 		});
 	});
 

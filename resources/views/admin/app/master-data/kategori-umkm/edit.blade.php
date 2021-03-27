@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="section">
-    <x-admin-breadcrumb backBtn=true title="Edit Kategori UMKM" url="{{ route('admin.master-data.kategori-umkm.index') }}">
+    <x-admin-breadcrumb backBtn=true title="Edit Kategori UMKM" backUrl="{{ route('admin.master-data.kategori-umkm.index') }}">
         <x-slot name="breadcrumbItem">
             <div class="breadcrumb-item">Master Data</div>
             <div class="breadcrumb-item">
