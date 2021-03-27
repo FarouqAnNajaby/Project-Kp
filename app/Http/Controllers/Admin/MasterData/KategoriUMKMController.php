@@ -80,9 +80,8 @@ class KategoriUMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($uuid)
+	public function edit(UMKMKategori $data)
 	{
-		$data = UMKMKategori::findOrFail($uuid);
 		return view('admin.app.master-data.kategori-umkm.edit', compact('data'));
 	}
 
@@ -93,10 +92,8 @@ class KategoriUMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $uuid)
+	public function update(Request $request, UMKMKategori $data)
 	{
-		$data = UMKMKategori::findOrFail($uuid);
-
 		$request->validate([
 			'nama' => 'required|string|max:50'
 		], [], [
@@ -119,7 +116,7 @@ class KategoriUMKMController extends Controller
 			->persistent('Tutup')
 			->autoclose(3000);
 
-		return redirect()->route('admin.master-data.kategori-umkm.edit', $uuid);
+		return redirect()->route('admin.master-data.kategori-umkm.edit', $data->uuid);
 	}
 
 	/**
@@ -128,12 +125,12 @@ class KategoriUMKMController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($uuid)
+	public function destroy(UMKMKategori $data)
 	{
-		$data = UMKMKategori::findOrFail($uuid);
-		if ($data->UMKM()->count() > 0) {
+		if ($data->UMKM()->count()) {
 			alert()
-				->error('Terdapat UMKM dengan kategori tersebut.', 'Gagal!')
+				->error('Terdapat UMKM dengan kategori tersebut.<br/>Harap ubah kategori pada UMKM terkait terlebih dahulu.', 'Gagal!')
+				->html()
 				->persistent('Tutup');
 		} else {
 			$data->delete();

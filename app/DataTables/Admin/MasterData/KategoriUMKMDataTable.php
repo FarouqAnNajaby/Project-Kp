@@ -21,21 +21,22 @@ class KategoriUMKMDataTable extends DataTable
 		return datatables()
 			->eloquent($query)
 			->addColumn('action', function ($query) {
-
 				$opsi = '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="' . route('admin.master-data.kategori-umkm.edit', $query->uuid) . '">
 							<i class="fas fa-pencil-alt"></i>
 						</a>';
-
 				$opsi .= Form::open(['route' => ['admin.master-data.kategori-umkm.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
 				$opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
 							<i class="fas fa-trash"></i>
 						</button>';
 				$opsi .= Form::close();
-
 				return $opsi;
 			})
-			->addColumn('jumlah', function ($query) {
+			->editColumn('count_umkm', function ($query) {
 				return number_format($query->UMKM()->count(), 0, '', '.');
+			})
+			->orderColumn('count_umkm', function ($query, $order) {
+				$query->withCount('umkm')
+					->orderBy('umkm_count', $order);
 			})
 			->rawColumns(['action']);
 	}
@@ -65,10 +66,10 @@ class KategoriUMKMDataTable extends DataTable
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
 							"<\'row\'<\'col-sm-12\'tr>>" + 
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
+			->orders([[2, 'desc'], [1, 'asc']])
 			->buttons(
 				Button::make('reload')
-			)
-			->orderBy(2, 'asc');
+			);
 	}
 
 	/**
@@ -85,8 +86,9 @@ class KategoriUMKMDataTable extends DataTable
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
-			Column::make('jumlah')
-				->title('Jumlah UMKM'),
+			Column::make('count_umkm')
+				->title('Jumlah UMKM')
+				->searchable(false),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)

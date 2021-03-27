@@ -3,9 +3,12 @@
 @section('content')
 
 <section class="section">
-    <x-admin-breadcrumb addBtn=true title="Kategori UMKM" url="{{ route('admin.master-data.kategori-umkm.create') }}">
+    <x-admin-breadcrumb addBtn=true title="Kategori UMKM" addUrl="{{ route('admin.master-data.kategori-umkm.create') }}">
         <x-slot name="breadcrumbItem">
-            <div class="breadcrumb-item">Data Kategori UMKM</div>
+            <div class="breadcrumb-item">Master Data</div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.master-data.kategori-umkm.index') }}">Data Kategori UMKM</a>
+            </div>
         </x-slot>
     </x-admin-breadcrumb>
     <div class="section-body">
@@ -29,13 +32,20 @@
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.23/b-1.6.5/datatables.min.css" />
+<link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.24/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/datatables/Buttons-1.7.0/css/buttons.bootstrap4.min.css') }}">
 @endpush
 
 @push('javascript')
-<script src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.23/b-1.6.5/datatables.min.js"></script>
+<script src="{{ asset('assets/modules/datatables/DataTables-1.10.24/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/DataTables-1.10.24/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/Buttons-1.7.0/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/modules/datatables/Buttons-1.7.0/js/buttons.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts() }}
+@endpush
+
+@push('javascript-custom')
 <script>
     $("table").on('draw.dt', function() {
         $('.tooltip.fade.top.in').hide();

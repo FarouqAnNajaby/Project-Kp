@@ -9,7 +9,7 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
 class UMKMKategori extends Model
 {
-	use HasFactory, Uuid, SoftDeletes;
+	use HasFactory, Uuid;
 
 	/**
 	 * The table associated with the model.

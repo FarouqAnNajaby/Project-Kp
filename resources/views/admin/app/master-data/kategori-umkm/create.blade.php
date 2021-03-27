@@ -3,13 +3,15 @@
 @section('content')
 
 <section class="section">
-    <x-admin-breadcrumb backBtn=true title="Tambah Kategori UMKM" url="{{ route('admin.master-data.kategori-umkm.index') }}">
+    <x-admin-breadcrumb backBtn=true title="Tambah Kategori UMKM" backUrl="{{ route('admin.master-data.kategori-umkm.index') }}">
         <x-slot name="breadcrumbItem">
             <div class="breadcrumb-item">Master Data</div>
             <div class="breadcrumb-item">
                 <a href="{{ route('admin.master-data.kategori-umkm.index') }}">Data Kategori UMKM</a>
             </div>
-            <div class="breadcrumb-item">Tambah Kategori UMKM</div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.master-data.kategori-umkm.create') }}">Tambah Kategori UMKM</a>
+            </div>
         </x-slot>
     </x-admin-breadcrumb>
     <div class="section-body">
@@ -24,7 +26,7 @@
                         <div class="form-group row mb-4">
                             {!! Form::label('nama', 'Kategori UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null), 'required']) !!}
+                                {!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('nama')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

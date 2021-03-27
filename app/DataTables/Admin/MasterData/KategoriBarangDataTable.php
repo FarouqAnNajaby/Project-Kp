@@ -36,7 +36,7 @@ class KategoriBarangDataTable extends DataTable
 				return $query->is_dropdown ? 'Ya' : 'Tidak';
 			})
 			->editColumn('count_barang', function ($query) {
-				return $query->Barang()->count();
+				return number_format($query->Barang()->count(), 0, '', '.');
 			})
 			->orderColumn('count_barang', function ($query, $order) {
 				$query->withCount('barang')
