@@ -74,7 +74,6 @@
         </div>
     </div>
 </section>
-
 @endsection
 
 @push('stylesheet')

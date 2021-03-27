@@ -32,11 +32,28 @@ class KategoriBarangDataTable extends DataTable
 
 				return $opsi;
 			})
-			->editColumn('dropdown', function ($query) {
-				return $query->is_dropdown ? '<span class="badge badge-success">Ya</span>' : 'Tidak';
+			->editColumn('is_dropdown', function ($query) {
+				return $query->is_dropdown ? 'Ya' : 'Tidak';
 			})
-			->escapeColumns([])
-			->rawColumns(['action' => 'action']);
+			->editColumn('count_barang', function ($query) {
+				return $query->Barang()->count();
+			})
+			->orderColumn('count_barang', function ($query, $order) {
+				$query->withCount('barang')
+					->orderBy('barang_count', $order);
+			})
+			->filterColumn('is_dropdown', function ($query, $keyword) {
+				$keyword = strtolower($keyword);
+				if ($keyword == 'ya') {
+					$keyword = 1;
+				} else if ($keyword == 'tidak') {
+					$keyword = 0;
+				}
+				if ($keyword === 1 || $keyword === 0) {
+					$query->where('is_dropdown', $keyword);
+				}
+			})
+			->rawColumns(['action']);
 	}
 
 	/**
@@ -64,7 +81,7 @@ class KategoriBarangDataTable extends DataTable
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
 							"<\'row\'<\'col-sm-12\'tr>>" + 
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
-			->orderBy(2, 'desc')
+			->orders([[2, 'desc'], [1, 'asc']])
 			->buttons(
 				Button::make('reload')
 			);
@@ -84,8 +101,11 @@ class KategoriBarangDataTable extends DataTable
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
-			Column::make('dropdown', 'is_dropdown')
+			Column::make('is_dropdown')
 				->title('Dropdown E-Commerce <i class="fad fa-question-circle" data-toggle="tooltip" title="Kategori yang akan ditampilkan pada menu e-commerce."></i>'),
+			Column::make('count_barang')
+				->title('Jumlah Barang')
+				->searchable(false),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)
