@@ -59,6 +59,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 		Route::get('{data:uuid}/edit', 'UMKMController@edit')->name('edit');
 		Route::patch('{data:uuid}/edit', 'UMKMController@update')->name('update');
 		Route::delete('{data:uuid}/delete', 'UMKMController@destroy')->name('destroy');
+		Route::post('export', 'UMKMController@export')->name('export');
 	});
 
 	Route::namespace('Barang')->prefix('barang')->name('barang.')->group(function () {

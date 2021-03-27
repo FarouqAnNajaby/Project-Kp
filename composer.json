@@ -24,6 +24,7 @@
         "maatwebsite/excel": "^3.1",
         "mbezhanov/faker-provider-collection": "^2.0",
         "propaganistas/laravel-phone": "^4.3",
+        "rap2hpoutre/fast-excel": "^2.5",
         "uxweb/sweet-alert": "^2.0",
         "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
         "yajra/laravel-datatables": "^1.5"

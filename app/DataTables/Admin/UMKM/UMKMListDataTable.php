@@ -11,6 +11,19 @@ use App\Models\UMKM;
 
 class UMKMListDataTable extends DataTable
 {
+	protected $fastExcel = true;
+	// public $fastExcelCallback = false;
+
+	public function fastExcelCallback()
+	{
+		return function ($row) {
+			return [
+				'Nama UMKM' => $row['nama'],
+				'Nomor Telepon' => $row['nomor_telp'],
+			];
+		};
+	}
+
 	/**
 	 * Build DataTable class.
 	 *

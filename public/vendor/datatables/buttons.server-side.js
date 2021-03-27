@@ -109,11 +109,11 @@
     };
 
     DataTable.ext.buttons.postExcel = {
-        className: "buttons-excel",
+        className: "buttons-excel btn-success",
 
         text: function (dt) {
             return (
-                '<i class="fa fa-file-excel-o"></i> ' +
+                '<i class="fad fa-file-excel"></i> ' +
                 dt.i18n("buttons.excel", "Excel")
             );
         },
@@ -157,7 +157,7 @@
             );
         },
 
-        buttons: ["csv", "excel", "pdf"],
+        buttons: ["postCsv", "postExcel", "pdf"],
     };
 
     DataTable.ext.buttons.csv = {
@@ -195,11 +195,11 @@
     };
 
     DataTable.ext.buttons.postCsv = {
-        className: "buttons-csv",
+        className: "buttons-csv btn-primary",
 
         text: function (dt) {
             return (
-                '<i class="fa fa-file-excel-o"></i> ' +
+                '<i class="fad fa-file-csv"></i> ' +
                 dt.i18n("buttons.csv", "CSV")
             );
         },

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\UMKM;
 
 use Propaganistas\LaravelPhone\PhoneNumber;
+use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +14,7 @@ use App\Models\UMKM;
 use App\Models\BarangKategori;
 use App\Http\Requests\Admin\UMKMRequest;
 use App\Http\Controllers\Controller;
+use App\Exports\Admin\UMKMExport;
 use App\DataTables\Admin\UMKM\UMKMListDataTable;
 use App\DataTables\Admin\UMKM\DaftarBarangDataTable;
 
@@ -162,5 +164,15 @@ class UMKMController extends Controller
 			->autoclose(3000);
 
 		return redirect()->route('admin.umkm.index');
+	}
+
+	public function export(Request $request)
+	{
+		if ($request->action == 'csv') {
+			$ext = '.csv';
+		} else {
+			$ext = '.xlsx';
+		}
+		return Excel::download(new UMKMExport, 'Admin-Daftar UMKM-' . date('Ymdhis') . $ext);
 	}
 }
