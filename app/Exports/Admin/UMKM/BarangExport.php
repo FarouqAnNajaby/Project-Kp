@@ -13,9 +13,11 @@ class BarangExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSi
 {
 	use Exportable;
 
-	public function __construct($uuid)
+	public function __construct($uuid, $search = null, $kategori = null)
 	{
 		$this->uuid = $uuid;
+		$this->search = $search;
+		$this->kategori = $kategori;
 	}
 
 	public function headings(): array
@@ -42,6 +44,29 @@ class BarangExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSi
 
 	public function query()
 	{
-		return Barang::query()->where('uuid_umkm', $this->uuid);
+		$data = Barang::query();
+		if ($this->search) {
+			$search = $this->search;
+			$data = $data->where(function ($query) use ($search) {
+				$query->orWhere('kode', 'LIKE', "%$search%")
+					->orWhere('nama', 'LIKE', "%$search%")
+					->orWhere('stok', $search)
+					->orWhere(function ($query) use ($search) {
+						$search = preg_replace("/[^0-9,]/", "", $search);
+						if (strpos($search, ',')) {
+							$search = trim($search, 0);
+						}
+						$search = filter_var($search, FILTER_SANITIZE_NUMBER_INT);
+						if (filter_var($search, FILTER_VALIDATE_INT)) {
+							$query->orWhere('harga', 'LIKE', "%$search%");
+						}
+					});
+			});
+		}
+		if ($this->kategori) {
+			$kategori = $this->kategori;
+			$data = $data->where('uuid_barang_kategori', $kategori);
+		}
+		return $data->where('uuid_umkm', $this->uuid);
 	}
 }

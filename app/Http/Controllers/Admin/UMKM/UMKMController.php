@@ -169,6 +169,8 @@ class UMKMController extends Controller
 
 	public function export(Request $request, $uuid = null)
 	{
+		$search = $request->search['value'];
+		$kategori = $request->kategori;
 		if ($request->action == 'csv') {
 			$ext = '.csv';
 		} else {
@@ -176,11 +178,11 @@ class UMKMController extends Controller
 		}
 		if (!$uuid) {
 			$file_name = 'Daftar UMKM-';
-			$export = new UMKMExport;
+			$export = new UMKMExport($search, $kategori);
 		} else {
 			$data = UMKM::findOrFail($uuid);
 			$file_name = $data->nama . '-Daftar Barang UMKM-';
-			$export = new BarangExport($uuid);
+			$export = new BarangExport($uuid, $search, $kategori);
 		}
 		return Excel::download($export, $file_name . date('Ymdhis') . $ext);
 	}

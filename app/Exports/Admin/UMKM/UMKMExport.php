@@ -14,6 +14,12 @@ class UMKMExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize
 {
 	use Exportable;
 
+	public function __construct($search = null, $kategori = null)
+	{
+		$this->search = $search;
+		$this->kategori = $kategori;
+	}
+
 	public function headings(): array
 	{
 		return [
@@ -40,6 +46,19 @@ class UMKMExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize
 
 	public function query()
 	{
-		return UMKM::query();
+		$data = UMKM::query();
+		if ($this->search) {
+			$search = $this->search;
+			$data = $data->where(function ($query) use ($search) {
+				$query->orWhere('nama', 'LIKE', "%$search%")
+					->orWhere('nomor_telp', 'LIKE', "%$search%")
+					->orWhere('nama_pemilik', 'LIKE', "%$search%");
+			});
+		}
+		if ($this->kategori) {
+			$kategori = $this->kategori;
+			$data = $data->where('uuid_umkm_kategori', $kategori);
+		}
+		return $data;
 	}
 }
