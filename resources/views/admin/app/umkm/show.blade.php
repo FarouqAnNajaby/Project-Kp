@@ -17,16 +17,16 @@
             <div class="card-header">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail">Detail UMKM</a>
+                        <a class="nav-link active" id="detail-tab" data-toggle="tab" href="#detail">Detail UMKM</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" id="deskripsi-tab" data-toggle="tab" href="#deskripsi">Daftar Barang</a>
+                        <a class="nav-link" id="deskripsi-tab" data-toggle="tab" href="#deskripsi">Daftar Barang</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
                 <div class="tab-content">
-                    <div class="tab-pane fade" id="detail">
+                    <div class="tab-pane fade show active" id="detail">
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-5 col-md-4">Logo UMKM :</label>
                             <div class="col-form-label col-7 col-md-3">
@@ -64,7 +64,7 @@
                             <p class="col-form-label col-7 col-md-8">{{ $data->alamat }}</p>
                         </div>
                     </div>
-                    <div class="tab-pane fade show active" id="deskripsi">
+                    <div class="tab-pane fade" id="deskripsi">
                         <div class="row mb-3">
                             <div class="col-md-3 col-sm-3 col-12">
                                 {!! Form::select('kategori', $kategori, null, ['placeholder' => 'Semua Kategori', 'class' => 'form-control select2', 'style' => 'width:100%;']) !!}
