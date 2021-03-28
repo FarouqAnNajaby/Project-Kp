@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Admin\Barang;
 
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
-use App\DataTables\Admin\Barang\FotoDataTable;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Barang;
-use App\Models\BarangFoto;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Models\Barang;
+use App\Http\Controllers\Controller;
 
 class FotoController extends Controller
 {
@@ -18,9 +16,10 @@ class FotoController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(FotoDataTable $dataTable, Barang $data)
+	public function index(Barang $data)
 	{
-		return $dataTable->render('admin.app.barang.foto.index', compact('data'));
+		$foto = $data->Foto()->paginate();
+		return view('admin.app.barang.foto.index', compact('data', 'foto'));
 	}
 
 	/**
@@ -45,7 +44,9 @@ class FotoController extends Controller
 			'foto' => 'required|mimes:jpg,jpeg,png|image|max:3072'
 		]);
 
-		$logo = Image::make($request->file('foto'))->fit(300)->encode('jpg', 75);
+		$logo = Image::make($request->file('foto'))->resize(500,  null, function ($constraint) {
+			$constraint->aspectRatio();
+		})->encode('jpg', 75);
 		$nama_file = Str::random(50) . ".jpg";
 
 		$data->Foto()->create([
@@ -105,15 +106,19 @@ class FotoController extends Controller
 	public function destroy(Barang $data, $uuid)
 	{
 		$foto = $data->Foto()->findOrFail($uuid);
-		$foto->delete();
-
-		Storage::disk('barang')->delete($foto->file);
-
-		alert()
-			->success('Data berhasil dihapus', 'Sukses!')
-			->persistent('Tutup')
-			->autoclose(3000);
-
+		if ($data->Foto()->count() != 1) {
+			$foto->delete();
+			Storage::disk('barang')->delete($foto->file);
+			alert()
+				->success('Data berhasil dihapus', 'Sukses!')
+				->persistent('Tutup')
+				->autoclose(3000);
+		} else {
+			alert()
+				->error('Minimal terdapat 1 foto barang.', 'Gagal!')
+				->persistent('Tutup')
+				->autoclose(3000);
+		}
 		return redirect()->route('admin.barang.foto.index', $data->uuid);
 	}
 }

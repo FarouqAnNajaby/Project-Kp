@@ -70,6 +70,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 		Route::get('{data:uuid}/edit', 'BarangController@edit')->name('edit');
 		Route::patch('{data:uuid}/edit', 'BarangController@update')->name('update');
 		Route::delete('{data:uuid}/delete', 'BarangController@destroy')->name('destroy');
+		Route::post('export', 'BarangController@export')->name('export');
 		Route::get('{data:uuid}/send-whatsapp', 'BarangController@sendWhatsapp')->name('send-whatsapp');
 
 		Route::prefix('{data:uuid}/foto')->name('foto.')->group(function () {

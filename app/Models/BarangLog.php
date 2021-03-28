@@ -40,6 +40,13 @@ class BarangLog extends Model
 	public $incrementing = false;
 
 	/**
+	 * Indicates if the model should be timestamped.
+	 *
+	 * @var bool
+	 */
+	public $timestamps = false;
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
@@ -55,13 +62,6 @@ class BarangLog extends Model
 	{
 		return 'uuid';
 	}
-
-	/**
-	 * Indicates if the model should be timestamped.
-	 *
-	 * @var bool
-	 */
-	public $timestamps = false;
 
 	/**
 	 * Get the barang harga.

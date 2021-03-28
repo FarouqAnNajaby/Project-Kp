@@ -112,7 +112,9 @@ class UMKMListDataTable extends DataTable
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
-			Column::make('umkm_kategori.nama')->title('Kategori'),
+			Column::make('umkm_kategori.nama')
+				->title('Kategori')
+				->searchable(false),
 			Column::make('nomor_telp')->title('No Telepon'),
 			Column::make('nama_pemilik')->title('Pemilik'),
 			Column::computed('action', 'Opsi')

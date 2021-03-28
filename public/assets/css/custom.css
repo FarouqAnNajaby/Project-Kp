@@ -124,6 +124,10 @@ select[readonly].select2-hidden-accessible
     text-transform: uppercase;
 }
 
+.white-space-nowrap {
+    white-space: nowrap;
+}
+
 @keyframes spin {
     0% {
         transform: translateZ(0) rotate(0);

@@ -39,6 +39,13 @@ class BarangFoto extends Model
 	public $incrementing = false;
 
 	/**
+	 * Indicates if the model should be timestamped.
+	 *
+	 * @var bool
+	 */
+	public $timestamps = false;
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
@@ -61,5 +68,19 @@ class BarangFoto extends Model
 	public function Barang()
 	{
 		return $this->belongsTo(Barang::class, 'uuid_barang', 'uuid');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		parent::boot();
+
+		static::creating(function ($model) {
+			$model->created_at = $model->freshTimestamp();
+		});
 	}
 }

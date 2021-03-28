@@ -41,12 +41,12 @@
                     <i class="fas fa-store"></i> <span>UMKM</span>
                 </a>
             </li>
-            <li class="dropdown{{ request()->routeIs('admin.barang*') ? ' active' : null }}">
+            <li class="dropdown{{ request()->segment(2) == 'barang' ? ' active' : null }}">
                 <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-boxes"></i><span>Barang</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="{{ request()->segment(2) == 'barang' && request()->segment(3) == '' ? ' active' : null }}"><a class=" nav-link" href="{{ route('admin.barang.index') }}">Data Barang</a></li>
+                    <li class="{{ request()->segment(2) == 'barang' && request()->segment(3) != 'log' ? ' active' : null }}"><a class=" nav-link" href="{{ route('admin.barang.index') }}">Data Barang</a></li>
 
                     <li class="{{ request()->segment(2) == 'barang' && request()->segment(3) == 'log' ? ' active' : null }}">
                         <a href="{{ route('admin.barang.log.index') }}">Log Barang</a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Barang;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\UMKM;
@@ -9,6 +10,7 @@ use App\Models\BarangKategori;
 use App\Models\Barang;
 use App\Http\Requests\Admin\BarangRequest;
 use App\Http\Controllers\Controller;
+use App\Exports\Admin\Barang\BarangExport;
 use App\DataTables\Admin\Barang\ListBarangDataTable;
 
 class BarangController extends Controller
@@ -109,9 +111,10 @@ class BarangController extends Controller
 		$validated = Arr::add($validated, 'stok', $stok);
 
 		$stok_awal = $data->stok;
+		$harga_awal = $data->harga;
 
 		$data->update($validated);
-		if ($request->stok != $stok_awal) {
+		if ($stok != $stok_awal || $harga != $harga_awal) {
 			$data->log()->create([
 				'stok'  => $stok,
 				'harga' => $harga
@@ -143,10 +146,22 @@ class BarangController extends Controller
 		return redirect()->route('admin.barang.index');
 	}
 
+	public function export(Request $request)
+	{
+		$search = $request->search['value'];
+		$kategori = $request->kategori;
+		if ($request->action == 'csv') {
+			$ext = '.csv';
+		} else {
+			$ext = '.xlsx';
+		}
+		$export = new BarangExport($search, $kategori);
+		return Excel::download($export, 'Daftar Barang-' . date('Ymdhis') . $ext);
+	}
+
 	public function sendWhatsapp(Barang $data)
 	{
 		$text = 'Yth.%20UMKM%20' . $data->UMKM->nama . '%0ABarang%20anda%20' . $data->nama . '%0Ayang%20terdaftar%20di%20koperasi%20kami%20hanya%20tersisa%20' . $data->stok . '%20stok.%0ADiharapkan%20kepada%20pihak%20bersangkutan%20untuk%20mendatangi%20koperasi%20kami%20untuk%20melakukan%20penambahan%20stok.';
-
-		return redirect('https://api.whatsapp.com/send?phone=+6281328044604&text=' . $text);
+		return redirect()->away('whatsapp://send?phone=' . $data->UMKM->nomor_telp . '&text=' . $text);
 	}
 }

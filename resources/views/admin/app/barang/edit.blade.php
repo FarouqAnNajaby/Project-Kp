@@ -2,10 +2,14 @@
 
 @section('content')
 <section class="section">
-    <x-admin-breadcrumb backBtn=true title="Ubah Barang" url="{{ route('admin.barang.index') }}">
+    <x-admin-breadcrumb backBtn=true title="Ubah Barang" backUrl="{{ route('admin.barang.index') }}">
         <x-slot name="breadcrumbItem">
-            <div class="breadcrumb-item"><a href="{{ route('admin.barang.index') }}">Data Barang</a></div>
-            <div class="breadcrumb-item"><a>Ubah Barang</a></div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.barang.index') }}">Data Barang</a>
+            </div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.barang.edit', $data->uuid) }}">Ubah Barang</a>
+            </div>
         </x-slot>
     </x-admin-breadcrumb>
     <div class="section-body">

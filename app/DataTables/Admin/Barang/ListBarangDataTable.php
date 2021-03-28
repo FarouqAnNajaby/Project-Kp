@@ -12,6 +12,13 @@ use App\Models\Barang;
 class ListBarangDataTable extends DataTable
 {
 	/**
+	 * DataTables print preview view.
+	 *
+	 * @var string
+	 */
+	protected $printPreview = 'admin.app.barang.print';
+
+	/**
 	 * Build DataTable class.
 	 *
 	 * @param mixed $query Results from query() method.
@@ -102,7 +109,7 @@ class ListBarangDataTable extends DataTable
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->orderBy(3, 'ASC')
 			->buttons(
-				Button::make('export'),
+				Button::make('postExport'),
 				Button::make('print'),
 				Button::make('reload')
 			);
@@ -121,7 +128,10 @@ class ListBarangDataTable extends DataTable
 				->exportable(false)
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
-			Column::make('nama')->title('Nama Barang'),
+			Column::make('kode')
+				->title('Kode Barang'),
+			Column::make('nama')
+				->title('Nama Barang'),
 			Column::make('kategori.nama')
 				->title('Kategori')
 				->searchable(false)

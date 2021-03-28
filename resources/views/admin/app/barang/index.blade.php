@@ -3,9 +3,11 @@
 @section('content')
 
 <section class="section">
-    <x-admin-breadcrumb addBtn=true title="Barang" url="{{ route('admin.barang.create') }}">
+    <x-admin-breadcrumb addBtn=true title="Barang" addUrl="{{ route('admin.barang.create') }}">
         <x-slot name="breadcrumbItem">
-            <div class="breadcrumb-item">Data Barang</div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.barang.index') }}">Data Barang</a>
+            </div>
         </x-slot>
     </x-admin-breadcrumb>
     <div class="section-body">
@@ -18,7 +20,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped white-space-nowrap">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
@@ -42,9 +44,20 @@
                                         <td class="text-center">{{ $data->rp_harga }}</td>
                                         <td class="text-center">{!! $data->umkm_limitted !!}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-success btn-icon" data-toggle="tooltip" title="Whatsapp" href="{{ route('admin.barang.send-whatsapp', $data->uuid) }}" target="_blank">
+                                            <a class="btn btn-success btn-icon mr-1" data-toggle="tooltip" title="Whatsapp" href="{{ route('admin.barang.send-whatsapp', $data->uuid) }}">
                                                 <i class="fab fa-whatsapp"></i>
                                             </a>
+                                            <a class="btn btn-icon btn-info mr-1" data-toggle="tooltip" title="Foto" href="{{ route('admin.barang.foto.index', $data->uuid) }}">
+                                                <i class="far fa-images"></i>
+                                            </a>
+                                            <a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" href="{{ route('admin.barang.edit', $data->uuid) }}">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            {{ Form::open(['route' => ['admin.barang.destroy', $data->uuid], 'method' => 'delete', 'class' => 'table-action-column']) }}
+                                            <button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            {{ Form::close() }}
                                         </td>
                                     </tr>
                                     @endforeach
@@ -66,7 +79,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            {!! $dataTable->table(['class' => 'table table-striped']) !!}
+                            {!! $dataTable->table(['class' => 'table table-striped white-space-nowrap']) !!}
                         </div>
                     </div>
                 </div>
@@ -98,18 +111,25 @@
         $("select[name=kategori]").on('change', function() {
             $('#list-barang-table').DataTable().draw();
         })
+        deleteData()
     })
     $("table").on('draw.dt', function() {
         $('.tooltip.fade.top.in').hide();
         $('[data-toggle=tooltip]').tooltip({
             container: 'body'
         });
+        deleteData()
+    })
+
+    const deleteData = () => {
         $('.delete').click(function(e) {
             e.preventDefault();
             let $this = $(this);
+            var msg = document.createElement('p');
+            msg.innerHTML = "Data Tidak Dapat Dikembalikan.<br/>Transaksi Pending dengan Barang dari UMKM Terkait Masih Bisa di Terima/Tolak.";
             swal({
                     title: 'Apakah Anda yakin?'
-                    , text: 'Data Tidak Dapat Dikembalikan Setelah Anda Menghapus.'
+                    , content: msg
                     , icon: 'warning'
                     , dangerMode: true
                     , buttons: true
@@ -120,6 +140,6 @@
                     }
                 })
         });
-    })
+    }
 </script>
 @endpush
