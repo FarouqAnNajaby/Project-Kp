@@ -45,8 +45,8 @@ return [
 	'snappy'        => [
 		'options'     => [
 			'no-outline'    => true,
-			'margin-left'   => '0',
-			'margin-right'  => '0',
+			'margin-left'   => '10mm',
+			'margin-right'  => '10mm',
 			'margin-top'    => '10mm',
 			'margin-bottom' => '10mm',
 		],
