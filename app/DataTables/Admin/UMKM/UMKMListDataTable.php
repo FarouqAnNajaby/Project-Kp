@@ -16,7 +16,7 @@ class UMKMListDataTable extends DataTable
 	 *
 	 * @var string
 	 */
-	protected $printPreview = 'admin.app.umkm.print';
+	protected $printPreview = 'admin.app.umkm.print.umkm';
 
 	/**
 	 * Build DataTable class.
@@ -91,7 +91,7 @@ class UMKMListDataTable extends DataTable
 							"<\'row\'<\'col-sm-12\'tr>>" +
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->buttons(
-				Button::make('export'),
+				Button::make('postExport'),
 				Button::make('print'),
 				Button::make('reload')
 			)

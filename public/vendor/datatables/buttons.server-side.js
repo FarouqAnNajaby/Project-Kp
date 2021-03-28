@@ -157,6 +157,22 @@
             );
         },
 
+        buttons: ["csv", "excel", "pdf"],
+    };
+
+    DataTable.ext.buttons.postExport = {
+        extend: "collection",
+
+        className: "buttons-export btn-primary",
+
+        text: function (dt) {
+            return (
+                '<i class="fas fa-file-export"></i> ' +
+                dt.i18n("buttons.export", "Export") +
+                '&nbsp;<span class="caret"/>'
+            );
+        },
+
         buttons: ["postCsv", "postExcel", "pdf"],
     };
 

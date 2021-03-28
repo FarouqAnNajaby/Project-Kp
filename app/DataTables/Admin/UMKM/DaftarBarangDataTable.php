@@ -12,6 +12,13 @@ use App\Models\Barang;
 class DaftarBarangDataTable extends DataTable
 {
 	/**
+	 * DataTables print preview view.
+	 *
+	 * @var string
+	 */
+	protected $printPreview = 'admin.app.umkm.print.barang';
+
+	/**
 	 * Build DataTable class.
 	 *
 	 * @param mixed $query Results from query() method.
@@ -100,7 +107,7 @@ class DaftarBarangDataTable extends DataTable
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->orders([[4, 'asc'], [2, 'asc']])
 			->buttons(
-				Button::make('export'),
+				Button::make('postExport'),
 				Button::make('print'),
 				Button::make('reload')
 			);

@@ -132,7 +132,7 @@ class Barang extends Model
 		Barang::observe(BarangObserver::class);
 
 		static::creating(function ($model) {
-			$model->kode = Str::upper(Str::random(20));
+			$model->kode = Str::upper(Str::random(10));
 		});
 	}
 }

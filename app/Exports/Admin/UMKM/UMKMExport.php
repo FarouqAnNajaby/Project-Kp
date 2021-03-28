@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports\Admin;
+namespace App\Exports\Admin\UMKM;
 
 use Propaganistas\LaravelPhone\PhoneNumber;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -18,11 +18,11 @@ class UMKMExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize
 	{
 		return [
 			'Nama UMKM',
-			'Kategori UMKM',
-			'Nama Pemilik UMKM',
-			'Email UMKM',
-			'Nomor Telepon UMKM',
-			'Alamat UMKM',
+			'Kategori',
+			'Nama Pemilik',
+			'Email',
+			'Nomor Telepon',
+			'Alamat',
 		];
 	}
 

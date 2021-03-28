@@ -60,6 +60,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 		Route::patch('{data:uuid}/edit', 'UMKMController@update')->name('update');
 		Route::delete('{data:uuid}/delete', 'UMKMController@destroy')->name('destroy');
 		Route::post('export', 'UMKMController@export')->name('export');
+		Route::post('{uuid}/show/export', 'UMKMController@export')->name('export.show');
 	});
 
 	Route::namespace('Barang')->prefix('barang')->name('barang.')->group(function () {

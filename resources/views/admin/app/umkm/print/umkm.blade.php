@@ -28,7 +28,23 @@
                 <th>Alamat</th>
             </tr>
         </thead>
-        @foreach(\App\Models\UMKM::get() as $row)
+        @php
+        $search = request()->search['value'];
+        $kategori = request()->kategori;
+        $data = new \App\Models\UMKM;
+        if($search) {
+			$data = $data->where(function($query) use($search) {
+				$query->orWhere('nama', 'LIKE', "%$search%")
+						->orWhere('nomor_telp', 'LIKE', "%$search%")
+						->orWhere('nama_pemilik', 'LIKE', "%$search%");
+			});
+		}
+        if($kategori) {
+			$data = $data->where('uuid_umkm_kategori', $kategori);
+        }
+        $data = $data->get();
+        @endphp
+        @foreach($data as $row)
         <tr>
             <td class="text-center">
                 {{ $loop->iteration }}.
@@ -42,9 +58,9 @@
         </tr>
         @endforeach
     </table>
-    <script>
+    {{-- <script>
         window.print();
-    </script>
+    </script> --}}
 </body>
 
 </html>

@@ -14,7 +14,8 @@ use App\Models\UMKM;
 use App\Models\BarangKategori;
 use App\Http\Requests\Admin\UMKMRequest;
 use App\Http\Controllers\Controller;
-use App\Exports\Admin\UMKMExport;
+use App\Exports\Admin\UMKM\UMKMExport;
+use App\Exports\Admin\UMKM\BarangExport;
 use App\DataTables\Admin\UMKM\UMKMListDataTable;
 use App\DataTables\Admin\UMKM\DaftarBarangDataTable;
 
@@ -166,13 +167,21 @@ class UMKMController extends Controller
 		return redirect()->route('admin.umkm.index');
 	}
 
-	public function export(Request $request)
+	public function export(Request $request, $uuid = null)
 	{
 		if ($request->action == 'csv') {
 			$ext = '.csv';
 		} else {
 			$ext = '.xlsx';
 		}
-		return Excel::download(new UMKMExport, 'Admin-Daftar UMKM-' . date('Ymdhis') . $ext);
+		if (!$uuid) {
+			$file_name = 'Daftar UMKM-';
+			$export = new UMKMExport;
+		} else {
+			$data = UMKM::findOrFail($uuid);
+			$file_name = $data->nama . '-Daftar Barang UMKM-';
+			$export = new BarangExport($uuid);
+		}
+		return Excel::download($export, $file_name . date('Ymdhis') . $ext);
 	}
 }
