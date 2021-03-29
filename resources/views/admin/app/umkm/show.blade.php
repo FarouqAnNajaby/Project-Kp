@@ -44,6 +44,10 @@
                             <p class="col-form-label col-7 col-md-8">{{ $data->nama }}</p>
                         </div>
                         <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-5 col-md-4">Kategori UMKM :</label>
+                            <p class="col-form-label col-7 col-md-8">{{ $data->UMKM_Kategori->nama }}</p>
+                        </div>
+                        <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-5 col-md-4">Tanggal Daftar :</label>
                             <p class="col-form-label col-7 col-md-8">{{ $data->tanggal_input }}</p>
                         </div>
