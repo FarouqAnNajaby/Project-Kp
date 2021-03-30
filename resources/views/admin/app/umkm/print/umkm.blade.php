@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name=description content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/modules/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/modules/fontawesome/css/all.min.css') }}">
     <style>
         body {
             margin: 20px
@@ -33,14 +33,14 @@
         $kategori = request()->kategori;
         $data = new \App\Models\UMKM;
         if($search) {
-			$data = $data->where(function($query) use($search) {
-				$query->orWhere('nama', 'LIKE', "%$search%")
-						->orWhere('nomor_telp', 'LIKE', "%$search%")
-						->orWhere('nama_pemilik', 'LIKE', "%$search%");
-			});
-		}
+        $data = $data->where(function($query) use($search) {
+        $query->orWhere('nama', 'LIKE', "%$search%")
+        ->orWhere('nomor_telp', 'LIKE', "%$search%")
+        ->orWhere('nama_pemilik', 'LIKE', "%$search%");
+        });
+        }
         if($kategori) {
-			$data = $data->where('uuid_umkm_kategori', $kategori);
+        $data = $data->where('uuid_umkm_kategori', $kategori);
         }
         $data = $data->get();
         @endphp

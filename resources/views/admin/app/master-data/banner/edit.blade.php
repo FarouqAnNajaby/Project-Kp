@@ -71,8 +71,13 @@
 </section>
 @endsection
 
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('assets/admin/modules/freezeui/freeze-ui.min.css') }}">
+@endpush
+
 @push('javascript')
-<script src="{{ asset('assets/modules/bs-custom-file-input/dist/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/freezeui/freeze-ui.min.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/bs-custom-file-input/dist/bs-custom-file-input.min.js') }}"></script>
 @endpush
 
 @push('javascript-custom')
@@ -98,6 +103,15 @@
     }
 
     $(document).ready(function() {
+
+        $('form').on('submit', function(e) {
+            FreezeUI({
+                selector: 'form'
+            })
+            $('input.form-control').attr('readonly', true)
+            $('input[type=submit]').attr('disabled', true)
+            $('.select2').attr("readonly", true)
+        })
 
         bsCustomFileInput.init()
         defaultLogo()

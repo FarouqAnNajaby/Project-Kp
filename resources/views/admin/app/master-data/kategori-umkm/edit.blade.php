@@ -47,5 +47,25 @@
         </div>
     </div>
 </section>
-
 @endsection
+
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('assets/admin/modules/freezeui/freeze-ui.min.css') }}">
+@endpush
+
+@push('javascript')
+<script src="{{ asset('assets/admin/modules/freezeui/freeze-ui.min.js') }}"></script>
+@endpush
+
+@push('javascript-custom')
+<script>
+    $('form').on('submit', function(e) {
+        FreezeUI({
+            selector: 'form'
+        })
+        $('input.form-control').attr('readonly', true)
+        $('input[type=submit]').attr('disabled', true)
+        $('.select2').attr("readonly", true)
+    })
+</script>
+@endpush

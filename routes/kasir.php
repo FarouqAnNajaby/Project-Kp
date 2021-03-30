@@ -15,27 +15,27 @@ use Illuminate\Support\Facades\Route;
 *					  nanti hasilnya di url = http://website.com/admin
 */
 
-Route::namespace('Kasir')->prefix('kasir')->group(function () {
-    Route::get('/', 'HomeController@index')->name('kasir.index');
+Route::namespace('Kasir')->prefix('kasir')->name('kasir.')->group(function () {
+	Route::get('/', 'HomeController@index')->name('index');
 
-    Route::prefix('transaksi')->group(function () {
-        Route::get('/', 'TransaksiController@index')->name('kasir.transaksi.index');
-        Route::get('{uuid}/show', 'TransaksiController@show')->name('kasir.transaksi.show');
-    });
+	Route::prefix('transaksi')->name('transaksi.')->group(function () {
+		Route::get('/', 'TransaksiController@index')->name('index');
+		Route::get('{uuid}/show', 'TransaksiController@show')->name('show');
+	});
 
 
-    Route::prefix('laporan-umkm')->group(function () {
-        Route::get('/', 'LaporanUMKMController@index')->name('kasir.laporan_umkm.index');
-        Route::get('{uuid}/show', 'LaporanController@show')->name('kasir.laporan_umkm.show');
-    });
+	Route::prefix('laporan-umkm')->name('laporan-umkm.')->group(function () {
+		Route::get('/', 'LaporanUMKMController@index')->name('index');
+		Route::get('{uuid}/show', 'LaporanController@show')->name('show');
+	});
 
-    Route::prefix('laporan')->group(function () {
-        Route::get('/', 'LaporanController@index')->name('kasir.laporan.index');
-        Route::get('{uuid}/show', 'LaporanController@show')->name('kasir.laporan.show');
-    });
+	Route::prefix('laporan')->name('laporan.')->group(function () {
+		Route::get('/', 'LaporanController@index')->name('index');
+		Route::get('{uuid}/show', 'LaporanController@show')->name('show');
+	});
 
-    Route::prefix('ajax')->name('ajax.')->group(function () {
-        Route::get('{uuid}/getBarangByKategori', 'AjaxController@getBarangByKategori')->name('getBarangByKategori');
-        Route::get('{uuid}/getDetailBarang', 'AjaxController@getDetailBarang')->name('getDetailBarang');
-    });
+	Route::prefix('ajax')->name('ajax.')->group(function () {
+		Route::get('{uuid}/getBarangByKategori', 'AjaxController@getBarangByKategori')->name('getBarangByKategori');
+		Route::get('{uuid}/getDetailBarang', 'AjaxController@getDetailBarang')->name('getDetailBarang');
+	});
 });

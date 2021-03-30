@@ -159,19 +159,19 @@
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" href="{{ asset('assets/modules/jquery-ui-smoothness/jquery-ui.theme.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/admin/modules/jquery-ui-smoothness/jquery-ui.theme.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/admin/modules/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/admin/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/admin/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
 @endpush
 
 @push('javascript')
-<script src="{{ asset('assets/modules/jquery-ui-smoothness/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('assets/modules/blockui-2.70/jquery.blockUI.js') }}"></script>
-<script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
-<script src="{{ asset('assets/modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/jquery-ui-smoothness/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/blockui-2.70/jquery.blockUI.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/cleave-js/dist/cleave.min.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('assets/admin/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 @endpush
 
 @push('javascript-custom')

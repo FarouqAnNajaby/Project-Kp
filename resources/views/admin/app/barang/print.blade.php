@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name=description content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/modules/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/modules/fontawesome/css/all.min.css') }}">
     <style>
         body {
             margin: 20px
@@ -32,24 +32,24 @@
         $kategori = request()->kategori;
         $data = \App\Models\Barang::where('stok', '>', 10);
         if($search) {
-			$data = $data->where(function($query) use($search) {
-				$query->orWhere('kode', 'LIKE', "%$search%")
-					->orWhere('nama', 'LIKE', "%$search%")
-					->orWhere('stok', $search)
-					->orWhere(function($query) use($search) {
-					$search = preg_replace("/[^0-9,]/", "", $search);
-					if (strpos($search, ',')) {
-						$search = trim($search, 0);
-					}
-					$search = filter_var($search, FILTER_SANITIZE_NUMBER_INT);
-					if (filter_var($search, FILTER_VALIDATE_INT)) {
-						$query->orWhere('harga', 'LIKE', "%$search%");
-					}
-				});
-			});
-		}
+        $data = $data->where(function($query) use($search) {
+        $query->orWhere('kode', 'LIKE', "%$search%")
+        ->orWhere('nama', 'LIKE', "%$search%")
+        ->orWhere('stok', $search)
+        ->orWhere(function($query) use($search) {
+        $search = preg_replace("/[^0-9,]/", "", $search);
+        if (strpos($search, ',')) {
+        $search = trim($search, 0);
+        }
+        $search = filter_var($search, FILTER_SANITIZE_NUMBER_INT);
+        if (filter_var($search, FILTER_VALIDATE_INT)) {
+        $query->orWhere('harga', 'LIKE', "%$search%");
+        }
+        });
+        });
+        }
         if($kategori) {
-			$data = $data->where('uuid_barang_kategori', $kategori);
+        $data = $data->where('uuid_barang_kategori', $kategori);
         }
         $data = $data->get();
         @endphp
