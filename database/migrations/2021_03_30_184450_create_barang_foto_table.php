@@ -16,9 +16,9 @@ class CreateBarangFotoTable extends Migration
         Schema::create('barang_foto', function (Blueprint $table) {
             $table->char('uuid', 36)->primary();
             $table->string('file', 100);
-            $table->boolean('is_highlight');
+            $table->boolean('is_highlight')->default(0);
             $table->char('uuid_barang', 36)->index('uuid_barang');
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable();
         });
     }
 

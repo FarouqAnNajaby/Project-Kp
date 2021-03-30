@@ -17,11 +17,10 @@ class CreateTransaksiTable extends Migration
             $table->char('uuid', 36)->primary();
             $table->string('kode', 10);
             $table->enum('jenis', ['offline', 'online'])->default('online');
-            $table->enum('kurir', ['ya', 'tidak']);
             $table->enum('status', ['pending', 'selesai']);
             $table->text('alamat');
             $table->bigInteger('total');
-            $table->char('uuid_user', 36)->index('uuid_user');
+            $table->char('uuid_user', 36)->nullable()->index('uuid_user');
             $table->timestamp('created_at')->nullable();
         });
     }

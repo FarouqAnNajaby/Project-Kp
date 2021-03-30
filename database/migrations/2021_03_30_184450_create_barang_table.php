@@ -19,6 +19,7 @@ class CreateBarangTable extends Migration
             $table->string('nama', 100);
             $table->smallInteger('stok');
             $table->bigInteger('harga');
+            $table->text('deskripsi_singkat');
             $table->longText('deskripsi');
             $table->char('uuid_barang_kategori', 36);
             $table->char('uuid_umkm', 36)->index('uuid_umkm');

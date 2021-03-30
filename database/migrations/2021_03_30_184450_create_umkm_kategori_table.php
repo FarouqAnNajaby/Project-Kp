@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBannersTable extends Migration
+class CreateUmkmKategoriTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateBannersTable extends Migration
      */
     public function up()
     {
-        Schema::create('banners', function (Blueprint $table) {
-            $table->id();
+        Schema::create('umkm_kategori', function (Blueprint $table) {
+            $table->char('uuid', 36)->primary();
+            $table->string('slug', 50);
+            $table->string('nama', 50);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateBannersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banners');
+        Schema::dropIfExists('umkm_kategori');
     }
 }
