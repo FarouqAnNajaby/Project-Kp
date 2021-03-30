@@ -4,8 +4,9 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Support\Arr;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\MinWord;
+use App\Rules\MaxWord;
 use App\Rules\FilteredNumeric;
-use App\Rules\Deskripsi;
 use App\Models\UMKM;
 use App\Models\BarangKategori;
 
@@ -32,11 +33,12 @@ class BarangRequest extends FormRequest
 		$kategori = implode(',', json_decode($kategori));
 
 		$rules = [
-			'nama'      => 'required|string|max:100',
-			'kategori'  => 'required|in:' . $kategori,
-			'stok'      => ['required', new FilteredNumeric],
-			'harga'     => ['required', new FilteredNumeric],
-			'deskripsi' => ['required', 'string', new Deskripsi(50)]
+			'nama'              => 'required|string|max:100',
+			'kategori'          => 'required|in:' . $kategori,
+			'stok'              => ['required', new FilteredNumeric],
+			'harga'             => ['required', new FilteredNumeric],
+			'deskripsi_singkat' => ['required', new MaxWord(50)],
+			'deskripsi'         => ['required', 'string', new MinWord(50)]
 		];
 
 		if ($this->method() == 'POST') {
@@ -56,12 +58,13 @@ class BarangRequest extends FormRequest
 	public function attributes()
 	{
 		return [
-			'umkm'      => 'UMKM',
-			'nama'      => 'Nama Barang',
-			'kategori'  => 'Kategori Barang',
-			'stok'      => 'Stok Barang',
-			'harga'     => 'Harga Barang/Satuan',
-			'deskripsi' => 'Deskripsi Barang',
+			'umkm'              => 'UMKM',
+			'nama'              => 'Nama Barang',
+			'kategori'          => 'Kategori Barang',
+			'stok'              => 'Stok Barang',
+			'harga'             => 'Harga Barang/Satuan',
+			'deskripsi_singkat' => 'Deskripsi Singkat Barang',
+			'deskripsi'         => 'Deskripsi Barang',
 		];
 	}
 

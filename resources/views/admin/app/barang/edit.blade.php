@@ -66,6 +66,15 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
+                            {!! Form::label('deskripsi_singkat', 'Deskripsi Singkat Barang* <i class="fas fa-info-circle" data-toggle="tooltip" title="Maximal 50 kata."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
+                            <div class="col-sm-12 col-md-7">
+                                {!! Form::textarea('deskripsi_singkat', null, ['class' => 'form-control' . ($errors->has('deskripsi_singkat') ? ' is-invalid' : null), 'required', 'style' => 'resize:vertical;height:150px;min-height:150px;']) !!}
+                                @error('deskripsi_singkat')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
                             {!! Form::label('deskripsi', 'Deskripsi Barang* <i class="fas fa-info-circle" data-toggle="tooltip" title="Minimal 50 kata."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
                             <div class="col-sm-12 col-md-7">
                                 {!! Form::textarea('deskripsi', null, ['class' => 'form-control summernote' . ($errors->has('deskripsi') ? ' is-invalid' : null), 'required']) !!}

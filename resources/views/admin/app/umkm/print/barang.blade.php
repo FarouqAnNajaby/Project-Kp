@@ -31,6 +31,8 @@
         $uuid = request()->segment(3);
         $search = request()->search['value'];
         $kategori = request()->kategori;
+        $col = request()->columns;
+        $direction = request()->order;
         $data = \App\Models\Barang::where('uuid_umkm', $uuid);
         if($search) {
 			$data = $data->where(function($query) use($search) {
@@ -38,19 +40,35 @@
 					->orWhere('nama', 'LIKE', "%$search%")
 					->orWhere('stok', $search)
 					->orWhere(function($query) use($search) {
-					$search = preg_replace("/[^0-9,]/", "", $search);
-					if (strpos($search, ',')) {
-						$search = trim($search, 0);
-					}
-					$search = filter_var($search, FILTER_SANITIZE_NUMBER_INT);
-					if (filter_var($search, FILTER_VALIDATE_INT)) {
-						$query->orWhere('harga', 'LIKE', "%$search%");
-					}
+						$search = preg_replace("/[^0-9,]/", "", $search);
+						if (strpos($search, ',')) {
+							$search = trim($search, 0);
+						}
+						$search = filter_var($search, FILTER_SANITIZE_NUMBER_INT);
+						if (filter_var($search, FILTER_VALIDATE_INT)) {
+							$query->orWhere('harga', 'LIKE', "%$search%");
+						}
 				});
 			});
-		}
+        }
         if($kategori) {
 			$data = $data->where('uuid_barang_kategori', $kategori);
+        }
+		
+		$orderBy = [];
+		foreach ($direction as $key => $value) {
+			foreach($col as $index => $val) {
+				if($value['column'] == $index) {
+					$dir = $direction[$key]['dir'];
+					if($col[$index]['name'] == 'kategori.nama') {
+						$data = $data->with(['kategori' => function($query) use($dir) {
+							$query->orderBy('nama', $dir);
+						}]);
+					} else {
+						$data = $data->orderBy($col[$index]['name'], $dir);
+					}
+				}
+			}
         }
         $data = $data->get();
         @endphp
