@@ -1,0 +1,174 @@
+.header.shop .search-bar {
+    width: 450px;
+}
+
+.header.shop .search-bar form {
+    width: 100%;
+}
+
+.header.shop .search-bar input {
+    width: 100%;
+    outline: none;
+}
+
+.hero-slider .single-slider {
+    background-image: none;
+}
+
+.section-title {
+    margin-bottom: 0;
+}
+
+.shop.single {
+    padding-top: 40px;
+}
+
+.shop.single .product-des .size ul,
+.shop.single .product-des .color ul {
+    display: unset;
+    margin-top: unset;
+}
+
+.shop.single .product-des .size ul li,
+.shop.single .product-des .color ul li {
+    display: block;
+    margin-right: 0;
+}
+
+.shop.single .product-des .product-buy {
+    margin-top: 20px;
+}
+
+.shop.single .product-des .size h4 {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.shop.single .product-des .color {
+    display: inline-block;
+    margin-right: 0;
+    /* margin-left: 30px; */
+}
+
+.shop.single .product-des .color h4 {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.color .nice-select {
+    line-height: 45px;
+    height: 45px;
+    float: none;
+    width: 100px;
+}
+
+.shop .category .check-box-list {
+    margin-top: 15px;
+}
+
+.shop .category .check-box-list li {
+    margin-bottom: 5px;
+}
+
+.shop .category .check-box-list li label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    cursor: pointer;
+}
+
+.shop .category .check-box-list li label input {
+    display: inline-block;
+    margin-right: 6px;
+    position: relative;
+    top: 1px;
+}
+
+.shop .category .check-box-list .count {
+    margin-left: 5px;
+    color: #666;
+}
+
+.price-filter-inner > .form-group:last-child {
+    margin-bottom: 0;
+}
+
+input.format-number {
+    outline: none;
+    width: 100%;
+    line-height: inherit;
+}
+
+button.btn-search-items {
+    padding: 0.375rem 0.75rem;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.shop.login .form .form-group input {
+    outline: none;
+}
+
+.categor-list li.active a {
+    color: #0088cc;
+}
+
+.nice-select.select-jk {
+    height: 48px;
+    line-height: 48px;
+    width: 100%;
+}
+
+.nice-select.select-jk .list {
+    width: 100%;
+}
+
+input,
+select {
+    outline: none;
+}
+
+.umkm {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.umkm-name {
+    margin-left: 24px;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    justify-content: center;
+}
+
+.umkm-name a {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.etalase-umkm {
+    display: flex;
+    flex-direction: column;
+}
+
+.etalase-umkm-name {
+    font-size: 22px;
+    font-weight: 600;
+    border-bottom: 2px solid #0088cc;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+}
+
+.etalase-umkm .row h4 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.footer-top.section {
+    padding: 65px 0;
+}

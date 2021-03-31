@@ -14,3 +14,32 @@ use Illuminate\Support\Facades\Route;
 *					  di controller/blade bisa dipanggil dengan route('admin.index'), yang mana
 *					  nanti hasilnya di url = http://website.com/admin
 */
+Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
+	Route::get('/', 'BerandaController@index')->name('index');
+	
+	// logg
+	Route::get('login', 'loginController@index')->name('login');
+	Route::get('registration', 'loginController@create')->name('registration');
+	
+	// list cart
+	Route::get('cart', 'CartController@index')->name('cart');
+
+	//produk
+	Route::get('pakaian', 'ProdukController@index')->name('pakaian');
+	Route::get('minuman', 'ProdukController@index')->name('minuman');
+	Route::get('snack', 'ProdukController@index')->name('snack');
+	Route::get('aksesoris', 'ProdukController@index')->name('aksesoris');
+	Route::get('produk', 'ProdukController@index')->name('produk');
+	Route::get('makanan', 'ProdukController@index')->name('makanan');
+	
+	// show detail broduk
+	Route::get('{data:uuid}/detail-barang', 'ProdukController@show')->name('detail-barang');
+	
+	// payment
+	Route::get('payment', 'PaymentController@index')->name('payment');
+	Route::post('sendPayment', 'PaymentController@create')->name('sendPayment');
+
+});
+
+    
+    
