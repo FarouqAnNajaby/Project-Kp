@@ -16,73 +16,85 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-	Route::get('/', 'HomeController@index')->name('index');
-	Route::get('login', function () {
-		return view('app.login');
-	})->name('login');
 
-	Route::namespace('MasterData')->prefix('master-data')->name('master-data.')->group(function () {
-
-		Route::prefix('banner-ecommerce')->name('banner.')->group(function () {
-			Route::get('/', 'BannerController@index')->name('index');
-			Route::get('create', 'BannerController@create')->name('create');
-			Route::post('create', 'BannerController@store')->name('store');
-			Route::get('{data:uuid}/edit', 'BannerController@edit')->name('edit');
-			Route::patch('{data:uuid}/edit', 'BannerController@update')->name('update');
-			Route::delete('{data:uuid}/delete', 'BannerController@destroy')->name('destroy');
-		});
-
-		Route::prefix('kategori-barang')->name('kategori-barang.')->group(function () {
-			Route::get('/', 'KategoriBarangController@index')->name('index');
-			Route::get('create', 'KategoriBarangController@create')->name('create');
-			Route::post('create', 'KategoriBarangController@store')->name('store');
-			Route::get('{data:uuid}/edit', 'KategoriBarangController@edit')->name('edit');
-			Route::patch('{data:uuid}/edit', 'KategoriBarangController@update')->name('update');
-			Route::delete('{data:uuid}/delete', 'KategoriBarangController@destroy')->name('destroy');
-		});
-
-		Route::prefix('kategori-umkm')->name('kategori-umkm.')->group(function () {
-			Route::get('/', 'KategoriUMKMController@index')->name('index');
-			Route::get('create', 'KategoriUMKMController@create')->name('create');
-			Route::post('create', 'KategoriUMKMController@store')->name('store');
-			Route::get('{data:uuid}/edit', 'KategoriUMKMController@edit')->name('edit');
-			Route::patch('{data:uuid}/edit', 'KategoriUMKMController@update')->name('update');
-			Route::delete('{data:uuid}/delete', 'KategoriUMKMController@destroy')->name('destroy');
-		});
+	Route::namespace('Auth')->middleware('guest:admin')->name('auth.')->group(function () {
+		Route::get('login', 'AuthenticatedSessionController@create')->name('login');
+		Route::post('login', 'AuthenticatedSessionController@store');
 	});
 
-	Route::namespace('UMKM')->prefix('umkm')->name('umkm.')->group(function () {
-		Route::get('/', 'UMKMController@index')->name('index');
-		Route::get('create', 'UMKMController@create')->name('create');
-		Route::post('create', 'UMKMController@store')->name('store');
-		Route::get('{data:uuid}/show', 'UMKMController@show')->name('show');
-		Route::get('{data:uuid}/edit', 'UMKMController@edit')->name('edit');
-		Route::patch('{data:uuid}/edit', 'UMKMController@update')->name('update');
-		Route::delete('{data:uuid}/delete', 'UMKMController@destroy')->name('destroy');
-		Route::post('export', 'UMKMController@export')->name('export');
-		Route::post('{uuid}/show/export', 'UMKMController@export')->name('export.show');
-	});
+	Route::middleware('auth:admin')->group(function () {
+		Route::get('/', 'HomeController@index')->name('index');
+		Route::get('logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
 
-	Route::namespace('Barang')->prefix('barang')->name('barang.')->group(function () {
-		Route::get('/', 'BarangController@index')->name('index');
-		Route::get('create', 'BarangController@create')->name('create');
-		Route::post('create', 'BarangController@store')->name('store');
-		Route::get('{data:uuid}/edit', 'BarangController@edit')->name('edit');
-		Route::patch('{data:uuid}/edit', 'BarangController@update')->name('update');
-		Route::delete('{data:uuid}/delete', 'BarangController@destroy')->name('destroy');
-		Route::post('export', 'BarangController@export')->name('export');
-		Route::get('{data:uuid}/send-whatsapp', 'BarangController@sendWhatsapp')->name('send-whatsapp');
-
-		Route::prefix('{data:uuid}/foto')->name('foto.')->group(function () {
-			Route::get('/', 'FotoController@index')->name('index');
-			Route::get('create', 'FotoController@create')->name('create');
-			Route::post('create', 'FotoController@store')->name('store');
-			Route::delete('{uuid}/delete', 'FotoController@destroy')->name('destroy');
+		Route::namespace('Auth')->name('auth.')->group(function () {
+			Route::get('pengaturan', 'SettingsController@edit')->name('settings');
+			Route::patch('pengaturan', 'SettingsController@store');
+			Route::patch('change-password', 'SettingsController@update')->name('settings.password');
 		});
 
-		Route::prefix('log')->name('log.')->group(function () {
-			Route::get('/', 'LogController@index')->name('index');
-			Route::get('{data:uuid}/show', 'LogController@show')->name('show');
+		Route::namespace('MasterData')->prefix('master-data')->name('master-data.')->group(function () {
+
+			Route::prefix('banner-ecommerce')->name('banner.')->group(function () {
+				Route::get('/', 'BannerController@index')->name('index');
+				Route::get('create', 'BannerController@create')->name('create');
+				Route::post('create', 'BannerController@store')->name('store');
+				Route::get('{data:uuid}/edit', 'BannerController@edit')->name('edit');
+				Route::patch('{data:uuid}/edit', 'BannerController@update')->name('update');
+				Route::delete('{data:uuid}/delete', 'BannerController@destroy')->name('destroy');
+			});
+
+			Route::prefix('kategori-barang')->name('kategori-barang.')->group(function () {
+				Route::get('/', 'KategoriBarangController@index')->name('index');
+				Route::get('create', 'KategoriBarangController@create')->name('create');
+				Route::post('create', 'KategoriBarangController@store')->name('store');
+				Route::get('{data:uuid}/edit', 'KategoriBarangController@edit')->name('edit');
+				Route::patch('{data:uuid}/edit', 'KategoriBarangController@update')->name('update');
+				Route::delete('{data:uuid}/delete', 'KategoriBarangController@destroy')->name('destroy');
+			});
+
+			Route::prefix('kategori-umkm')->name('kategori-umkm.')->group(function () {
+				Route::get('/', 'KategoriUMKMController@index')->name('index');
+				Route::get('create', 'KategoriUMKMController@create')->name('create');
+				Route::post('create', 'KategoriUMKMController@store')->name('store');
+				Route::get('{data:uuid}/edit', 'KategoriUMKMController@edit')->name('edit');
+				Route::patch('{data:uuid}/edit', 'KategoriUMKMController@update')->name('update');
+				Route::delete('{data:uuid}/delete', 'KategoriUMKMController@destroy')->name('destroy');
+			});
+		});
+
+		Route::namespace('UMKM')->prefix('umkm')->name('umkm.')->group(function () {
+			Route::get('/', 'UMKMController@index')->name('index');
+			Route::get('create', 'UMKMController@create')->name('create');
+			Route::post('create', 'UMKMController@store')->name('store');
+			Route::get('{data:uuid}/show', 'UMKMController@show')->name('show');
+			Route::get('{data:uuid}/edit', 'UMKMController@edit')->name('edit');
+			Route::patch('{data:uuid}/edit', 'UMKMController@update')->name('update');
+			Route::delete('{data:uuid}/delete', 'UMKMController@destroy')->name('destroy');
+			Route::post('export', 'UMKMController@export')->name('export');
+			Route::post('{uuid}/show/export', 'UMKMController@export')->name('export.show');
+		});
+
+		Route::namespace('Barang')->prefix('barang')->name('barang.')->group(function () {
+			Route::get('/', 'BarangController@index')->name('index');
+			Route::get('create', 'BarangController@create')->name('create');
+			Route::post('create', 'BarangController@store')->name('store');
+			Route::get('{data:uuid}/edit', 'BarangController@edit')->name('edit');
+			Route::patch('{data:uuid}/edit', 'BarangController@update')->name('update');
+			Route::delete('{data:uuid}/delete', 'BarangController@destroy')->name('destroy');
+			Route::post('export', 'BarangController@export')->name('export');
+			Route::get('{data:uuid}/send-whatsapp', 'BarangController@sendWhatsapp')->name('send-whatsapp');
+
+			Route::prefix('{data:uuid}/foto')->name('foto.')->group(function () {
+				Route::get('/', 'FotoController@index')->name('index');
+				Route::get('create', 'FotoController@create')->name('create');
+				Route::post('create', 'FotoController@store')->name('store');
+				Route::delete('{uuid}/delete', 'FotoController@destroy')->name('destroy');
+			});
+
+			Route::prefix('log')->name('log.')->group(function () {
+				Route::get('/', 'LogController@index')->name('index');
+				Route::get('{data:uuid}/show', 'LogController@show')->name('show');
+			});
 		});
 	});
 });

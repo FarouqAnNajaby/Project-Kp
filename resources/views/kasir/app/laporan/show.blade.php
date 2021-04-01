@@ -84,5 +84,5 @@
 @endsection
 
 @push('javascript')
-<script src="assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+<script src="{{ asset('assets/admin/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 @endpush

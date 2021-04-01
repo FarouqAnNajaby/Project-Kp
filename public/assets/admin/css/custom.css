@@ -128,6 +128,22 @@ select[readonly].select2-hidden-accessible
     white-space: nowrap;
 }
 
+.chartWrapper {
+    position: relative;
+}
+
+.chartWrapper > canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+
+.chartAreaWrapper {
+    width: 600px;
+    overflow-x: scroll;
+}
+
 @keyframes spin {
     0% {
         transform: translateZ(0) rotate(0);

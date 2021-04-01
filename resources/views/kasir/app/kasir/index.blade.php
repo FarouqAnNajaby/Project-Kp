@@ -195,7 +195,7 @@
         deskripsi.html('').css('height', 0).getNiceScroll().remove()
 
         var data = e.params.data.id;
-        var url = "{{ route('ajax.getBarangByKategori', ':id') }}"
+        var url = "{{ route('kasir.ajax.getBarangByKategori', ':id') }}"
         url = url.replace(':id', data);
         if (data) {
             nama_barang_cbx.slideDown()
@@ -220,7 +220,7 @@
         jumlah.val(0)
         var data = e.params.data.id
         if (data) {
-            var url = "{{ route('ajax.getDetailBarang', ':id') }}"
+            var url = "{{ route('kasir.ajax.getDetailBarang', ':id') }}"
             url = url.replace(':id', data);
             $.ajax({
                 url: url
@@ -280,7 +280,7 @@
                     if (!cart || !cart.length) {
                         cart = [];
                     }
-                    var url = "{{ route('ajax.getDetailBarang', ':id') }}"
+                    var url = "{{ route('kasir.ajax.getDetailBarang', ':id') }}"
                     url = url.replace(':id', nama_barang.val());
                     $.ajax({
                         url: url

@@ -14,3 +14,7 @@ use Illuminate\Support\Facades\Route;
 *					  di controller/blade bisa dipanggil dengan route('admin.index'), yang mana
 *					  nanti hasilnya di url = http://website.com/admin
 */
+
+Route::get('/login', function () {
+	return '123';
+})->name('login');

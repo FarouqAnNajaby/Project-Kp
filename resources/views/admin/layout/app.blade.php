@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta content="{{ csrf_token() }}" name="csrf-token">
-    <title>Admin Lamongan Mart</title>
+    <title>{{ request()->segment(1) == 'admin' ? 'Admin' : 'Kasir' }} Lamongan Mart</title>
 
     @include('admin.partials.stylesheet')
 </head>
@@ -14,13 +14,15 @@
 
     <div class="main-wrapper main-wrapper-1">
 
-        @include('admin.partials.navbar')
+        @if(request()->segment(1) == 'admin')
 
-        @if(request()->routeIs('admin*'))
+        @include('admin.partials.navbar')
 
         @include('admin.partials.sidebar')
 
         @else
+
+        @include('kasir.partials.navbar')
 
         @include('kasir.partials.sidebar')
 
