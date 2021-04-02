@@ -2,12 +2,11 @@
 
 namespace App\DataTables\Kasir;
 
-use App\Models\UMKM;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Button;
+use Illuminate\Support\Str;
+use App\Models\UMKM;
 
 class LaporanUMKMDataTable extends DataTable
 {
@@ -28,13 +27,12 @@ class LaporanUMKMDataTable extends DataTable
 				return $opsi;
 			})
 			->editColumn('nama', function ($query) {
-				return $query->nama;
+				return Str::limit($query->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->nama . '">...</p>');
 			})
 			->editColumn('nama_pemilik', function ($query) {
-				return $query->nama_pemilik;
+				return Str::limit($query->nama_pemilik, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->nama_pemilik . '">...</p>');
 			})
-			->escapeColumns([])
-			->rawColumns(['action' => 'action']);
+			->rawColumns(['action', 'nama_pemilik', 'nama']);
 	}
 
 	/**
@@ -45,7 +43,13 @@ class LaporanUMKMDataTable extends DataTable
 	 */
 	public function query(UMKM $model)
 	{
-		return $model->with('umkm_kategori')->select('umkm.*')->newQuery();
+		$model = $model->with('umkm_kategori')
+			->select('umkm.*')
+			->newQuery();
+		if ($kategori = $this->request()->get('kategori')) {
+			$model->where('uuid_umkm_kategori', $kategori);
+		}
+		return $model;
 	}
 
 	/**
@@ -56,15 +60,17 @@ class LaporanUMKMDataTable extends DataTable
 	public function html()
 	{
 		return $this->builder()
-			->setTableId('laporanumkmdatatable-table')
+			->setTableId('laporan-umkm-table')
 			->columns($this->getColumns())
-			->minifiedAjax()
+			->ajax([
+				'data' => "function(data) {
+					data.kategori = $('select[name=kategori]').val();
+				}"
+			])
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +
 							"<\'row\'<\'col-sm-12\'tr>>" +
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->buttons(
-				Button::make('export'),
-				Button::make('print'),
 				Button::make('reload')
 			)
 			->orderBy(1, 'asc');
@@ -84,7 +90,9 @@ class LaporanUMKMDataTable extends DataTable
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('nama'),
-			Column::make('umkm_kategori.nama')->title('Kategori'),
+			Column::make('umkm_kategori.nama')
+				->title('Kategori')
+				->searchable(false),
 			Column::make('nomor_telp')->title('No Telepon'),
 			Column::make('nama_pemilik')->title('Pemilik'),
 			Column::computed('action', 'Opsi')
@@ -101,6 +109,6 @@ class LaporanUMKMDataTable extends DataTable
 	 */
 	protected function filename()
 	{
-		return 'Kasir\LaporanUMKM_' . date('YmdHis');
+		return 'Kasir-LaporanUMKM_' . date('YmdHis');
 	}
 }

@@ -78,7 +78,7 @@ class UMKMController extends Controller
 	{
 		$kategori = BarangKategori::pluck('nama', 'uuid');
 		if (!$data->logo) {
-			$data->logo = 'assets/img/umkm-default.png';
+			$data->logo = 'assets/admin/img/umkm-default.png';
 		} else {
 			$data->logo = 'storage/logo-umkm/' . $data->logo;
 		}

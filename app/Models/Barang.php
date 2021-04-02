@@ -121,6 +121,14 @@ class Barang extends Model
 	}
 
 	/**
+	 * Get the foto barang for barang
+	 */
+	public function Transaksi()
+	{
+		return $this->hasMany(TransaksiBarang::class, 'uuid_barang', 'uuid');
+	}
+
+	/**
 	 * The "booted" method of the model.
 	 *
 	 * @return void

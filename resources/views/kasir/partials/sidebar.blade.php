@@ -10,13 +10,13 @@
             <li class="{{ request()->routeIs('kasir.index') ? 'active' : null }}">
                 <a href="{{ route('kasir.index') }}" class="nav-link"><i class="fas fa-pencil-ruler"></i> <span>Kasir</span></a>
             </li>
-            <li class="{{ request()->routeIs('kasir.transaksi.index') ? 'active' : null }}">
+            <li class="{{ request()->segment(2) == 'transaksi' ? 'active' : null }}">
                 <a href="{{ route('kasir.transaksi.index') }}" class="nav-link"><i class="fas fa-th-large"></i> <span>Transaksi</span></a>
             </li>
-            <li class="{{ request()->routeIs('kasir.laporan-umkm.index') ? 'active' : null }}">
+            <li class="{{ request()->segment(2) == 'laporan-umkm' ? 'active' : null }}">
                 <a href="{{ route('kasir.laporan-umkm.index') }}" class="nav-link"><i class="far fa-file-alt"></i> <span>Laporan UMKM</span></a>
             </li>
-            <li class="{{ request()->routeIs('kasir.laporan.index') ? 'active' : null }}">
+            <li class="{{ request()->segment(2) == 'laporan' ? 'active' : null }}">
                 <a href="{{ route('kasir.laporan.index') }}" class="nav-link"><i class="far fa-file-alt"></i> <span>Laporan Transaksi</span></a>
             </li>
         </ul>

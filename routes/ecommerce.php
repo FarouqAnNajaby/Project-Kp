@@ -19,8 +19,10 @@ Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
 	Route::get('/', 'BerandaController@index')->name('index');
 
 	// logg
-	Route::get('login', 'loginController@index')->name('login');
-	Route::get('registration', 'loginController@create')->name('registration');
+	Route::middleware('guest')->group(function () {
+		Route::get('login', 'loginController@index')->name('login');
+		Route::get('registration', 'loginController@create')->name('registration');
+	});
 
 	// list cart
 	Route::get('cart', 'CartController@index')->name('cart');
