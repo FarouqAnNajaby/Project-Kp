@@ -1,23 +1,17 @@
-@extends('admin.layout.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-@section('content')
-<section class="section">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Kasir Lamongan Mart</title>
 
-    <x-admin-breadcrumb backBtn=true title="Detail Laporan Transaksi" url="{{ route('kasir.laporan.index') }}">
-        <x-slot name="breadcrumbItem">
-            <div class="breadcrumb-item"><a href="{{ route('kasir.laporan.index') }}">Laporan Transaksi</a></div>
-            <div class="breadcrumb-item">Detail Laporan Transaksi</div>
-        </x-slot>
-    </x-admin-breadcrumb>
+    @include('admin.partials.stylesheet')
+</head>
 
-    <div class="section-body">
-        <div class="row mb-3">
-            <div class="col-md-6 col-12 text-right ml-auto">
-                <a class="btn btn-icon btn-info icon-left" href="{{ route('kasir.laporan.print', $data->uuid) }}" target="_blank">
-                    <i class="fas fa-print"></i> Print
-                </a>
-            </div>
-        </div>
+
+<body>
+    <section class="section">
         <div class="invoice">
             <div class="invoice-print">
                 <div class="row">
@@ -72,7 +66,7 @@
                                         <td class="text-center">
                                             {{ $item->jumlah }}
                                         </td>
-                                        <td class="text-center">
+                                        <td class="text-right">
                                             {{ $item->total }}
                                         </td>
                                     </tr>
@@ -105,14 +99,13 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-@endsection
-
-@push('stylesheet')
-<link rel="stylesheet" href="{{ asset('assets/admin/modules/chocolat/dist/css/chocolat.css') }}">
-@endpush
-
-@push('javascript')
-<script src="{{ asset('assets/admin/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-@endpush
+    </section>
+    @include('admin.partials.js')
+    <script>
+        window.onload = function() {
+            window.print();
+            window.close();
+        }
+    </script>
+</body>
+</html>

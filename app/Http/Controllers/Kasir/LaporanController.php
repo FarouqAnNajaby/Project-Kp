@@ -37,8 +37,9 @@ class LaporanController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
+	public function create(Transaksi $data)
 	{
+		return view('kasir.app.laporan.print', compact('data'));
 	}
 
 	/**
@@ -58,9 +59,8 @@ class LaporanController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($uuid)
+	public function show(Transaksi $data)
 	{
-		$data = Transaksi::findOrFail($uuid);
 		return view('kasir.app.laporan.show', compact('data'));
 	}
 

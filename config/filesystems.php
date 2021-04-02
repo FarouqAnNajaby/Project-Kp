@@ -57,6 +57,11 @@ return [
 			'root' => storage_path('app/public/banner'),
 		],
 
+		'bukti-transfer' => [
+			'driver' => 'local',
+			'root' => storage_path('app/public/bukti-transfer'),
+		],
+
 		's3' => [
 			'driver' => 's3',
 			'key' => env('AWS_ACCESS_KEY_ID'),
