@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
 class Admin extends Authenticatable
 {
-	use HasFactory;
+	use HasFactory, Uuid;
 
 	/**
 	 * The table associated with the model.

@@ -19,15 +19,23 @@ Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
 	Route::get('/', 'BerandaController@index')->name('index');
 
 	// logg
-	Route::middleware('guest')->group(function () {
-		Route::get('login', 'loginController@index')->name('login');
-		Route::get('registration', 'loginController@create')->name('registration');
+	Route::namespace('Auth')->middleware('guest')->group(function () {
+		Route::get('login', 'AuthController@show')->name('login');
+		Route::post('login', 'AuthController@update');
+		Route::get('registration', 'AuthController@create')->name('register');
+		Route::post('registration', 'AuthController@store');
+	});
+
+	Route::namespace('Auth')->middleware('auth')->group(function () {
+		Route::get('logout', 'AuthController@destroy')->name('logout');
+		Route::get('profile', 'ProfileController@index')->name('profile');
 	});
 
 	// list cart
 	Route::get('cart', 'CartController@index')->name('cart');
 
 	//produk
+	Route::get('barang', 'ProdukController@index')->name('barang');
 	Route::get('pakaian', 'ProdukController@index')->name('pakaian');
 	Route::get('minuman', 'ProdukController@index')->name('minuman');
 	Route::get('snack', 'ProdukController@index')->name('snack');
@@ -36,7 +44,7 @@ Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
 	Route::get('makanan', 'ProdukController@index')->name('makanan');
 
 	// show detail broduk
-	Route::get('{data:uuid}/detail-barang', 'ProdukController@show')->name('detail-barang');
+	Route::get('barang/{kode}/{slug}', 'ProdukController@show')->name('show');
 
 	// payment
 	Route::get('payment', 'PaymentController@index')->name('payment');

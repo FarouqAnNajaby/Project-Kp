@@ -89,6 +89,26 @@ class Barang extends Model
 	}
 
 	/**
+	 * Get the limitted nama barang text for ecommerce.
+	 *
+	 * @return string
+	 */
+	public function getNameLimitted2Attribute()
+	{
+		return Str::limit($this->nama, 30, '<p class="d-inline-block" data-toggle="tooltip" title="' . $this->nama . '">...</p>');
+	}
+
+	/**
+	 * Get the highlight foto.
+	 *
+	 * @return string
+	 */
+	public function getFotoHighlightAttribute()
+	{
+		// return $this->select('barang_foto.file');
+	}
+
+	/**
 	 * Get the log barang for barang
 	 */
 	public function Log()

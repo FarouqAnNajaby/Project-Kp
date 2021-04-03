@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Barang;
 
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\UMKM;
@@ -53,12 +54,14 @@ class BarangController extends Controller
 		$harga             = filter_var($request->harga, FILTER_SANITIZE_NUMBER_INT);
 		$stok              = filter_var($request->stok, FILTER_SANITIZE_NUMBER_INT);
 		$deskripsi_singkat = strip_tags($request->deskripsi_singkat);
+		$slug              = Str::slug($request->nama);
 
 		$validated = Arr::add($validated, 'uuid_umkm', $request->umkm);
 		$validated = Arr::add($validated, 'uuid_barang_kategori', $request->kategori);
 		$validated = Arr::add($validated, 'harga', $harga);
 		$validated = Arr::add($validated, 'stok', $stok);
-		$validated = Arr::add($validated, 'deskripsi_singkat', $stok);
+		$validated = Arr::add($validated, 'deskripsi_singkat', $deskripsi_singkat);
+		$validated = Arr::add($validated, 'slug', $slug);
 
 		Barang::create($validated);
 
@@ -108,11 +111,13 @@ class BarangController extends Controller
 		$harga             = filter_var($request->harga, FILTER_SANITIZE_NUMBER_INT);
 		$stok              = filter_var($request->stok, FILTER_SANITIZE_NUMBER_INT);
 		$deskripsi_singkat = strip_tags($request->deskripsi_singkat);
+		$slug              = Str::slug($request->nama);
 
 		$validated = Arr::add($validated, 'uuid_barang_kategori', $request->kategori);
 		$validated = Arr::add($validated, 'harga', $harga);
 		$validated = Arr::add($validated, 'stok', $stok);
-		$validated = Arr::add($validated, 'deskripsi_singkat', $stok);
+		$validated = Arr::add($validated, 'deskripsi_singkat', $deskripsi_singkat);
+		$validated = Arr::add($validated, 'slug', $slug);
 
 		$stok_awal = $data->stok;
 		$harga_awal = $data->harga;

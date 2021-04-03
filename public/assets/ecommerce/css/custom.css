@@ -169,6 +169,13 @@ select {
     font-weight: 500;
 }
 
-.footer-top.section {
-    padding: 65px 0;
+.img-cover {
+    object-fit: cover;
+    -o-object-fit: cover;
+    height: 200px;
+    transition: transform 0.2s;
+}
+
+.img-cover:hover {
+    transform: scale(1.5);
 }

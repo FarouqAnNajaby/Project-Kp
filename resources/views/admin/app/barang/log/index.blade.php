@@ -26,15 +26,15 @@
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" href="{{ asset('assets/admin/modules/datatables/DataTables-1.10.24/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/admin/modules/datatables/Buttons-1.7.0/css/buttons.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/admin/datatables/DataTables-1.10.24/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/admin/datatables/Buttons-1.7.0/css/buttons.bootstrap4.min.css') }}">
 @endpush
 
 @push('javascript')
-<script src="{{ asset('assets/admin/modules/datatables/DataTables-1.10.24/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/admin/modules/datatables/DataTables-1.10.24/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('assets/admin/modules/datatables/Buttons-1.7.0/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('assets/admin/modules/datatables/Buttons-1.7.0/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/admin/datatables/DataTables-1.10.24/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/admin/datatables/DataTables-1.10.24/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/admin/datatables/Buttons-1.7.0/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/admin/datatables/Buttons-1.7.0/js/buttons.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts() }}
 <script>
