@@ -74,6 +74,14 @@ class User extends Authenticatable
 	 */
 	public function getFormattedNotelpAttribute()
 	{
-		return PhoneNumber::make($this->nomor_telepon);
+		return PhoneNumber::make($this->nomor_telepon)->formatNational();
+	}
+
+	/**
+	 * Get the transaksi
+	 */
+	public function Transaksi()
+	{
+		return $this->hasMany(Transaksi::class, 'uuid_user', 'uuid');
 	}
 }

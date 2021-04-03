@@ -66,21 +66,21 @@
                                                 <a href="{{ route('ecommerce.index') }}">Home</a>
                                             </li>
                                             <li class="{{ request()->segment(1) == 'barang' && request()->kategori == 'pakaian' ? 'active' : null }}">
-                                                <a href="{{ route('ecommerce.barang') . '?kategori=pakaian' }}">Pakaian</a>
+                                                <a href="{{ route('ecommerce.barang.index') . '?kategori=pakaian' }}">Pakaian</a>
                                             </li>
                                             <li class="{{ request()->segment(1) == 'barang' && request()->kategori == 'minuman' ? 'active' : null }}">
-                                                <a href=" {{ route('ecommerce.barang') . '?kategori=minuman' }} ">Minuman</a>
+                                                <a href=" {{ route('ecommerce.barang.index') . '?kategori=minuman' }} ">Minuman</a>
                                             </li>
                                             <li class="{{ request()->segment(1) == 'barang' && request()->kategori == 'snack' ? 'active' : null }}">
-                                                <a href=" {{ route('ecommerce.barang') . '?kategori=snack' }} ">Snack</a>
+                                                <a href=" {{ route('ecommerce.barang.index') . '?kategori=snack' }} ">Snack</a>
                                             </li>
                                             <li>
                                                 <a href=" javascript:;">Kategori<i class="ti-angle-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href=" ">Keripik</a></li>
-                                                    <li><a href=" ">Aksesoris</a></li>
-                                                    <li><a href=" ">Sambal</a></li>
-                                                    <li><a href=" {{ route('ecommerce.produk') }} ">Semua Kategori</a></li>
+                                                    <li><a href="javascript:;">Keripik</a></li>
+                                                    <li><a href="javascript:;">Aksesoris</a></li>
+                                                    <li><a href="javascript:;">Sambal</a></li>
+                                                    <li><a href="{{ route('ecommerce.barang.index') }}">Semua Kategori</a></li>
                                                 </ul>
                                             </li>
 

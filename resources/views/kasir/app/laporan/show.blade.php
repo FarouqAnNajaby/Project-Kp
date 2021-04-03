@@ -110,9 +110,9 @@
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" href="{{ asset('assets/admin/chocolat/dist/css/chocolat.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/chocolat/dist/css/chocolat.css') }}">
 @endpush
 
 @push('javascript')
-<script src="{{ asset('assets/admin/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
+<script src="{{ asset('assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 @endpush

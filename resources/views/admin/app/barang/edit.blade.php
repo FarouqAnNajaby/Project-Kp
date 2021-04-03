@@ -101,15 +101,15 @@
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" href="{{ asset('assets/admin/freezeui/freeze-ui.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/admin/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/freezeui/freeze-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/admin/summernote/summernote-bs4.css') }}">
 @endpush
 
 @push('javascript')
-<script src="{{ asset('assets/admin/freezeui/freeze-ui.min.js') }}"></script>
-<script src="{{ asset('assets/admin/cleave-js/dist/cleave.min.js') }}"></script>
-<script src="{{ asset('assets/admin/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/modules/freezeui/freeze-ui.min.js') }}"></script>
+<script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
+<script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/admin/summernote/summernote-bs4.js') }}"></script>
 @endpush
 

@@ -13,7 +13,9 @@
 <!-- ScrollUp JS -->
 <script src="{{ asset('assets/ecommerce/js/scrollup.js')}}"></script>
 <script src="{{ asset('assets/ecommerce/js/autoNumeric.min.js')}}"></script>
+<script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
 <!-- Active JS -->
+@stack('javascript')
 <script src="{{ asset('assets/ecommerce/js/active.js')}}"></script>
 <script>
     new AutoNumeric.multiple('.format-number', {

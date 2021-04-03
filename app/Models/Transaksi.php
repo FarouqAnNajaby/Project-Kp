@@ -66,6 +66,16 @@ class Transaksi extends Model
 	}
 
 	/**
+	 * Get the transaksi date ecommerce.
+	 *
+	 * @return string
+	 */
+	public function getFormattedTanggalEcommerceAttribute()
+	{
+		return $this->created_at->isoFormat('dddd, Do MMMM YYYY HH:mm:s');
+	}
+
+	/**
 	 * Get the total in rupiah format
 	 *
 	 * @return string

@@ -41,7 +41,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-4 col-12">
                             <div class="single-product">
                                 <div class="product-img">
-                                    <a href="{{ route('ecommerce.barang', $value->uuid) }}">
+                                    <a href="{{ route('ecommerce.barang.index', $value->uuid) }}">
                                         <img class="default-img" src="https://via.placeholder.com/550x750" alt="">
                                         <img class="hover-img" src="https://via.placeholder.com/550x750" alt="">
                                     </a>
@@ -71,7 +71,7 @@
                     <div class="content">
                         <p>Aksesoris</p>
                         <h3>Kumpulan Aksesoris</h3>
-                        <a href=" {{ route('ecommerce.aksesoris') }}">Shop Now</a>
+                        <a href=" {{ route('ecommerce.barang.index') }}">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     <div class="content">
                         <p>Makanan</p>
                         <h3>Makan enak,<br> perut kenyang!</h3>
-                        <a href="{{ route('ecommerce.makanan') }}" class="btn">Shop Now</a>
+                        <a href="{{ route('ecommerce.barang.index') }}" class="btn">Shop Now</a>
                     </div>
                 </div>
             </div>

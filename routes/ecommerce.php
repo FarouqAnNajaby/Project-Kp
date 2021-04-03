@@ -22,29 +22,30 @@ Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
 	Route::namespace('Auth')->middleware('guest')->group(function () {
 		Route::get('login', 'AuthController@show')->name('login');
 		Route::post('login', 'AuthController@update');
-		Route::get('registration', 'AuthController@create')->name('register');
-		Route::post('registration', 'AuthController@store');
+		Route::get('register', 'AuthController@create')->name('register');
+		Route::post('register', 'AuthController@store');
 	});
 
-	Route::namespace('Auth')->middleware('auth')->group(function () {
-		Route::get('logout', 'AuthController@destroy')->name('logout');
-		Route::get('profile', 'ProfileController@index')->name('profile');
+	Route::middleware('auth')->group(function () {
+
+		Route::namespace('Auth')->group(function () {
+			Route::get('logout', 'AuthController@destroy')->name('logout');
+			Route::get('profile', 'ProfileController@index')->name('profile');
+			Route::patch('profile', 'ProfileController@update');
+			Route::patch('change-password', 'ProfileController@store')->name('change-password');
+		});
+		Route::get('riwayat-pembelian', 'HistoryController@index')->name('history');
+		Route::get('{data:kode}/riwayat-pembelian', 'HistoryController@show')->name('history.show');
 	});
 
 	// list cart
 	Route::get('cart', 'CartController@index')->name('cart');
 
 	//produk
-	Route::get('barang', 'ProdukController@index')->name('barang');
-	Route::get('pakaian', 'ProdukController@index')->name('pakaian');
-	Route::get('minuman', 'ProdukController@index')->name('minuman');
-	Route::get('snack', 'ProdukController@index')->name('snack');
-	Route::get('aksesoris', 'ProdukController@index')->name('aksesoris');
-	Route::get('produk', 'ProdukController@index')->name('produk');
-	Route::get('makanan', 'ProdukController@index')->name('makanan');
-
-	// show detail broduk
-	Route::get('barang/{kode}/{slug}', 'ProdukController@show')->name('show');
+	Route::prefix('barang')->name('barang.')->group(function () {
+		Route::get('/', 'ProdukController@index')->name('index');
+		Route::get('{kode}/{slug}', 'ProdukController@show')->name('show');
+	});
 
 	// payment
 	Route::get('payment', 'PaymentController@index')->name('payment');

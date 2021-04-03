@@ -8,7 +8,7 @@
                 <div class="bread-inner">
                     <ul class="bread-list">
                         <li><a href="{{ route('ecommerce.index') }}">Home<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{ route('ecommerce.barang') }}">Produk</a></li>
+                        <li class="active"><a href="{{ route('ecommerce.barang.index') }}">Produk</a></li>
                     </ul>
                 </div>
             </div>

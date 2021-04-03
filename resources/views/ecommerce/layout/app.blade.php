@@ -19,6 +19,7 @@
 
     @include('ecommerce.partials.footer')
     @include('ecommerce.partials.javascript')
+    @include('sweet::alert')
     <script>
         const toNumber = (num) => {
             return parseInt(num.replace(/,.*|[^0-9]/g, ''), 10);

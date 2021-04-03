@@ -99,12 +99,12 @@
 @endsection
 
 @push('stylesheet')
-<link rel="stylesheet" href="{{ asset('assets/admin/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
 @endpush
 
 @push('javascript')
-<script src="{{ asset('assets/admin/select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('assets/admin/chart.min.js') }}"></script>
+<script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/modules/chart.min.js') }}"></script>
 @endpush
 
 @push('javascript-custom')
@@ -152,9 +152,7 @@
     // statistik lengkung
     var statistics_chart = document.getElementById("transaksiChart").getContext('2d');
     var tanggal = ['{!! $tanggal_transaksi !!}'];
-    var data = {
-        !!$transaksi!!
-    };
+    var data = {!! $transaksi !!};
     var myChart = new Chart(statistics_chart, {
         type: 'line'
         , data: {
@@ -196,9 +194,7 @@
 
     // statistik bar
     var ctx = document.getElementById("umkmChart").getContext('2d');
-    var data = {
-        !!$umkm!!
-    };
+    var data = {!! $umkm !!};
     var myChart = new Chart(ctx, {
         type: 'bar'
         , data: {
