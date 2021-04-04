@@ -6,6 +6,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Transaksi;
 
 class LaporanTransaksiDataTable extends DataTable
@@ -32,7 +33,7 @@ class LaporanTransaksiDataTable extends DataTable
 				return $opsi;
 			})
 			->editColumn('created_at', function ($query) {
-				return $query->created_at->isoFormat('dddd, Do MMMM YYYY');
+				return Carbon::parse($query->created_at)->isoFormat('dddd, Do MMMM YYYY');
 			})
 			->editColumn('total', function ($query) {
 				return 'Rp' . number_format($query->total, 2, ',', '.');

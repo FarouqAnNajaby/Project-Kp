@@ -50,10 +50,12 @@ class AjaxController extends Controller
 
 			$status   = 200;
 			$response = ['message' => ['data' => [
-				'nama'		=> $barang->nama,
-				'harga'		=> $barang->harga,
+				'nama'      => $barang->nama,
+				'harga'     => $barang->harga,
 				'deskripsi' => $barang->deskripsi,
-				'foto'      => $foto
+				'foto'      => $foto,
+				'stok'      => $barang->stok,
+				'harga'     => $barang->harga
 			]]];
 		} else {
 			$status   = 404;
@@ -65,7 +67,7 @@ class AjaxController extends Controller
 	public function store(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
-			'cart.*.id' => ['required', Rule::exists('barang', 'uuid')->where(function ($query) {
+			'cart.*.id' => ['required', Rule::exists('barang', 'uuid')->where(function ($query) use ($request) {
 				$query->where('stok', '>', 0);
 			})],
 			'cart.*.jumlah' => 'required|integer|min:1',
@@ -80,6 +82,12 @@ class AjaxController extends Controller
 		$total = 0;
 		foreach ($request->cart as $index => $item) {
 			$data = Barang::where('uuid', $item['id'])->first();
+			if ($data->stok < $item['jumlah']) {
+				$data = [
+					'msg' => 'Stok Barang ' . $data->nama . ' tidak mencukupi.'
+				];
+				return response()->json($data, 400);
+			}
 			$barang[$index]['uuid_barang'] = $data->uuid;
 			$barang[$index]['jumlah'] = $item['jumlah'];
 			$barang[$index]['harga'] = $data->harga;
@@ -90,12 +98,18 @@ class AjaxController extends Controller
 			'status' => 'selesai',
 			'total' => $total
 		];
+
 		$transaksi = Transaksi::create($transaksi);
 		$transaksi->TransaksiBarang()->createMany($barang);
 
-		$response = [
-			'msg' => $transaksi
-		];
+		foreach ($barang as $index => $item) {
+			$data = Barang::where('uuid', $item['uuid_barang'])->first();
+			$data->update([
+				'stok' => $data->stok - $item['jumlah']
+			]);
+		}
+
+		$response = ['msg' => $transaksi];
 
 		return response()->json($response, 200);
 	}

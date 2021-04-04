@@ -13,7 +13,7 @@ class HomeController extends Controller
 	public function index()
 	{
 		$kategori = BarangKategori::whereHas('barang', function (Builder $query) {
-			$query->has('foto');
+			$query->where('stok', '>', 0)->has('foto');
 		})
 			->pluck('nama', 'uuid');
 		return view('kasir.app.kasir.index', compact('kategori'));

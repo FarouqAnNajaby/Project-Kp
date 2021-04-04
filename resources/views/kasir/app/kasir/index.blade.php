@@ -34,7 +34,18 @@
                                 {!! Form::number('jumlah', 0, ['class' => 'form-control']) !!}
                             </div>
                         </div>
-
+                        <div class="form-group row mb-4" id="stok-barang" style="display: none;">
+                            {!! Form::label('stok', 'Stok Barang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            <div class="col-sm-12 col-md-8">
+                                {!! Form::text('stok', null, ['class' => 'form-control', 'disabled']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4" id="harga-barang" style="display: none;">
+                            {!! Form::label('harga', 'Harga Barang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            <div class="col-sm-12 col-md-8">
+                                {!! Form::text('harga', null, ['class' => 'form-control', 'disabled']) !!}
+                            </div>
+                        </div>
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                             <div class="col-sm-12 col-md-7">
@@ -184,6 +195,8 @@
         , numeral: true
     });
     var nama_barang_cbx = $('#nama-barang-combobox')
+    var stok_barang = $('#stok-barang')
+    var harga_barang = $('#harga-barang')
     var nama_barang = $('#nama_barang')
     var deskripsi = $('#deskripsi-content')
     var foto = $("#foto-content")
@@ -192,6 +205,8 @@
     $("#kategori").on('select2:select', function(e) {
         foto.html('')
         jumlah.val(0)
+        stok_barang.slideUp();
+        harga_barang.slideUp();
         nama_barang.val('').trigger('change')
         deskripsi.html('').css('height', 0).getNiceScroll().remove()
 
@@ -220,6 +235,8 @@
     nama_barang.on('select2:select', function(e) {
         foto.html('');
         jumlah.val(0)
+        stok_barang.slideUp();
+        harga_barang.slideUp();
         var data = e.params.data.id
         if (data) {
             var url = "{{ route('kasir.ajax.getDetailBarang', ':id') }}"
@@ -237,8 +254,12 @@
                 }
                 , success: function(response) {
                     var data = response.message.data;
+                    stok_barang.slideDown();
+                    $('#stok').val(data.stok)
+                    harga_barang.slideDown();
+                    $('#harga').val(convertToRupiah(data.harga))
                     deskripsi.html(data.deskripsi).css({
-                        height: 250
+                        height: 380
                     }).niceScroll();;
                     if (data.foto.length >= 1) {
                         foto.append('<div class="owl-carousel owl-theme slider"></div>')
@@ -259,6 +280,8 @@
                 }
             })
         } else {
+            stok_barang.slideUp();
+            harga_barang.slideUp();
             deskripsi.html('').css('height', 0).getNiceScroll().remove()
             foto.html('')
         }
@@ -277,6 +300,7 @@
         }
         reloadDataOnTable(cart)
     })
+
     $('#add-barang').on('click', function() {
         if (nama_barang.val()) {
             if (jumlah.val() > 0) {
@@ -294,6 +318,10 @@
                             nama_barang.val(null).trigger('change');
                             deskripsi.html('').css('height', 0).getNiceScroll().remove()
                             foto.html('')
+                            stok_barang.slideUp();
+                            $('#stok').val('')
+                            harga_barang.slideUp();
+                            $('#harga').val('')
                         }
                         , success: function(response) {
                             var data = response.message.data;
@@ -417,6 +445,7 @@
                             swal({
                                 icon: 'error'
                                 , title: "Terjadi Kesalahan!"
+                                , text: err.msg || ''
                             });
                         }
                     }
@@ -527,9 +556,7 @@
         return 'Rp' + rupiah.split('', rupiah.length - 1).reverse().join('');
     }
 
-    function toNumber(num) {
-        return parseInt(num.replace(/,.*|[^0-9]/g, ''), 10);
-    }
+    const toNumber = (num) => parseInt(num.replace(/,.*|[^0-9]/g, ''), 10);
 </script>
 
 @endpush
