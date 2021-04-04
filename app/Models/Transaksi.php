@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
@@ -37,6 +38,13 @@ class Transaksi extends Model
 	 * @var bool
 	 */
 	public $incrementing = false;
+
+	/**
+	 * Indicates if the model should be timestamped.
+	 *
+	 * @var bool
+	 */
+	public $timestamps = false;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -99,5 +107,20 @@ class Transaksi extends Model
 	public function TransaksiBarang()
 	{
 		return $this->hasMany(TransaksiBarang::class, 'uuid_transaksi', 'uuid');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		parent::boot();
+
+		static::creating(function ($model) {
+			$model->kode = Str::upper(Str::random(10));
+			$model->created_at = $model->freshTimestamp();
+		});
 	}
 }

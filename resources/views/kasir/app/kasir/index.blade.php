@@ -67,7 +67,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card block-ui">
                     <div class="card-header">
                         <h4>Detail Pembelian</h4>
                     </div>
@@ -95,11 +95,12 @@
                                 </tfoot>
                             </table>
                         </div>
+                        {!! Form::open(['route' => 'kasir.ajax.store', 'id' => 'submit-cart']) !!}
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('pembayaran', 'Pembayaran') !!}
-                                    {!! Form::text('pembayaran', null, ['class' => 'form-control', 'val' => 0]) !!}
+                                    {!! Form::text('pembayaran', null, ['class' => 'form-control', 'val' => 0, 'autocomplete' => 'off']) !!}
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -108,10 +109,11 @@
                                     {!! Form::text('uang_kembali', null, ['class' => 'form-control', 'disabled' => 'true', 'value' => 'Rp0,00']) !!}
                                 </div>
                             </div>
+                            <div class="col-12">
+                                {!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
+                            </div>
                         </div>
-                        <div class="d-grid gap-2">
-                            {!! Form::submit('Kirim', ['class' => 'btn btn-primary', 'id' => 'submit-cart']) !!}
-                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
@@ -216,6 +218,7 @@
     })
 
     nama_barang.on('select2:select', function(e) {
+        foto.html('');
         jumlah.val(0)
         var data = e.params.data.id
         if (data) {
@@ -330,6 +333,9 @@
 
     $('#modal-edit-cart').on('hidden.bs.modal', function(event) {
         $(this).removeAttr('data-id');
+        $('#modal-nama-barang').val('')
+        $('#modal-jumlah-barang').val('')
+        $('#modal-harga-barang').val('')
     })
 
     $('#save-edit-cart').on('click', function() {
@@ -362,7 +368,81 @@
         }
     })
 
-    $('#submit-cart').on('click', function() {})
+    $('#submit-cart').on('submit', function(e) {
+        e.preventDefault();
+        var pembayaran = toNumber($('#pembayaran').val());
+        var total = getTotal(cart)
+        if (cart.length && total > 0) {
+            if (Number.isInteger(pembayaran) && pembayaran >= total) {
+                var url = $(this).attr('action');
+                var csrf_token = $(this).find('input[name=_token]').val();
+                $.ajax({
+                    url: url
+                    , data: {
+                        cart: cart
+                    }
+                    , type: 'POST'
+                    , headers: {
+                        'X-CSRF-TOKEN': csrf_token
+                    }
+                    , dataType: 'json'
+                    , beforeSend: function() {
+                        $('.block-ui').block({
+                            theme: true
+                            , message: null
+                        })
+                    }
+                    , complete: function() {
+                        $('.block-ui').unblock()
+                    }
+                    , success: function(response) {
+                        resetCart();
+                        let uuid = response.msg.uuid
+                        var urlLaporan = "{{ route('kasir.laporan.show', ':uuid') }}";
+                        urlLaporan = urlLaporan.replace(':uuid', uuid);
+                        swal({
+                                icon: 'success'
+                                , title: 'Sukses!'
+                                , text: 'Transaksi berhasil dilakukan.'
+                            })
+                            .then((result) => {
+                                if (result) {
+                                    window.open(urlLaporan)
+                                }
+                            })
+                    }
+                    , error: function(xhr, status, error) {
+                        if (xhr.responseText != "") {
+                            var err = JSON.parse(xhr.responseText)
+                            swal({
+                                icon: 'error'
+                                , title: "Terjadi Kesalahan!"
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    })
+
+    const resetCart = () => {
+        cart = [];
+        updateCart(cart);
+        reloadDataOnTable(cart)
+        $('#uang_kembali').val('');
+        $('#pembayaran').val('')
+    }
+
+    const getTotal = (arr) => {
+        total_harga = 0;
+        total_jml = 0;
+        if (arr.length) {
+            arr.forEach(function(data) {
+                total_harga += data.harga * parseInt(data.jumlah);
+            })
+        }
+        return total_harga;
+    }
 
     const getTotalJumlahAndHarga = (arr) => {
         total_harga = 0;
@@ -444,7 +524,11 @@
         var angkarev = angka.toString().split('').reverse().join('');
         for (var i = 0; i < angkarev.length; i++)
             if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
-        return 'Rp' + rupiah.split('', rupiah.length - 1).reverse().join('') + ',00';
+        return 'Rp' + rupiah.split('', rupiah.length - 1).reverse().join('');
+    }
+
+    function toNumber(num) {
+        return parseInt(num.replace(/,.*|[^0-9]/g, ''), 10);
     }
 </script>
 

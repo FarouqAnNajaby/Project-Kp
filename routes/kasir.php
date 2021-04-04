@@ -53,6 +53,7 @@ Route::namespace('Kasir')->prefix('kasir')->name('kasir.')->group(function () {
 		Route::prefix('ajax')->name('ajax.')->group(function () {
 			Route::get('{uuid}/getBarangByKategori', 'AjaxController@getBarangByKategori')->name('getBarangByKategori');
 			Route::get('{uuid}/getDetailBarang', 'AjaxController@getDetailBarang')->name('getDetailBarang');
+			Route::post('buyItems', 'AjaxController@store')->name('store');
 		});
 	});
 });
