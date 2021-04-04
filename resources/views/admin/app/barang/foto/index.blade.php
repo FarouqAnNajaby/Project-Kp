@@ -27,6 +27,7 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Foto</th>
+                                        <th class="text-center">Highlight</th>
                                         <th class="text-center">Opsi</th>
                                     </tr>
                                 </thead>
@@ -44,6 +45,12 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
+                                            {{ $row->is_highlight ? 'Ya' : 'Tidak' }}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('admin.barang.foto.edit', [$data->uuid, $row->uuid]) }}" data-toggle="tooltip" title="Ubah" class="btn btn-info btn-icon">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
                                             {{ Form::open(['route' => ['admin.barang.foto.destroy', [$data->uuid, $row->uuid]], 'method' => 'delete', 'class' => 'table-action-column']) }}
                                             <button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
                                                 <i class="fas fa-trash"></i>

@@ -88,6 +88,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 				Route::get('/', 'FotoController@index')->name('index');
 				Route::get('create', 'FotoController@create')->name('create');
 				Route::post('create', 'FotoController@store')->name('store');
+				Route::get('{uuid}/edit', 'FotoController@edit')->name('edit');
+				Route::patch('{uuid}/edit', 'FotoController@update')->name('update');
 				Route::delete('{uuid}/delete', 'FotoController@destroy')->name('destroy');
 			});
 
