@@ -1,7 +1,6 @@
 @extends('admin.layout.app')
 
 @section('content')
-
 <section class="section">
     <x-admin-breadcrumb title="Kasir">
         <x-slot name="breadcrumbItem">
@@ -161,16 +160,16 @@
 @push('stylesheet')
 <link rel="stylesheet" href="{{ asset('assets/modules/jquery-ui-smoothness/jquery-ui.theme.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/admin/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/admin/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
 @endpush
 
 @push('javascript')
 <script src="{{ asset('assets/modules/jquery-ui-smoothness/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('assets/admin/blockui-2.70/jquery.blockUI.js') }}"></script>
+<script src="{{ asset('assets/modules/blockui-2.70/jquery.blockUI.js') }}"></script>
 <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
-<script src="{{ asset('assets/admin/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('assets/modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 @endpush
 
@@ -241,7 +240,7 @@
                     if (data.foto.length >= 1) {
                         foto.append('<div class="owl-carousel owl-theme slider"></div>')
                         for (var i = 0; i < data.foto.length; i++) {
-                            $('.owl-carousel').append('<div><img src="' + data.foto[i] + '"/></div>')
+                            $('.owl-carousel').append('<div><img class="img-cover" src="storage/barang/' + data.foto[i] + '"/></div>')
                         }
                         $('.owl-carousel').owlCarousel({
                             loop: true
@@ -270,6 +269,9 @@
     var total_harga = 0
     var total_jml = 0;
     $(window).on('load', function() {
+        if (!Array.isArray(cart) || cart == null) {
+            cart = [];
+        }
         reloadDataOnTable(cart)
     })
     $('#add-barang').on('click', function() {

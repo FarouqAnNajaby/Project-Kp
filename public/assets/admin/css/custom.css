@@ -144,6 +144,12 @@ select[readonly].select2-hidden-accessible
     overflow-x: scroll;
 }
 
+.img-cover {
+    object-fit: cover;
+    -o-object-fit: cover;
+    height: 200px;
+}
+
 @keyframes spin {
     0% {
         transform: translateZ(0) rotate(0);
