@@ -174,7 +174,7 @@ class FotoController extends Controller
 					->autoclose(3000);
 			} else {
 				alert()
-					->error('Minimal terdapat 1 foto barang sebagai highlight.', 'Gagal!')
+					->error('Harus ada 1 foto barang sebagai highlight.', 'Gagal!')
 					->persistent('Tutup')
 					->autoclose(3000);
 			}
