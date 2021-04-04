@@ -28,17 +28,15 @@ class TransaksiDataTable extends DataTable
 						<i class="fas fa-eye"></i>
 					</a>';
 
-				$opsi .= Form::open(['method' => 'terima', 'class' => 'table-action-column']);
+				$opsi .= Form::open(['route' => ['kasir.transaksi.update', [$query->uuid, 'terima']], 'method' => 'patch', 'class' => 'table-action-column mr-1']);
 				$opsi .= '<button class="btn btn-icon btn-success terima" data-toggle="tooltip" title="Terima">
                             <i class="fas fa-check"></i>
                             </button>';
+				$opsi .= Form::close();
 
-				$opsi .= Form::open(['method' => 'tolak', 'class' => 'table-action-column']);
-				$opsi .= '<button class="btn btn-icon btn-danger tolak" data-toggle="tooltip" title="Tolak">
+				$opsi .= '<button class="btn btn-icon btn-danger tolak" data-uuid="' . $query->uuid . '" data-toggle="tooltip" title="Tolak">
                             <i class="fas fa-times"></i>
                             </button>';
-
-				$opsi .= Form::close();
 
 				return $opsi;
 			})

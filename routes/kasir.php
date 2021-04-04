@@ -35,6 +35,7 @@ Route::namespace('Kasir')->prefix('kasir')->name('kasir.')->group(function () {
 		Route::prefix('transaksi')->name('transaksi.')->group(function () {
 			Route::get('/', 'TransaksiController@index')->name('index');
 			Route::get('{data:uuid}/show', 'TransaksiController@show')->name('show');
+			Route::patch('{data:uuid}/show/{status}', 'TransaksiController@update')->name('update');
 		});
 
 
@@ -46,7 +47,7 @@ Route::namespace('Kasir')->prefix('kasir')->name('kasir.')->group(function () {
 
 		Route::prefix('laporan')->name('laporan.')->group(function () {
 			Route::get('/', 'LaporanController@index')->name('index');
-			Route::get('{data:uuid}/show', 'LaporanController@show')->name('show');
+			Route::get('{uuid}/show', 'LaporanController@show')->name('show');
 			Route::get('{data:uuid}/print', 'LaporanController@create')->name('print');
 			Route::match(['get', 'post'], '{uuid}/whatsapp', 'LaporanController@store')->name('whatsapp');
 		});

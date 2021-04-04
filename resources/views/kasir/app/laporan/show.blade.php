@@ -2,10 +2,12 @@
 
 @section('content')
 <section class="section">
-    <x-admin-breadcrumb backBtn=true title="Detail Laporan Transaksi" url="{{ route('kasir.laporan.index') }}">
+    <x-admin-breadcrumb backBtn=true title="Detail Laporan Transaksi" backUrl="{{ route('kasir.laporan.index') }}">
         <x-slot name="breadcrumbItem">
             <div class="breadcrumb-item"><a href="{{ route('kasir.laporan.index') }}">Laporan Transaksi</a></div>
-            <div class="breadcrumb-item">Detail Laporan Transaksi</div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('kasir.laporan.show', $data->uuid) }}">Detail Laporan Transaksi</a>
+            </div>
         </x-slot>
     </x-admin-breadcrumb>
     <div class="section-body">
