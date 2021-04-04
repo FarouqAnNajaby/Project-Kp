@@ -7,6 +7,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
 use Illuminate\Support\Str;
 use Collective\Html\FormFacade as Form;
+use Carbon\Carbon;
 use App\Models\Transaksi;
 
 class TransaksiDataTable extends DataTable
@@ -48,7 +49,7 @@ class TransaksiDataTable extends DataTable
 				return 'Rp' . number_format($query->total, 2, ',', '.');
 			})
 			->editColumn('created_at', function ($query) {
-				return $query->created_at->isoFormat('dddd, Do MMMM YYYY');
+				return Carbon::parse($query->created_at)->isoFormat('dddd, Do MMMM YYYY');
 			})
 			->filterColumn('total', function ($query, $keyword) {
 				$keyword = preg_replace("/[^0-9,]/", "", $keyword);

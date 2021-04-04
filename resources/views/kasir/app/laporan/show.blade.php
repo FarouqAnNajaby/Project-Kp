@@ -2,14 +2,12 @@
 
 @section('content')
 <section class="section">
-
     <x-admin-breadcrumb backBtn=true title="Detail Laporan Transaksi" url="{{ route('kasir.laporan.index') }}">
         <x-slot name="breadcrumbItem">
             <div class="breadcrumb-item"><a href="{{ route('kasir.laporan.index') }}">Laporan Transaksi</a></div>
             <div class="breadcrumb-item">Detail Laporan Transaksi</div>
         </x-slot>
     </x-admin-breadcrumb>
-
     <div class="section-body">
         <div class="row mb-3">
             <div class="col-md-6 col-12 text-right ml-auto">
@@ -30,16 +28,26 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <address>
+                                    <strong>Jenis Transaksi:</strong><br>
+                                    {{ ucfirst($data->jenis) }}
+                                </address>
+                                @if($data->uuid_user)
+                                <address>
                                     <strong>Pemesan:</strong><br>
                                     {{ $data->User->nama }}<br>
                                     {{ $data->User->email }}<br>
                                     {{ $data->User->nomor_telepon }}
                                 </address>
+                                @endif
                             </div>
-                            <div class="col-md-6 text-md-right">
+                            <div class="col-md-6 ml-auto text-md-right">
                                 <address>
                                     <strong>Tanggal Transaksi:</strong><br>
-                                    {{ $data->formatted_tanggal }}<br><br>
+                                    {{ $data->formatted_tanggal_ecommerce }}
+                                </address>
+                                <address>
+                                    <strong>Status:</strong><br>
+                                    {{ ucfirst($data->status) }}
                                 </address>
                             </div>
                         </div>
@@ -81,6 +89,7 @@
                             </table>
                         </div>
                         <div class="row mt-4">
+                            @if($data->uuid_user)
                             <div class="col-lg-8 col-md-8 col-12">
                                 <div class="section-title">
                                     Bukti Transfer
@@ -93,7 +102,8 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12 text-right">
+                            @endif
+                            <div class="col-lg-4 col-md-4 col-12 ml-auto text-right">
                                 <hr class="mb-2">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Total</div>

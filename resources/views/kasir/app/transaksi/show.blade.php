@@ -1,9 +1,6 @@
 @extends('admin.layout.app')
 
 @section('content')
-
-<!-- Main Content -->
-
 <section class="section">
     <x-admin-breadcrumb backBtn=true title="Detail Transaksi" url="{{ route('kasir.transaksi.index') }}">
         <x-slot name="breadcrumbItem">
@@ -14,7 +11,7 @@
     <div class="section-body">
         <div class="row">
             <div class="col-12">
-                <div class="card card card-light">
+                <div class="card card-light">
                     <div class="row mb-3 mt-3 mr-3">
                         <div class="col-md-6 col-12 text-right ml-auto">
                             <button href="#" class="btn btn-success" data-toggle="tooltip" title="Terima"><i class="fas fa-check"></i></button>

@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Carbon\Carbon;
 
 class Transaksi extends Model
 {
@@ -70,7 +71,7 @@ class Transaksi extends Model
 	 */
 	public function getFormattedTanggalAttribute()
 	{
-		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
+		return Carbon::parse($this->created_at)->isoFormat('dddd, Do MMMM YYYY');
 	}
 
 	/**
@@ -80,7 +81,7 @@ class Transaksi extends Model
 	 */
 	public function getFormattedTanggalEcommerceAttribute()
 	{
-		return $this->created_at->isoFormat('dddd, Do MMMM YYYY HH:mm:s');
+		return Carbon::parse($this->created_at)->isoFormat('dddd, Do MMMM YYYY - HH:mm:s');
 	}
 
 	/**
