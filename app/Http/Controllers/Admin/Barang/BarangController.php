@@ -170,7 +170,7 @@ class BarangController extends Controller
 
 	public function sendWhatsapp(Barang $data)
 	{
-		$text = 'Yth.%20UMKM%20' . $data->UMKM->nama . '%0ABarang%20anda%20' . $data->nama . '%0Ayang%20terdaftar%20di%20koperasi%20kami%20hanya%20tersisa%20' . $data->stok . '%20stok.%0ADiharapkan%20kepada%20pihak%20bersangkutan%20untuk%20mendatangi%20koperasi%20kami%20untuk%20melakukan%20penambahan%20stok.';
+		$text = 'Kepada%20' . $data->UMKM->nama . '%20yang%20bersangkutan%2C%20kami%20dari%20lamonganmart.com%20mengkonfirmasi%20bahwa%20jumlah%20stok%20produk%20' . $data->nama . '%20anda%20telah%20menipis.%20Harap%20datang%20satu%20hari%20setelah%20informasi%20ini%20diberikan%20ke%20Lamongan%20Mart%20di%20Jl.%20Basuki%20Rahmat%20No.176%2C%20Groyok%2C%20Sukomulyo%2C%20Lamongan%20untuk%20membawa%20stok%20produk%20' . $data->nama . '.%20Terima%20kasih%20atas%20perhatianya.%0A%0ALamongan%20Mart%20buka%0AHari%20%3A%20Senin%20s%2Fd%20Jumat%0APukul%20%3A%2008.00%20-%2015.00%0A%0ASalam%20%2C%20Admin';
 		return redirect()->away('whatsapp://send?phone=' . $data->UMKM->nomor_telp . '&text=' . $text);
 	}
 }

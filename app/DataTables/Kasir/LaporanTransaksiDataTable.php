@@ -22,12 +22,24 @@ class LaporanTransaksiDataTable extends DataTable
 		return datatables()
 			->eloquent($query)
 			->addColumn('action', function ($query) {
+				$opsi = '';
+				if (in_array($query->status, ['selesai', 'batal'])) {
+					if ($query->status == 'selesai') {
+						$opsi .= '<a class="btn btn-success btn-icon mr-1" data-toggle="tooltip" title="Hubungi Whatsapp" href="' . route('kasir.laporan.whatsapp', $query->uuid) . '">
+						<i class="fab fa-whatsapp"></i>
+						</a>';
+					} else {
+						$opsi .= '<button class="btn btn-success btn-icon mr-1 transaksi-batal" data-uuid="' . $query->uuid . '" data-toggle="tooltip" title="Hubungi Whatsapp">
+						<i class="fab fa-whatsapp"></i>
+						</button>';
+					}
+				}
 				if ($query->status == 'pending' && $query->jenis == 'online') {
 					$url = route('kasir.transaksi.show', $query->uuid);
 				} else {
 					$url = route('kasir.laporan.show', $query->uuid);
 				}
-				$opsi = '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat" href="' . $url . '" target="_blank">
+				$opsi .= '<a class="btn btn-icon btn-info" data-toggle="tooltip" title="Lihat" href="' . $url . '" target="_blank">
 					<i class="fas fa-eye"></i>
 				</a>';
 				return $opsi;
@@ -42,8 +54,10 @@ class LaporanTransaksiDataTable extends DataTable
 				$status = ucfirst($query->status);
 				if ($query->status == 'pending') {
 					$class = 'badge-warning';
-				} else {
+				} else if ($query->status == 'selesai') {
 					$class = 'badge-success';
+				} else {
+					$class = 'badge-danger';
 				}
 				return "<span class=\"badge $class\">$status</span>";
 			})

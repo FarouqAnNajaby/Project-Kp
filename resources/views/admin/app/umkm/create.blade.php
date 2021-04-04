@@ -77,7 +77,7 @@
                             <div class="col-sm-12 col-md-9 offset-md-3">
                                 <div class="custom-control custom-checkbox">
                                     {!! Form::checkbox('syarat_ketentuan', true, false, ['class' => 'custom-control-input' . ($errors->has('syarat_ketentuan') ? ' is-invalid' : null), 'id' => 'syarat_ketentuan', 'required']) !!}
-                                    <label class="custom-control-label" for="syarat_ketentuan">Dengan ini saya menyatakan setuju dengan <a href="" target="_blank" class="font-weight-bold">syarat & ketentuan</a>.</label>
+                                    <label class="custom-control-label" for="syarat_ketentuan">Dengan ini saya menyatakan setuju dengan <p id="syarat_ketentuan" class="font-weight-bold d-inline-block text-primary clickable-text">syarat & ketentuan</p>.</label>
                                     @error('syarat_ketentuan')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -99,6 +99,40 @@
         </div>
     </div>
 </section>
+<div class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Syarat & Ketentuan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-justify" id="syarat-ketentuan-content">
+                <p class="mb-0">Dengan mendaftar atau menggunakan layanan yang ditawarkan oleh (Layanan) atau salah satu layanan Lamongan Mart (Jejualan atau kami), Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut (Ketentuan Layanan).<br><br>
+                    Syarat dan ketentuan ini dibuat demi kepentingan bersama agar kedua belah pihak mendapatkan kenyamanan.<br><br>
+                    <b>KETENTUAN AKUN</b></p>
+                <ol class="pl-3">
+                    <li>Anda harus memberikan nama Toko Online, nomer ponsel, alamat email yang valid, dan informasi lainnya yang diperlukan untuk menyelesaikan proses pendaftaran.</li>
+                    <li>Anda tidak dapat menggunakan layanan Jejualan untuk tujuan ilegal atau tidak sah.</li>
+                    <li>Pelanggaran dari salah satu Ketentuan Akun sebagaimana ditetapkan dalam kebijaksanaan tunggal Jejualan akan mengakibatkan penghentian segera layanan Anda.</li>
+                </ol><br>
+                <p class="mb-0"><b>LAYANAN</b></p>
+                <ol class="pl-3">
+                    <li>Menjualkan produk anda beserta dengan foto dan keterangan produk.</li>
+                    <li>Mempromosikan toko online anda.</li>
+                    <li>Membuatkan laporan pendapatan dari hasil penjualan.</li>
+                </ol><br>
+                <p><b>PENGHAPUSAN AKUN</b><br>
+                    Anda dapat melakukan pengajuan penghapusan akun Anda kapan saja. Setelah akun Anda dihapus semua konten Anda akan segera dihapus dari Layanan. Penghapusan akun dan data bersifat permanen, kami tidak pernah dan akan menyimpan data tersebut. Pastikan sebaik-baiknya sebelum pengajuan penghapusan akun Anda.
+                </p>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('stylesheet')
@@ -111,6 +145,7 @@
 <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/addons/cleave-phone.id.js') }}"></script>
+<script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 @endpush
 
 @push('javascript-custom')
@@ -127,5 +162,13 @@
         $('input[type=submit]').attr('disabled', true)
         $('.select2').attr("readonly", true)
     })
+    $('#syarat_ketentuan').on('click', function() {
+        $('.modal').modal('show');
+    })
+    // $('.modal').on('show.bs.modal', function(event) {
+    //     $('.modal-body').css({
+    //         height: 400
+    //     }).niceScroll();
+    // })
 </script>
 @endpush

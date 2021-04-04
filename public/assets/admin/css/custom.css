@@ -150,6 +150,10 @@ select[readonly].select2-hidden-accessible
     height: 200px;
 }
 
+.clickable-text {
+    cursor: pointer;
+}
+
 @keyframes spin {
     0% {
         transform: translateZ(0) rotate(0);

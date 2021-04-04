@@ -260,7 +260,7 @@
                     $('#harga').val(convertToRupiah(data.harga))
                     deskripsi.html(data.deskripsi).css({
                         height: 380
-                    }).niceScroll();;
+                    }).niceScroll();
                     if (data.foto.length >= 1) {
                         foto.append('<div class="owl-carousel owl-theme slider"></div>')
                         for (var i = 0; i < data.foto.length; i++) {

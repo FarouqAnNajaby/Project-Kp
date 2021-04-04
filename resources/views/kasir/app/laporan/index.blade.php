@@ -41,15 +41,15 @@
             </div>
             <div class="col-sm">
                 <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="fas fa-clipboard-list"></i>
+                    <div class="card-icon bg-danger">
+                        <i class="fas fa-times"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>Total Transaksi</h4>
+                            <h4>Transaksi Batal</h4>
                         </div>
                         <div class="card-body">
-                            {{ number_format($total, 0, '', '.') }}
+                            {{ number_format($batal, 0, '', '.') }}
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     <div class="card-body ">
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                {!! Form::select('status', ['pending' => 'Pending', 'selesai' => 'Selesai'], null, ['placeholder' => 'Status', 'class' => 'form-control select2']) !!}
+                                {!! Form::select('status', ['pending' => 'Pending', 'selesai' => 'Selesai', 'batal' => 'Batal'], null, ['placeholder' => 'Status', 'class' => 'form-control select2']) !!}
                             </div>
                             <div class="col-md-4 offset-md-6">
                                 <div class="row">
@@ -79,7 +79,7 @@
                         </div>
                         <div class="table-responsive">
                             <div class="table-responsive">
-                                {!! $dataTable->table(['class' => 'table table-striped']) !!}
+                                {!! $dataTable->table(['class' => 'table table-striped white-space-nowrap']) !!}
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,30 @@
         </div>
     </div>
 </section>
-
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pilih Alasan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Alasan</label>
+                    <div class="input-group">
+                        {!! Form::select('alasan', [1 => 'Stok barang tidak mencukupi', 2 => 'Bukti transfer tidak valid', 3 => 'Jumlah yang dibayarkan kurang atau tidak sesuai'], null, ['placeholder' => '-------Pilih-------', 'class' => 'form-control']) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="save">Kirim</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('stylesheet')
@@ -114,10 +137,59 @@
         $('[data-toggle=tooltip]').tooltip({
             container: 'body'
         });
+        $('.transaksi-batal').on('click', function() {
+            let uuid = $(this).data('uuid');
+            $('.modal').modal('show').attr('data-uuid', uuid);
+        })
     });
     $(document).ready(function() {
         $("select[name=bulan], select[name=tahun], select[name=status]").on('change', function() {
             $('#laporantransaksi-table').DataTable().draw();
+        })
+        $('#save').on('click', function() {
+            let uuid = $('.modal').data('uuid');
+            let alasan = $('select[name=alasan]').val();
+            if (uuid && alasan) {
+                swal({
+                        title: 'Apakah Anda yakin?'
+                        , text: 'Pastikan alasan sudah benar & telah mentransfer kembali sesuai dengan nominal transaksi.'
+                        , icon: 'warning'
+                        , dangerMode: true
+                        , buttons: true
+                    })
+                    .then((result) => {
+                        if (result) {
+                            let url = "{{ route('kasir.laporan.whatsapp', ':uuid') }}"
+                            url = url.replace(':uuid', uuid);
+                            $.ajax({
+                                url: url
+                                , data: {
+                                    alasan: alasan
+                                }
+                                , type: 'POST'
+                                , headers: {
+                                    'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
+                                }
+                                , dataType: 'json'
+                                , success: function(response) {
+                                    response = response.msg;
+                                    window.location.href = `whatsapp://send?phone=${response.nomor_telepon}&text=${response.text}`;
+                                    $('.modal').modal('hide')
+                                }
+                                , error: function(xhr, status, error) {
+                                    if (xhr.responseText != "") {
+                                        var err = JSON.parse(xhr.responseText)
+                                        swal({
+                                            icon: 'error'
+                                            , title: "Terjadi Kesalahan!"
+                                            , text: err.msg.alasan[0] || ''
+                                        });
+                                    }
+                                }
+                            })
+                        }
+                    })
+            }
         })
     })
 </script>
