@@ -82,7 +82,7 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="single-product">
                             <div class="product-img">
-                                <a href="{{ route('ecommerce.show', [$value->kode, $value->slug]) }}">
+                                <a href="{{ route('ecommerce.barang.show', [$value->kode, $value->slug]) }}">
                                     <img class="default-img img-cover img-fluid" src="{{ asset('storage/barang/' . $value->foto) }}" alt="">
                                 </a>
                             </div>
