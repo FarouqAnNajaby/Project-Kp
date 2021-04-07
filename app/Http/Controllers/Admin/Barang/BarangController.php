@@ -49,10 +49,11 @@ class BarangController extends Controller
 	public function store(BarangRequest $request)
 	{
 		$validated = $request->validated();
-		$validated = Arr::except($validated, ['harga', 'stok', 'umkm', 'kategori', 'deskripsi_singkat']);
+		$validated = Arr::except($validated, ['harga', 'stok', 'umkm', 'kategori', 'deskripsi', 'deskripsi_singkat']);
 
 		$harga             = filter_var($request->harga, FILTER_SANITIZE_NUMBER_INT);
 		$stok              = filter_var($request->stok, FILTER_SANITIZE_NUMBER_INT);
+		$deskripsi         = nl2br(strip_tags($request->deskripsi));
 		$deskripsi_singkat = strip_tags($request->deskripsi_singkat);
 		$slug              = Str::slug($request->nama);
 
@@ -60,6 +61,7 @@ class BarangController extends Controller
 		$validated = Arr::add($validated, 'uuid_barang_kategori', $request->kategori);
 		$validated = Arr::add($validated, 'harga', $harga);
 		$validated = Arr::add($validated, 'stok', $stok);
+		$validated = Arr::add($validated, 'deskripsi', $deskripsi);
 		$validated = Arr::add($validated, 'deskripsi_singkat', $deskripsi_singkat);
 		$validated = Arr::add($validated, 'slug', $slug);
 
@@ -106,16 +108,18 @@ class BarangController extends Controller
 	public function update(BarangRequest $request, Barang $data)
 	{
 		$validated = $request->validated();
-		$validated = Arr::except($validated, ['harga', 'stok', 'kategori']);
+		$validated = Arr::except($validated, ['harga', 'stok', 'kategori', 'deskripsi', 'deskripsi_singkat']);
 
 		$harga             = filter_var($request->harga, FILTER_SANITIZE_NUMBER_INT);
 		$stok              = filter_var($request->stok, FILTER_SANITIZE_NUMBER_INT);
+		$deskripsi         = nl2br(strip_tags($request->deskripsi));
 		$deskripsi_singkat = strip_tags($request->deskripsi_singkat);
 		$slug              = Str::slug($request->nama);
 
 		$validated = Arr::add($validated, 'uuid_barang_kategori', $request->kategori);
 		$validated = Arr::add($validated, 'harga', $harga);
 		$validated = Arr::add($validated, 'stok', $stok);
+		$validated = Arr::add($validated, 'deskripsi', $deskripsi);
 		$validated = Arr::add($validated, 'deskripsi_singkat', $deskripsi_singkat);
 		$validated = Arr::add($validated, 'slug', $slug);
 

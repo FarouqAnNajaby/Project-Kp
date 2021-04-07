@@ -11,7 +11,7 @@
                             <a href="/index.php">Home<i class="ti-arrow-right"></i></a>
                         </li>
                         <li class="active">
-                            <a href="/history.php">Riwayat Pembelian</a>
+                            <a href="/history.php">Riwayat Transaksi</a>
                         </li>
                     </ul>
                 </div>
@@ -43,7 +43,7 @@
                                     <a href="{{ route('ecommerce.history.show', $item->kode) }}" class="text-primary">#{{ $item->kode }}</a>
                                 </td>
                                 <td class="text-center" data-title="Status">
-                                    <span class="badge badge-{{ $item->status == 'selesai' ? 'success' : 'warning' }}">{{ ucfirst($item->status) }}</span>
+                                    <span class="badge badge-{{ $item->status == 'selesai' ? 'success' : ($item->status == 'pending' ? 'warning' : 'danger') }}">{{ ucfirst($item->status) }}</span>
                                 </td>
                                 <td class="text-center" data-title="Jumlah">
                                     {{ $item->TransaksiBarang()->count() }}

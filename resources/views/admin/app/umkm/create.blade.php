@@ -145,7 +145,6 @@
 <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/addons/cleave-phone.id.js') }}"></script>
-<script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 @endpush
 
 @push('javascript-custom')
@@ -165,10 +164,5 @@
     $('#syarat_ketentuan').on('click', function() {
         $('.modal').modal('show');
     })
-    // $('.modal').on('show.bs.modal', function(event) {
-    //     $('.modal-body').css({
-    //         height: 400
-    //     }).niceScroll();
-    // })
 </script>
 @endpush

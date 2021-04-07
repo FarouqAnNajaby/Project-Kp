@@ -16,9 +16,15 @@ class BerandaController extends Controller
 	 */
 	public function index()
 	{
-		$banner = Banner::get();
-		$barang = Barang::where('stok', '>', 0)->orderBy('created_at', 'desc')->limit(8)->get();
-		return view('ecommerce.app.index', compact('banner', 'barang'));
+		$data = Barang::where('barang.stok', '>', 0)
+			->select(['barang.kode', 'barang.slug', 'barang.nama', 'barang.harga', 'barang_foto.file as foto'])
+			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
+			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
+			->where('barang_foto.is_highlight', 1)
+			->orderBy('barang.created_at', 'desc')
+			->limit(9)
+			->get();
+		return view('ecommerce.app.index', compact('data'));
 	}
 
 	/**

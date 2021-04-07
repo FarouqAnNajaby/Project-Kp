@@ -43,16 +43,17 @@ class BannerController extends Controller
 	{
 		if (Banner::count() < 5) {
 			$request->validate([
-				'foto' => 'required|mimes:jpg,jpeg,png|image|max:3072|dimensions:width=1900,height=700',
-				'judul' => 'required|string|min:5|max:20',
-				'deskripsi' => 'required|string|min:10|max:100'
+				'foto' => 'required|mimes:jpg,jpeg,png|image|max:3072|dimensions:width=1157,height=560',
+				'judul' => 'required|string|min:5|max:50',
+				'deskripsi' => 'required|string|min:10|max:180'
 			]);
-
 
 			$logo = Image::make($request->file('foto'))->encode('jpg', 100);
 			$nama_file = Str::random(50) . ".jpg";
 
-			$arr = $request->only('judul', 'deskripsi');
+			$arr = [];
+			$arr = Arr::add($arr, 'judul', nl2br($request->judul));
+			$arr = Arr::add($arr, 'deskripsi', nl2br($request->deskripsi));
 			$arr = Arr::prepend($arr, $nama_file, 'foto');
 
 			Banner::create($arr);
@@ -106,12 +107,14 @@ class BannerController extends Controller
 	public function update(Request $request, Banner $data)
 	{
 		$request->validate([
-			'foto' => 'sometimes|mimes:jpg,jpeg,png|image|max:3072|dimensions:width=1900,height=700',
-			'judul' => 'required|string|min:5|max:20',
-			'deskripsi' => 'required|string|min:10|max:100'
+			'foto' => 'sometimes|mimes:jpg,jpeg,png|image|max:3072|dimensions:width=1157,height=560',
+			'judul' => 'required|string|min:5|max:50',
+			'deskripsi' => 'required|string|min:10|max:180'
 		]);
 
-		$arr = $request->only('judul', 'deskripsi');
+		$arr = [];
+		$arr = Arr::add($arr, 'judul', nl2br($request->judul));
+		$arr = Arr::add($arr, 'deskripsi', nl2br($request->deskripsi));
 
 		if ($request->hasFile('foto')) {
 			$foto = Image::make($request->file('foto'))->encode('jpg', 100);

@@ -5,9 +5,6 @@
 <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 <script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/stisla.js') }}"></script>
-
-{{-- <script src="{{ asset('assets/modules/datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script> --}}
 @stack('javascript')
 <script src="{{ asset('assets/admin/js/scripts.js') }}"></script>
 @stack('javascript-custom')

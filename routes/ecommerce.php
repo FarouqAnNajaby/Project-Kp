@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
 	Route::get('/', 'BerandaController@index')->name('index');
 
-	// logg
 	Route::namespace('Auth')->middleware('guest')->group(function () {
 		Route::get('login', 'AuthController@show')->name('login');
 		Route::post('login', 'AuthController@update');
@@ -34,20 +33,28 @@ Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
 			Route::patch('profile', 'ProfileController@update');
 			Route::patch('change-password', 'ProfileController@store')->name('change-password');
 		});
-		Route::get('riwayat-pembelian', 'HistoryController@index')->name('history');
+		Route::get('riwayat-transaksi', 'HistoryController@index')->name('history');
 		Route::get('{data:kode}/riwayat-pembelian', 'HistoryController@show')->name('history.show');
+		Route::prefix('keranjang')->name('cart.')->group(function () {
+			Route::get('/', 'CartController@index')->name('index');
+			Route::patch('/', 'CartController@update')->name('update');
+			Route::delete('/', 'CartController@destroy')->name('destroy');
+		});
+		Route::prefix('checkout')->name('checkout.')->group(function () {
+			Route::get('/', 'CartController@create')->name('index');
+			Route::post('/', 'CartController@store')->name('store');
+		});
 	});
 
-	// list cart
-	Route::get('cart', 'CartController@index')->name('cart');
+	Route::get('etalase/{kode}', 'EtalaseController@index')->name('etalase');
 
-	//produk
 	Route::prefix('barang')->name('barang.')->group(function () {
 		Route::get('/', 'ProdukController@index')->name('index');
 		Route::get('{kode}/{slug}', 'ProdukController@show')->name('show');
+		Route::post('{kode}/{slug}', 'ProdukController@store')->name('store');
 	});
 
-	// payment
-	Route::get('payment', 'PaymentController@index')->name('payment');
-	Route::post('sendPayment', 'PaymentController@create')->name('sendPayment');
+	Route::get('bantuan', function () {
+		return view('ecommerce.app.bantuan');
+	})->name('bantuan');
 });

@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers\Ecommerce;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\UMKM;
 use App\Models\Barang;
 use App\Http\Controllers\Controller;
 
-class ProdukController extends Controller
+class EtalaseController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(Request $request)
+	public function index(Request $request, $kode)
 	{
-		$data = Barang::where('barang.stok', '>', 0)
+		$data = UMKM::where('kode', $kode)->firstOrFail();
+		if (!$data->logo) {
+			$data->logo = 'assets/img/umkm-default.png';
+		} else {
+			$data->logo = 'storage/logo-umkm/' . $data->logo;
+		}
+		$barang = Barang::where('barang.stok', '>', 0)
 			->select(['barang.kode', 'barang.slug', 'barang.nama', 'barang.harga', 'barang_foto.file as foto'])
 			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
 			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
+			->join('umkm', 'barang.uuid_umkm', '=', 'umkm.uuid')
+			->where('umkm.kode', $kode)
 			->where('barang_foto.is_highlight', 1)
 			->when($request->has('keyword'), function ($query) use ($request) {
 				$keyword = $request->keyword;
@@ -52,6 +59,8 @@ class ProdukController extends Controller
 		$kategori = Barang::where('barang.stok', '>', 0)
 			->select([DB::raw('count(barang.uuid_barang_kategori) as total'), 'barang_kategori.nama', 'barang_kategori.slug'])
 			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
+			->join('umkm', 'barang.uuid_umkm', '=', 'umkm.uuid')
+			->where('umkm.kode', $kode)
 			->whereHas('foto', function (Builder $query) {
 				$query->where('barang_foto.is_highlight', 1);
 			})
@@ -70,7 +79,7 @@ class ProdukController extends Controller
 			->groupBy('barang.uuid_barang_kategori')
 			->orderBy('total', 'desc')
 			->get();
-		return view('ecommerce.app.barang.index', compact('data', 'kategori'));
+		return view('ecommerce.app.etalase', compact('data', 'barang', 'kategori'));
 	}
 
 	/**
@@ -89,64 +98,9 @@ class ProdukController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request, $kode, $slug)
+	public function store(Request $request)
 	{
-		if (!Auth::check()) {
-			$response = [
-				'msg' => 'Silahkan login terlebih dahulu.'
-			];
-			return response()->json($response, 403);
-		}
-		$data = Barang::select('barang.*')
-			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
-			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
-			->where('barang.stok', '>', 0)
-			->where('barang.kode', $kode)
-			->where('barang.slug', $slug)
-			->where('barang_foto.is_highlight', 1)
-			->first();
-		if (!$data) {
-			$response = [
-				'msg' => 'Data tidak ditemukan.'
-			];
-			return response()->json($response, 404);
-		}
-		$validator = Validator::make($request->all(), [
-			'quantity' => 'required|integer|min:1|max:' . $data->stok,
-		], [
-			'quantity.min' => ':Attribute barang minimal :min.',
-			'quantity.max' => "Stok barang yang tersisa adalah $data->stok."
-		], [
-			'quantity' => 'Jumlah'
-		]);
-		if ($validator->fails()) {
-			$response = [
-				'msg' => $validator->errors()
-			];
-			return response()->json($response, 400);
-		}
-
-		$user = Auth::user();
-		$keranjang = $user->Keranjang();
-		if ($keranjang->where('uuid_barang', $data->uuid)->exists()) {
-			$item = $keranjang->where('uuid_barang', $data->uuid)->first();
-			$quantity = $item->jumlah + $request->quantity;
-			if ($quantity > $data->stok) {
-				$response = [
-					'msg' => 'Jumlah Barang di Keranjang Melebihi Stok.'
-				];
-				return response()->json($response, 400);
-			}
-			$item->update([
-				'jumlah' => $quantity
-			]);
-		} else {
-			$keranjang->create([
-				'jumlah'      => $request->quantity,
-				'uuid_barang' => $data->uuid
-			]);
-		}
-		return response()->json([], 200);
+		//
 	}
 
 	/**
@@ -155,17 +109,9 @@ class ProdukController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($kode, $slug)
+	public function show($id)
 	{
-		$data = Barang::select('barang.*')
-			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
-			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
-			->where('barang.stok', '>', 0)
-			->where('barang.kode', $kode)
-			->where('barang.slug', $slug)
-			->where('barang_foto.is_highlight', 1)
-			->firstOrFail();
-		return view('ecommerce.app.barang.show', compact('data'));
+		//
 	}
 
 	/**

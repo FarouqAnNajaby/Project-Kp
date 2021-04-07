@@ -7,7 +7,7 @@
                     <a href="{{ route('ecommerce.profile') }}">Profil Pengguna</a>
                 </li>
                 <li @if(request()->routeIs('ecommerce.history') || request()->routeIs('ecommerce.history.show'))class="active"@endif>
-                    <a href="{{ route('ecommerce.history') }}">Riwayat Pembelian</a>
+                    <a href="{{ route('ecommerce.history') }}">Riwayat Transaksi</a>
                 </li>
                 <li><a href="{{ route('ecommerce.logout') }}">Keluar</a></li>
             </ul>

@@ -24,7 +24,7 @@
                     <div class="card-body">
                         {!! Form::model($data,['route' => ['admin.master-data.banner.update', $data->uuid],'method' => 'patch', 'files' => true]) !!}
                         <div class="form-group row mb-4">
-                            {!! Form::label('foto', 'Foto Banner <i class="fas fa-info-circle" data-toggle="tooltip" title="Ukuran file maksimal 3MB, ekstensi berupa jpeg, jpg, png & berupa landscape (1900x700)."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
+                            {!! Form::label('foto', 'Foto Banner <i class="fas fa-info-circle" data-toggle="tooltip" title="Ukuran file maksimal 3MB, ekstensi berupa jpeg, jpg, png & berupa landscape (1157x560)."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
                             <div class="col-sm-12 col-md-7">
                                 <div class="custom-file">
                                     {!! Form::file('foto', ['class' => 'custom-file-input', 'id'=>'foto', 'accept' => 'image/jpeg,image/png']) !!}
@@ -37,9 +37,9 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('judul', 'Judul* <i class="fas fa-info-circle" data-toggle="tooltip" title="Minimal 5 huruf & maksimal 20 huruf."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
+                            {!! Form::label('judul', 'Judul* <i class="fas fa-info-circle" data-toggle="tooltip" title="Minimal 5 huruf & maksimal 50 huruf."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('judul', null, ['class' => 'form-control' . ($errors->has('judul') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                {!! Form::textarea('judul', old('judul') ?? strip_tags($data->judul), ['class' => 'form-control' . ($errors->has('judul') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('judul')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -48,7 +48,7 @@
                         <div class="form-group row mb-4">
                             {!! Form::label('deskripsi', 'Deskripsi Banner* <i class="fas fa-info-circle" data-toggle="tooltip" title="Minimal 100 huruf."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::textarea('deskripsi', null, ['class' => 'form-control' . ($errors->has('deskripsi') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                {!! Form::textarea('deskripsi', old('deskripsi') ?? strip_tags($data->deskripsi), ['class' => 'form-control' . ($errors->has('deskripsi') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('deskripsi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

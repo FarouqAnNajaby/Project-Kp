@@ -77,7 +77,7 @@
                         <div class="form-group row mb-4">
                             {!! Form::label('deskripsi', 'Deskripsi Barang* <i class="fas fa-info-circle" data-toggle="tooltip" title="Minimal 50 kata."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::textarea('deskripsi', null, ['class' => 'form-control summernote' . ($errors->has('deskripsi') ? ' is-invalid' : null), 'required']) !!}
+                                {!! Form::textarea('deskripsi', old('deskripsi') ?? strip_tags($data->deskripsi), ['class' => 'form-control' . ($errors->has('deskripsi') ? ' is-invalid' : null), 'required', 'style' => 'resize:vertical;height:200px;min-height:200px;']) !!}
                                 @error('deskripsi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -103,14 +103,12 @@
 @push('stylesheet')
 <link rel="stylesheet" href="{{ asset('assets/modules/freezeui/freeze-ui.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/admin/summernote/summernote-bs4.css') }}">
 @endpush
 
 @push('javascript')
 <script src="{{ asset('assets/modules/freezeui/freeze-ui.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
 <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('assets/admin/summernote/summernote-bs4.js') }}"></script>
 @endpush
 
 @push('javascript-custom')
@@ -132,7 +130,6 @@
         $('input').attr('readonly', true)
         $('input[type=submit]').attr('disabled', true)
         $('.select2').attr('readonly', true)
-        $('.summernote').summernote('disable')
     })
 </script>
 @endpush

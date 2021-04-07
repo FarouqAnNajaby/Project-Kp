@@ -11,7 +11,7 @@
                             <a href="{{ route('ecommerce.index') }}">Home<i class="ti-arrow-right"></i></a>
                         </li>
                         <li>
-                            <a href="{{ route('ecommerce.history') }}">Riwayat Pembelian<i class="ti-arrow-right"></i></a></a>
+                            <a href="{{ route('ecommerce.history') }}">Riwayat Transaksi<i class="ti-arrow-right"></i></a></a>
                         </li>
                         <li class="active">
                             <a href="{{ route('ecommerce.history.show', $transaksi->kode) }}">Transaksi #{{ $transaksi->kode }}</a>
@@ -41,7 +41,7 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td data-title="Nama Barang">
-                                    <a href="javascript:;" class="text-primary">
+                                    <a href="{{ route('ecommerce.barang.show', [$item->Barang->kode, $item->Barang->slug]) }}" class="text-primary">
                                         {!! Str::limit($item->Barang->nama, 30, '<p class="d-inline-block" data-toggle="tooltip" title="'. $item->Barang->nama . '">...</p>') !!}
                                     </a>
                                 </td>

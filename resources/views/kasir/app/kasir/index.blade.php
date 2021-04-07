@@ -183,7 +183,6 @@
 <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
 <script src="{{ asset('assets/modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 @endpush
 
 @push('javascript-custom')

@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
-class TransaksiBarang extends Model
+class Keranjang extends Model
 {
 	use HasFactory, Uuid;
 
@@ -15,7 +16,7 @@ class TransaksiBarang extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'transaksi_barang';
+	protected $table = 'keranjang';
 
 	/**
 	 * The primary key associated with the table.
@@ -39,13 +40,6 @@ class TransaksiBarang extends Model
 	public $incrementing = false;
 
 	/**
-	 * Indicates if the model should be timestamped.
-	 *
-	 * @var bool
-	 */
-	public $timestamps = false;
-
-	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
@@ -63,40 +57,29 @@ class TransaksiBarang extends Model
 	}
 
 	/**
-	 * Get the harga in rupiah format.
+	 * Get the subtotal.
 	 *
 	 * @return string
 	 */
-	public function getRpHargaAttribute()
+	public function getSubTotalAttribute()
 	{
-		return 'Rp' . number_format($this->harga, 2, ',', '.');
+		$sub_total = $this->jumlah * $this->Barang->harga;
+		return 'Rp' . number_format($sub_total, 2, ',', '.');
 	}
 
 	/**
-	 * Get the total in rupiah format.
-	 *
-	 * @return string
+	 * Get the user
 	 */
-	public function getTotalAttribute()
+	public function User()
 	{
-		$total = $this->harga * $this->jumlah;
-		return 'Rp' . number_format($total, 2, ',', '.');
+		return $this->belongsTo(User::class, 'uuid_user', 'uuid');
 	}
 
 	/**
-	 * Get the related barang
+	 * Get the barang
 	 */
 	public function Barang()
 	{
 		return $this->belongsTo(Barang::class, 'uuid_barang', 'uuid');
-	}
-
-	protected static function booted()
-	{
-		parent::boot();
-
-		static::creating(function ($model) {
-			$model->created_at = $model->freshTimestamp();
-		});
 	}
 }

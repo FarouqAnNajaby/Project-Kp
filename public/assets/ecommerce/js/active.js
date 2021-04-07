@@ -176,18 +176,23 @@ Version:1.0
         // /*===========================
         //   Home Slider 4 JS
         // =============================*/
-        // $('.home-slider-4').owlCarousel({
-        // 	items: 1,
-        // 	autoplay: true,
-        // 	autoplayTimeout: 5000,
-        // 	smartSpeed: 400,
-        // 	autoplayHoverPause: true,
-        // 	nav: true,
-        // 	loop: true,
-        // 	merge: true,
-        // 	dots: false,
-        // 	navText: ['<i class=" ti-arrow-left"></i>', '<i class=" ti-arrow-right"></i>'],
-        // });
+        var slider4 = $(".home-slider-4");
+        var slider_length = slider4.children().length > 1;
+        slider4.owlCarousel({
+            items: 1,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            smartSpeed: 400,
+            autoplayHoverPause: true,
+            nav: slider_length,
+            loop: slider_length,
+            merge: true,
+            dots: false,
+            navText: [
+                '<i class=" ti-arrow-left"></i>',
+                '<i class=" ti-arrow-right"></i>',
+            ],
+        });
 
         /*====================================
 		14. CountDown

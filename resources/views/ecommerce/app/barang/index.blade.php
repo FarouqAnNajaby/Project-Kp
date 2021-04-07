@@ -24,26 +24,26 @@
                         <h3 class="title">Kategori</h3>
                         <ul class="check-box-list">
                             @foreach ($kategori as $index => $value)
-                            @if($index < 5) <li>
-                                <label class="checkbox-inline" for="kategori-{{ $index }}">
-                                    {!! Form::radio('kategori', $value->slug, request()->kategori == $value->slug ? true : false, ['id' => 'kategori-' . $index]) !!}{{ $value->nama }} <span class="count">({{ $value->total }})</span>
-                                </label>
-                                </li>
-                                @elseif($index == 5)
-                                <li><a data-toggle="collapse" href="#more-kategori" class="mb-3 text-primary">...........................</a></li>
-                                @endif
-                                @if($index >= 5)<li>
+                            <li>
+                                @if($index < 5) <label class="checkbox-inline" for="kategori-{{ $index }}">
+                                    {!! Form::radio('kategori', $value->slug, request()->kategori == $value->slug ? true : false, ['id' => 'kategori-' . $index]) !!}
+                                    {{ $value->nama }} <span class="count">({{ $value->total }})</span>
+                                    </label>
+                                    @elseif($index == 5)
+                                    <a data-toggle="collapse" href="#more-kategori" class="mb-3 text-primary">...........................</a>
+                                    @endif
+                                    @if($index >= 5)
                                     <div class="collapse" id="more-kategori">
                                         <label class="checkbox-inline" for="kategori-{{ $index }}">
                                             {!! Form::radio('kategori', $value->slug, request()->kategori == $value->slug ? true : false, ['id' => 'kategori-' . $index]) !!}{{ $value->nama }} <span class="count">({{ $value->total }})</span>
                                         </label>
                                     </div>
-                                </li>
-                                @endif
-                                @endforeach
-                                @if(request()->has('kategori'))
-                                <li><a href="javascript:;" id="remove-filter-kategori" class="text-primary">Hapus filter kategori</a></li>
-                                @endif
+                                    @endif
+                            </li>
+                            @endforeach
+                            @if(request()->has('kategori'))
+                            <li><a href="javascript:;" id="remove-filter-kategori" class="text-primary">Hapus filter kategori</a></li>
+                            @endif
                         </ul>
                     </div>
                     <div class="single-widget range">
@@ -87,7 +87,7 @@
                                 </a>
                             </div>
                             <div class="product-content">
-                                <h3><a href="{{ route('ecommerce.login') }}">{!! $value->name_limitted2 !!}</a></h3>
+                                <h3><a href="{{ route('ecommerce.barang.show', [$value->kode, $value->slug]) }}">{!! $value->name_limitted2 !!}</a></h3>
                                 <div class="product-price">
                                     <span>{{ $value->rp_harga }}</span>
                                 </div>

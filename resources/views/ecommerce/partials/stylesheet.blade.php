@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ asset('assets/ecommerce/css/niceselect.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/ecommerce/css/animate.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/ecommerce/css/flex-slider.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/ecommerce/css/owl-carousel.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/ecommerce/css/slicknav.min.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/ecommerce/css/reset.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/ecommerce/css/style.css')}}">

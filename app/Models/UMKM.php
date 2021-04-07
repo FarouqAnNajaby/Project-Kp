@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,6 +66,16 @@ class UMKM extends Model
 	public function getTanggalInputAttribute()
 	{
 		return $this->created_at->isoFormat('dddd, Do MMMM YYYY');
+	}
+
+	/**
+	 *  Get the UMKM created_at.
+	 *
+	 * @return string
+	 */
+	public function getLocalNomorTelpAttribute()
+	{
+		return PhoneNumber::make($this->nomor_telp, 'ID')->formatNational();
 	}
 
 	/**

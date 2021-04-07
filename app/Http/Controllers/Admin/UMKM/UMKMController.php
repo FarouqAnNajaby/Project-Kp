@@ -78,7 +78,7 @@ class UMKMController extends Controller
 	{
 		$kategori = BarangKategori::pluck('nama', 'uuid');
 		if (!$data->logo) {
-			$data->logo = 'assets/admin/img/umkm-default.png';
+			$data->logo = 'assets/img/umkm-default.png';
 		} else {
 			$data->logo = 'storage/logo-umkm/' . $data->logo;
 		}
@@ -126,7 +126,9 @@ class UMKMController extends Controller
 		$validated = Arr::add($validated, 'nomor_telp', $nomor_telp);
 
 		if ($request->hasFile('logo')) {
-			$logo = Image::make($request->file('logo'))->resize(215, null)->encode('jpg', 75);
+			$logo = Image::make($request->file('logo'))->resize(null, 250, function ($constraint) {
+				$constraint->aspectRatio();
+			})->encode('jpg', 75);
 			$nama_file = Str::random(50) . ".jpg";
 			$validated = Arr::add($validated, 'logo', $nama_file);
 

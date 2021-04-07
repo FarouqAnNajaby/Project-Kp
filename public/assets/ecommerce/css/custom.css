@@ -179,3 +179,59 @@ select {
 .img-cover:hover {
     transform: scale(1.5);
 }
+
+.hero-area4 .big-content .inner {
+    right: unset;
+    left: 25%;
+}
+
+.flexslider-thumbnails .slides > li {
+    overflow: hidden;
+    position: relative;
+    height: 450px;
+}
+.flexslider-thumbnails .slides img {
+    height: 100%;
+    object-fit: cover;
+    -o-object-fit: cover;
+}
+
+.shop.single .flex-control-thumbs li {
+    height: 70px;
+}
+
+.shop.single .flex-control-thumbs li img {
+    height: 100%;
+    object-fit: cover;
+    -o-object-fit: cover;
+}
+
+.text-strikethrough {
+    text-decoration: line-through;
+}
+
+.text-strikethrough:hover {
+    text-decoration: line-through;
+}
+
+.img-grey {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+#bukti-transfer-col {
+    display: none;
+}
+
+#img-bukti-transfer {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+}
+
+.etalase-logo {
+    height: 250px;
+    max-height: 250px;
+    object-fit: cover;
+}

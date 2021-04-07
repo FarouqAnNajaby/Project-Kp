@@ -84,4 +84,12 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Transaksi::class, 'uuid_user', 'uuid');
 	}
+
+	/**
+	 * Get the keranjang
+	 */
+	public function Keranjang()
+	{
+		return $this->hasMany(Keranjang::class, 'uuid_user', 'uuid');
+	}
 }

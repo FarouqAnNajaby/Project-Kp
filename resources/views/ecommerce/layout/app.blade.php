@@ -84,7 +84,7 @@
                 params.delete('orderby');
             }
             params = params.toString();
-            url = window.location.origin + '/barang';
+            url = window.location.origin + window.location.pathname;
             window.location.href = `${url}?${params}`
         }
     </script>

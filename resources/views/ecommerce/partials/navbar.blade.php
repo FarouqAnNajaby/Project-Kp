@@ -39,10 +39,8 @@
                             <a href="{{ route('ecommerce.login') }}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                             @endguest
                         </div>
-                        <div class="sinlge-bar shopping">
-                            <a href="{{ route('ecommerce.cart') }}" class="single-icon"><i class="ti-bag"></i> <span class="total-count"><?= rand(1, 5); ?></span></a>
-                        </div>
                         @auth
+                        <x-ecommerce-cart />
                         <div class="single-bar shopping">
                             <a href="{{ route('ecommerce.logout') }}" class="single-icon"><i class="fa fa-sign-out"></i></a>
                         </div>
@@ -74,16 +72,7 @@
                                             <li class="{{ request()->segment(1) == 'barang' && request()->kategori == 'snack' ? 'active' : null }}">
                                                 <a href=" {{ route('ecommerce.barang.index') . '?kategori=snack' }} ">Snack</a>
                                             </li>
-                                            <li>
-                                                <a href=" javascript:;">Kategori<i class="ti-angle-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="javascript:;">Keripik</a></li>
-                                                    <li><a href="javascript:;">Aksesoris</a></li>
-                                                    <li><a href="javascript:;">Sambal</a></li>
-                                                    <li><a href="{{ route('ecommerce.barang.index') }}">Semua Kategori</a></li>
-                                                </ul>
-                                            </li>
-
+                                            <x-ecommerce-navbar-kategori />
                                         </ul>
                                     </div>
                                 </div>
