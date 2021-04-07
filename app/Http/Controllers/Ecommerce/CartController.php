@@ -158,8 +158,14 @@ class CartController extends Controller
 			'jumlah' => $request->jumlah
 		]);
 		$total = 0;
-		foreach ($user->Keranjang()->get() as $index => $item) {
-			$total += $item->jumlah * $item->Barang->harga;
+		$keranjang = $user
+			->select('keranjang.jumlah', 'barang.harga')
+			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
+			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
+			->where('barang.stok', '>', 0)
+			->get();
+		foreach ($keranjang as $index => $item) {
+			$total += $item->jumlah * $item->harga;
 		}
 		$total = 'Rp' . number_format($total, 2, ',', '.');
 		$response = [
