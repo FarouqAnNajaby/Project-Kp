@@ -84,7 +84,11 @@
                 params.delete('orderby');
             }
             params = params.toString();
+            @if(!request()->routeIs('ecommerce.etalase'))
+            url = window.location.origin + '/barang';
+            @else
             url = window.location.origin + window.location.pathname;
+            @endif
             window.location.href = `${url}?${params}`
         }
     </script>
