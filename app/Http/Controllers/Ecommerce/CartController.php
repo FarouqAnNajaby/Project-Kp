@@ -23,7 +23,8 @@ class CartController extends Controller
 		$user = Auth::user();
 		$data = $user->Keranjang();
 		$total = 0;
-		return view('ecommerce.app.keranjang.index', compact('data', 'total'));
+		$outOfStock = 0;
+		return view('ecommerce.app.keranjang.index', compact('data', 'total', 'outOfStock'));
 	}
 
 	/**
