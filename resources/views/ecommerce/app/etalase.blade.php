@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-6 mb-4">
                                             <h4>Email</h4>
-                                            <p>{{ $data->email }}</p>
+                                            <p>{{ $data->email ?? '-' }}</p>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-6 mb-4">
                                             <h4>Nomor Telepon</h4>
