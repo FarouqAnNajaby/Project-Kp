@@ -82,9 +82,9 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('alamat', 'Alamat UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('alamat', 'Alamat UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('alamat', null, ['class' => 'form-control' . ($errors->has('alamat') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                {!! Form::text('alamat', null, ['class' => 'form-control' . ($errors->has('alamat') ? ' is-invalid' : null), 'autocomplete' => 'off']) !!}
                                 @error('alamat')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

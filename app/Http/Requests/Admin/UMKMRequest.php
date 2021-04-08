@@ -35,7 +35,7 @@ class UMKMRequest extends FormRequest
 			'nama_pemilik' => ['required', new HumanName(), 'max:50'],
 			'email'        => 'required|email:dns,spoof',
 			'nomor_telp'   => 'required|phone:ID',
-			'alamat'       => 'required',
+			'alamat'       => 'nullable',
 		];
 		if ($this->method() == 'POST') {
 			$rules = Arr::add($rules, 'syarat_ketentuan', 'required');
