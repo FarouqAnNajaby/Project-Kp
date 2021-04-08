@@ -33,7 +33,7 @@ class UMKMRequest extends FormRequest
 			'nama'         => 'required|string|min:3|max:100',
 			'kategori'     => 'required|in:' . $kategori,
 			'nama_pemilik' => ['required', new HumanName(), 'max:50'],
-			'email'        => 'sometimes|email:dns,spoof',
+			'email'        => 'nullable|email:dns,spoof',
 			'nomor_telp'   => 'required|phone:ID',
 			'alamat'       => 'required',
 		];
