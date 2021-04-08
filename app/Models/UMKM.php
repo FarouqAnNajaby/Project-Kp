@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Propaganistas\LaravelPhone\PhoneNumber;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -92,5 +93,19 @@ class UMKM extends Model
 	public function UMKM_Kategori()
 	{
 		return $this->belongsTo(UMKMKategori::class, 'uuid_umkm_kategori', 'uuid');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		parent::boot();
+
+		static::creating(function ($model) {
+			$model->kode = Str::upper(Str::random(10));
+		});
 	}
 }
