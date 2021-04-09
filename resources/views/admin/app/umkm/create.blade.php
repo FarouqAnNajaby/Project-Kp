@@ -47,9 +47,9 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('email', 'Email UMKM*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('email', 'Email UMKM', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::email('email', null, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                {!! Form::email('email', null, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : null), 'autocomplete' => 'off']) !!}
                                 @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
