@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Controllers\Controller;
 
 class CartController extends Controller
@@ -22,12 +23,8 @@ class CartController extends Controller
 	{
 		$user = Auth::user();
 		$data = $user
-			->select('keranjang.*', 'barang.harga', 'barang.kode', 'barang.slug', 'barang.nama')
-			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
-			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
-			->where('barang.stok', '>', 0)
-			->whereNull('barang.deleted_at')
-			->get();
+			->Keranjang()
+			->has('barang')->get();
 		$total = 0;
 		$outOfStock = 0;
 		return view('ecommerce.app.keranjang.index', compact('data', 'total', 'outOfStock'));
