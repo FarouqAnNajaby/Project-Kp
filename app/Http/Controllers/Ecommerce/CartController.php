@@ -21,7 +21,13 @@ class CartController extends Controller
 	public function index()
 	{
 		$user = Auth::user();
-		$data = $user->Keranjang();
+		$data = $user
+			->select('keranjang.*', 'barang.harga', 'barang.kode', 'barang.slug', 'barang.nama')
+			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
+			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
+			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
+			->get();
 		$total = 0;
 		$outOfStock = 0;
 		return view('ecommerce.app.keranjang.index', compact('data', 'total', 'outOfStock'));
@@ -40,6 +46,7 @@ class CartController extends Controller
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
 			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
 			->get();
 		if (!$data->count()) {
 			abort(403);
@@ -65,6 +72,7 @@ class CartController extends Controller
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
 			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
 			->get();
 
 		$total = 0;
@@ -136,6 +144,7 @@ class CartController extends Controller
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
 			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
 			->where('keranjang.uuid', $request->uuid)
 			->first();
 		if (!$data) {
@@ -164,6 +173,7 @@ class CartController extends Controller
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
 			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
 			->get();
 		foreach ($keranjang as $index => $item) {
 			$total += $item->jumlah * $item->harga;

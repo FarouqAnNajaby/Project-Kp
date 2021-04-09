@@ -24,14 +24,24 @@
                             <div class="short">
                                 <h4>{{ $data->nama }}</h4>
                                 <div class="rating-main">
+                                    @if($data->Review()->count())
                                     <ul class="rating">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-o"></i></li>
-                                        <li class="dark"><i class="fa fa-star-o"></i></li>
+                                        @php
+                                        $rata = $data->Review()->avg('nilai');
+                                        $rata2 = floor($rata);
+                                        @endphp
+                                        @for($i = 0; $i < $rata2; $i++) <li><i class="fa fa-star"></i></li>
+                                            @if($rata - $rata2==0.5 && $i==$rata2-1) <li><i class="fas fa-star-half-alt"></i></li>
+                                            @endif
+                                            @if($i == $rata2-1 && $rata <= 4) @for($j=0; $j < 5 - round($rata); $j++) <li><i class="far fa-star"></i></li>
+                                                @endfor
+                                                @endif
+                                                @endfor
                                     </ul>
-                                    <a href="javascript:;" class="total-review">(102) Penilaian</a>
+                                    <span class="total-review">({{ $data->Review()->count() }}) Penilaian</span>
+                                    @else
+                                    <span class="total-review ml-0 font-weight-normal">(Barang belum memiliki penilaian)</span>
+                                    @endif
                                 </div>
                                 <p class="price">{{ $data->rp_harga }}</p>
                                 <p class="description">{{ $data->deskripsi_singkat }}</p>
@@ -80,12 +90,12 @@
                     <div class="product-info">
                         <div class="nav-main">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#description" role="tab">Deskripsi</a></li>
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#reviews" role="tab">Penilaian</a></li>
                             </ul>
                         </div>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="description" role="tabpanel">
+                            <div class="tab-pane fade" id="description" role="tabpanel">
                                 <div class="tab-single">
                                     <div class="row">
                                         <div class="col-12">
@@ -96,99 +106,41 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="reviews" role="tabpanel">
+                            <div class="tab-pane fade show active" id="reviews" role="tabpanel">
                                 <div class="tab-single review-panel">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="ratting-main">
+                                                @if($data->Review()->count())
                                                 <div class="avg-ratting">
-                                                    <h4>4.5 <span>(Overall)</span></h4>
-                                                    <span>Based on 1 Comments</span>
+                                                    <h4>{{ $data->Review()->avg('nilai') }} <span>(Rata-rata)</span></h4>
+                                                    <span>Dari total {{ $data->Review()->count() }} penilaian</span>
                                                 </div>
+                                                @foreach ($data->Review()->get() as $item)
                                                 <div class="single-rating">
-                                                    <div class="rating-author">
-                                                        <img src="https://via.placeholder.com/60x60" alt="#">
-                                                    </div>
                                                     <div class="rating-des">
-                                                        <h6>Naimur Rahman</h6>
+                                                        <h6>{{ $item->User->nama }} <span class="font-weight-normal">({{ $item->formatted_tanggal }})</span></h6>
                                                         <div class="ratings">
                                                             <ul class="rating">
-                                                                <li><i class="fa fa-star"></i></li>
-                                                                <li><i class="fa fa-star"></i></li>
-                                                                <li><i class="fa fa-star"></i></li>
-                                                                <li><i class="fa fa-star-half-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                @for($i = 0; $i < $item->nilai; $i++)
+                                                                    <li><i class="fa fa-star"></i></li>
+                                                                    @if($i == floor($item->nilai)-1 && $item->nilai <= 4) @for($j=0; $j < 5 - round($item->nilai); $j++) <li><i class="far fa-star"></i></li>
+                                                                        @endfor
+                                                                        @endif
+                                                                        @endfor
                                                             </ul>
-                                                            <div class="rate-count">(<span>3.5</span>)</div>
+                                                            <div class="rate-count">(<span>{{ $item->nilai }}</span>)</div>
                                                         </div>
-                                                        <p>Duis tincidunt mauris ac aliquet congue. Donec vestibulum consequat cursus. Aliquam pellentesque nulla dolor, in imperdiet.</p>
+                                                        <p>{{ $item->keterangan }}</p>
                                                     </div>
                                                 </div>
-                                                <div class="single-rating">
-                                                    <div class="rating-author">
-                                                        <img src="https://via.placeholder.com/60x60" alt="#">
-                                                    </div>
-                                                    <div class="rating-des">
-                                                        <h6>Advin Geri</h6>
-                                                        <div class="ratings">
-                                                            <ul class="rating">
-                                                                <li><i class="fa fa-star"></i></li>
-                                                                <li><i class="fa fa-star"></i></li>
-                                                                <li><i class="fa fa-star"></i></li>
-                                                                <li><i class="fa fa-star"></i></li>
-                                                                <li><i class="fa fa-star"></i></li>
-                                                            </ul>
-                                                            <div class="rate-count">(<span>5.0</span>)</div>
-                                                        </div>
-                                                        <p>Duis tincidunt mauris ac aliquet congue. Donec vestibulum consequat cursus. Aliquam pellentesque nulla dolor, in imperdiet.</p>
-                                                    </div>
+                                                @endforeach
+                                                @else
+                                                <div class="avg-rating">
+                                                    <span>Barang belum memiliki penilaian</span>
                                                 </div>
+                                                @endif
                                             </div>
-                                            <div class="comment-review">
-                                                <div class="add-review">
-                                                    <h5>Add A Review</h5>
-                                                    <p>Your email address will not be published. Required fields are marked</p>
-                                                </div>
-                                                <h4>Your Rating</h4>
-                                                <div class="review-inner">
-                                                    <div class="ratings">
-                                                        <ul class="rating">
-                                                            <li><i class="fa fa-star"></i></li>
-                                                            <li><i class="fa fa-star"></i></li>
-                                                            <li><i class="fa fa-star"></i></li>
-                                                            <li><i class="fa fa-star"></i></li>
-                                                            <li><i class="fa fa-star"></i></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <form class="form" method="post" action="mail/mail.php">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-12">
-                                                        <div class="form-group">
-                                                            <label>Your Name<span>*</span></label>
-                                                            <input type="text" name="name" required="required" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <div class="form-group">
-                                                            <label>Your Email<span>*</span></label>
-                                                            <input type="email" name="email" required="required" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12 col-12">
-                                                        <div class="form-group">
-                                                            <label>Write a review<span>*</span></label>
-                                                            <textarea name="message" rows="6" placeholder=""></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12 col-12">
-                                                        <div class="form-group button5">
-                                                            <button type="submit" class="btn">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +150,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 @endsection

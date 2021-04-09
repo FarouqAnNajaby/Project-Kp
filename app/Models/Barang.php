@@ -149,6 +149,14 @@ class Barang extends Model
 	}
 
 	/**
+	 * Get the foto barang for barang
+	 */
+	public function Review()
+	{
+		return $this->hasMany(Review::class, 'uuid_barang', 'uuid');
+	}
+
+	/**
 	 * The "booted" method of the model.
 	 *
 	 * @return void

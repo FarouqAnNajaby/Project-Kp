@@ -34,7 +34,7 @@
                         @php
                         $totalOut = 0;
                         @endphp
-                        @forelse ($data->get() as $index => $item)
+                        @forelse ($data as $index => $item)
                         @if($item->Barang->stok > 0)
                         @php
                         $total += $item->Barang->harga * $item->jumlah;

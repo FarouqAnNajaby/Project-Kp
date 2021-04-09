@@ -81,7 +81,7 @@ class Transaksi extends Model
 	 */
 	public function getFormattedTanggalEcommerceAttribute()
 	{
-		return Carbon::parse($this->created_at)->isoFormat('dddd, Do MMMM YYYY - HH:mm:s');
+		return Carbon::parse($this->created_at)->isoFormat('dddd, Do MMMM YYYY - HH:mm:ss');
 	}
 
 	/**

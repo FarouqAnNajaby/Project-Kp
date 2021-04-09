@@ -33,7 +33,7 @@
                     <div class="right-bar">
                         <div class="sinlge-bar">
                             @auth
-                            <a href="{{ route('ecommerce.profile') }}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                            <a href="{{ route('ecommerce.profile') }}" class="single-icon"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
                             @endauth
                             @guest
                             <a href="{{ route('ecommerce.login') }}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>

@@ -29,12 +29,14 @@ class Cart extends Component
 		$data = $user->Keranjang()
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
 			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
 			->orderBy('keranjang.updated_at', 'asc');
 		$total_item = $data->count();
 		$total_pay = $user->Keranjang()
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
 			->select(DB::raw('SUM(keranjang.jumlah*barang.harga) as total'))
 			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
 			->first()->total;
 		$total_pay = 'Rp' . number_format($total_pay, 2, ',', '.');
 		return view('ecommerce.partials.cart', compact('data', 'total_item', 'total_pay'));

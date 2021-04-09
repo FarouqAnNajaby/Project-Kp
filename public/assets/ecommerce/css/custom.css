@@ -127,7 +127,8 @@ button.btn-search-items {
 }
 
 input,
-select {
+select,
+textarea {
     outline: none;
 }
 
@@ -234,4 +235,8 @@ select {
     height: 250px;
     max-height: 250px;
     object-fit: cover;
+}
+
+.shop.single .rating-des {
+    padding-left: 20px;
 }

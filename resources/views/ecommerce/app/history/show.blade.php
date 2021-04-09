@@ -75,6 +75,9 @@
                         </tfoot>
                     </table>
                 </div>
+                @if($transaksi->status == 'selesai')
+                <a href="{{ route('ecommerce.review.index', $transaksi->kode) }}" class="btn text-white">Beri Penilaian</a>
+                @endif
             </div>
         </div>
     </div>
