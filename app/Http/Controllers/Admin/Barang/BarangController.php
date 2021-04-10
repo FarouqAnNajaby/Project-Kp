@@ -6,6 +6,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\UMKM;
 use App\Models\BarangKategori;
 use App\Models\Barang;
@@ -23,7 +24,11 @@ class BarangController extends Controller
 	 */
 	public function index(ListBarangDataTable $dataTable)
 	{
-		$outOfStock = Barang::where('stok', '<=', 10)->orderBy('stok', 'ASC')->paginate(5);
+		$outOfStock = Barang::where('stok', '<=', 10)
+			->whereHas('umkm', function (Builder $query) {
+				$query->whereNull('deleted_at');
+			})
+			->orderBy('stok', 'ASC')->paginate(5);
 		$kategori = BarangKategori::pluck('nama', 'uuid');
 		return $dataTable->render('admin.app.barang.index', compact('kategori', 'outOfStock'));
 	}

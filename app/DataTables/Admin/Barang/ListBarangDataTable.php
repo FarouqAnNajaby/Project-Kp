@@ -6,6 +6,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 use Collective\Html\FormFacade as Form;
 use App\Models\Barang;
 
@@ -81,6 +82,9 @@ class ListBarangDataTable extends DataTable
 			->with('umkm')
 			->with('kategori')
 			->select('barang.*')
+			->whereHas('umkm', function (Builder $query) {
+				$query->whereNull('deleted_at');
+			})
 			->newQuery();
 
 		if ($kategori = $this->request()->get('kategori')) {
