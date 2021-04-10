@@ -16,11 +16,14 @@ class BerandaController extends Controller
 	 */
 	public function index()
 	{
-		$data = Barang::where('barang.stok', '>', 0)
-			->select(['barang.kode', 'barang.slug', 'barang.nama', 'barang.harga', 'barang_foto.file as foto'])
+		$data = Barang::select(['barang.kode', 'barang.slug', 'barang.nama', 'barang.harga', 'barang_foto.file as foto'])
 			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
 			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
+			->join('umkm', 'barang.uuid_umkm', '=', 'umkm.uuid')
+			->whereNull('umkm.deleted_at')
 			->where('barang_foto.is_highlight', 1)
+			->where('barang.stok', '>', 0)
+			->whereNull('barang.deleted_at')
 			->orderBy('barang.created_at', 'desc')
 			->limit(9)
 			->get();
@@ -77,13 +80,9 @@ class BerandaController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(LoginRequest $request)
+	public function update($id)
 	{
-		$request->authenticate();
-
-		$request->session()->regenerate();
-
-		return redirect()->route('admin.index');
+		//
 	}
 
 	/**

@@ -35,6 +35,8 @@ Route::namespace('Ecommerce')->name('ecommerce.')->group(function () {
 		});
 		Route::get('riwayat-transaksi', 'HistoryController@index')->name('history');
 		Route::get('{data:kode}/riwayat-pembelian', 'HistoryController@show')->name('history.show');
+		Route::get('{kode}/riwayat/barang/{uuid}', 'HistoryController@edit')->name('history.barang');
+
 		Route::get('{kode}/review', 'ReviewController@index')->name('review.index');
 		Route::get('{kode}/review/{uuid}', 'ReviewController@create')->name('review.create');
 		Route::post('{kode}/review/{uuid}', 'ReviewController@store')->name('review.store');

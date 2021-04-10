@@ -42,6 +42,8 @@ class CartController extends Controller
 			->select('keranjang.*', 'barang.harga', 'barang.kode', 'barang.slug', 'barang.nama')
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
+			->join('umkm', 'barang.uuid_umkm', '=', 'umkm.uuid')
+			->whereNull('umkm.deleted_at')
 			->where('barang.stok', '>', 0)
 			->whereNull('barang.deleted_at')
 			->get();
@@ -68,6 +70,8 @@ class CartController extends Controller
 			->select('barang.uuid as uuid_barang', 'barang.harga', 'keranjang.jumlah', 'keranjang.uuid')
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
+			->join('umkm', 'barang.uuid_umkm', '=', 'umkm.uuid')
+			->whereNull('umkm.deleted_at')
 			->where('barang.stok', '>', 0)
 			->whereNull('barang.deleted_at')
 			->get();
@@ -140,6 +144,8 @@ class CartController extends Controller
 			->select('keranjang.*', 'barang.harga', 'barang.kode', 'barang.slug', 'barang.nama', 'barang.stok')
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
+			->join('umkm', 'barang.uuid_umkm', '=', 'umkm.uuid')
+			->whereNull('umkm.deleted_at')
 			->where('barang.stok', '>', 0)
 			->whereNull('barang.deleted_at')
 			->where('keranjang.uuid', $request->uuid)
@@ -169,6 +175,8 @@ class CartController extends Controller
 			->select('keranjang.jumlah', 'barang.harga')
 			->join('keranjang', 'keranjang.uuid_user', '=', 'users.uuid')
 			->join('barang', 'keranjang.uuid_barang', '=', 'barang.uuid')
+			->join('umkm', 'barang.uuid_umkm', '=', 'umkm.uuid')
+			->whereNull('umkm.deleted_at')
 			->where('barang.stok', '>', 0)
 			->whereNull('barang.deleted_at')
 			->get();

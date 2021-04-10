@@ -90,12 +90,12 @@
                     <div class="product-info">
                         <div class="nav-main">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#description" role="tab">Deskripsi</a></li>
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#reviews" role="tab">Penilaian</a></li>
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#description" role="tab">Deskripsi</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Penilaian</a></li>
                             </ul>
                         </div>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade" id="description" role="tabpanel">
+                            <div class="tab-pane fade show active" id="description" role="tabpanel">
                                 <div class="tab-single">
                                     <div class="row">
                                         <div class="col-12">
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade show active" id="reviews" role="tabpanel">
+                            <div class="tab-pane fade" id="reviews" role="tabpanel">
                                 <div class="tab-single review-panel">
                                     <div class="row">
                                         <div class="col-12">

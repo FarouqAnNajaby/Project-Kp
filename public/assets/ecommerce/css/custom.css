@@ -147,7 +147,8 @@ textarea {
     justify-content: center;
 }
 
-.umkm-name a {
+.umkm-name a,
+.umkm-name span {
     font-weight: 900;
     font-size: 20px;
 }

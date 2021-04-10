@@ -61,9 +61,16 @@ class HistoryController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id)
+	public function edit($kode, $uuid)
 	{
-		//
+		$user = Auth::user();
+		$transaksi = Transaksi::where('kode', $kode)
+			->where('uuid_user', $user->uuid)->firstOrFail();
+		$barang = $transaksi->TransaksiBarang()
+			->where('uuid', $uuid)->firstOrFail();
+		$data = $barang->Barang()->withTrashed()->first();
+
+		return view('ecommerce.app.history.barang', compact('data', 'barang'));
 	}
 
 	/**

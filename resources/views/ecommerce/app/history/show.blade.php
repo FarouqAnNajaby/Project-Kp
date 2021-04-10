@@ -41,7 +41,7 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td data-title="Nama Barang">
-                                    <a href="{{ route('ecommerce.barang.show', [$item->Barang->kode, $item->Barang->slug]) }}" class="text-primary">
+                                    <a href="{{ route('ecommerce.history.barang', [$transaksi->kode, $item->uuid]) }}" class="text-primary">
                                         {!! Str::limit($item->Barang->nama, 30, '<p class="d-inline-block" data-toggle="tooltip" title="'. $item->Barang->nama . '">...</p>') !!}
                                     </a>
                                 </td>

@@ -19,7 +19,10 @@ class ProdukController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$data = Barang::where('barang.stok', '>', 0)
+		$data = Barang::whereHas('umkm', function (Builder $query) {
+			$query->whereNull('deleted_at');
+		})
+			->where('barang.stok', '>', 0)
 			->select(['barang.kode', 'barang.slug', 'barang.nama', 'barang.harga', 'barang_foto.file as foto'])
 			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
 			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
@@ -49,7 +52,10 @@ class ProdukController extends Controller
 			->orderBy('barang.created_at', 'desc')
 			->paginate();
 
-		$kategori = Barang::where('barang.stok', '>', 0)
+		$kategori = Barang::whereHas('umkm', function (Builder $query) {
+			$query->whereNull('deleted_at');
+		})
+			->where('barang.stok', '>', 0)
 			->select([DB::raw('count(barang.uuid_barang_kategori) as total'), 'barang_kategori.nama', 'barang_kategori.slug'])
 			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
 			->whereHas('foto', function (Builder $query) {
@@ -97,7 +103,10 @@ class ProdukController extends Controller
 			];
 			return response()->json($response, 403);
 		}
-		$data = Barang::select('barang.*')
+		$data = Barang::whereHas('umkm', function (Builder $query) {
+			$query->whereNull('deleted_at');
+		})
+			->select('barang.*')
 			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
 			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
 			->where('barang.stok', '>', 0)
@@ -157,7 +166,10 @@ class ProdukController extends Controller
 	 */
 	public function show($kode, $slug)
 	{
-		$data = Barang::select('barang.*')
+		$data = Barang::whereHas('umkm', function (Builder $query) {
+			$query->whereNull('deleted_at');
+		})
+			->select('barang.*')
 			->join('barang_kategori', 'barang.uuid_barang_kategori', '=', 'barang_kategori.uuid')
 			->join('barang_foto', 'barang_foto.uuid_barang', '=', 'barang.uuid')
 			->where('barang.stok', '>', 0)
