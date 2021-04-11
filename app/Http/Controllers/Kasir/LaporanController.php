@@ -92,7 +92,7 @@ class LaporanController extends Controller
 	 */
 	public function show($uuid)
 	{
-		$data = Transaksi::whereIn('status', ['selesai', 'batal'])->firstOrFail();
+		$data = Transaksi::whereIn('status', ['selesai', 'batal'])->where('uuid', $uuid)->firstOrFail();
 		return view('kasir.app.laporan.show', compact('data'));
 	}
 

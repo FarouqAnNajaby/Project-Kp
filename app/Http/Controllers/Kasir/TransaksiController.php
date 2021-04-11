@@ -84,6 +84,20 @@ class TransaksiController extends Controller
 	{
 		if ($request->status == 'terima') {
 			$data = Transaksi::where('jenis', 'online')->where('status', 'pending')->findOrFail($uuid);
+			foreach ($data->TransaksiBarang()->get() as $index => $item) {
+				if ($item->Barang->stok == 0 || $item->Barang->stok < $item->jumlah) {
+					alert()
+						->error('Stok pada salah satu barang tidak tersedia.', 'Gagal!')
+						->persistent('Tutup');
+					return redirect()->back();
+				}
+			}
+
+			foreach ($data->TransaksiBarang()->get() as $index => $item) {
+				$item->Barang->update([
+					'stok' => $item->Barang->stok - $item->jumlah
+				]);
+			}
 			$data->update([
 				'status' => 'selesai'
 			]);
