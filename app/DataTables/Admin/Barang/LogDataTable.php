@@ -12,6 +12,12 @@ use App\Models\BarangLog;
 class LogDataTable extends DataTable
 {
 	/**
+	 * DataTables print preview view.
+	 *
+	 * @var string
+	 */
+	protected $printPreview = 'admin.app.barang.log.print';
+	/**
 	 * Build DataTable class.
 	 *
 	 * @param mixed $query Results from query() method.

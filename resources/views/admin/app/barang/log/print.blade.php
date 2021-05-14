@@ -16,32 +16,32 @@
 </head>
 
 <body>
-	<h4 class="text-center mb-4">DAFTAR UMKM LAMONGAN MART</h4>
+    <h4 class="text-center mb-4">LOG BARANG LAMONGAN MART</h4>
     <table class="table table-bordered table-condensed table-striped">
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama UMKM</th>
-                <th>Kategori</th>
-                <th>Nama Pemilik</th>
-                <th>Email</th>
-                <th>Nomor Telepon</th>
-                <th>Alamat</th>
+                <th>Nama Barang</th>
+                <th>Stok</th>
+                <th>Harga</th>
+                <th>Tanggal Input</th>
             </tr>
         </thead>
         @php
         $search = request()->search['value'];
-        $kategori = request()->kategori;
-        $data = new \App\Models\UMKM;
+        $data = \App\Models\BarangLog::with('barang')
+        ->select('barang_log.*');
         if($search) {
         $data = $data->where(function($query) use($search) {
-        $query->orWhere('nama', 'LIKE', "%$search%")
-        ->orWhere('nomor_telp', 'LIKE', "%$search%")
-        ->orWhere('nama_pemilik', 'LIKE', "%$search%");
-        });
+        $search = preg_replace("/[^0-9,]/", "", $search);
+        if (strpos($search, ',')) {
+        $search = trim($search, 0);
         }
-        if($kategori) {
-        $data = $data->where('uuid_umkm_kategori', $kategori);
+        $search = filter_var($search, FILTER_SANITIZE_NUMBER_INT);
+        if (filter_var($search, FILTER_VALIDATE_INT)) {
+        $query->orWhere('harga', 'LIKE', "%$search%");
+        }
+        });
         }
         $data = $data->get();
         @endphp
@@ -50,12 +50,10 @@
             <td class="text-center">
                 {{ $loop->iteration }}.
             </td>
-            <td>{{ $row->nama }}</td>
-            <td>{{ $row->UMKM_Kategori->nama }}</td>
-            <td>{{ $row->nama_pemilik }}</td>
-            <td>{{ $row->email }}</td>
-            <td>{{ \Propaganistas\LaravelPhone\PhoneNumber::make($row->nomor_telp)->formatNational() }}</td>
-            <td>{{ $row->alamat }}</td>
+            <td>{{ $row->Barang->nama }}</td>
+            <td>{{ number_format($row->stok, 0, '', '.') }}</td>
+            <td>{{ 'Rp' . number_format($row->harga, 2, ',', '.') }}</td>
+            <td>{{ \Carbon\Carbon::parse($row->created_at)->isoFormat('dddd, Do MMMM YYYY') }}</td>
         </tr>
         @endforeach
     </table>

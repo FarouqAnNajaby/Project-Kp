@@ -106,7 +106,7 @@
     <script>
         window.onload = function() {
             window.print();
-            window.close();
+            setTimeout(window.close, 0);
         }
     </script>
 </body>

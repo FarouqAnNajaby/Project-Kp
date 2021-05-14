@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    <h4 class="text-center mb-4">DAFTAR BARANG UMKM LAMONGAN MART</h4>
     <table class="table table-bordered table-condensed table-striped">
         <thead>
             <tr>
