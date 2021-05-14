@@ -12,6 +12,12 @@ use App\Models\Transaksi;
 class LaporanTransaksiDataTable extends DataTable
 {
 	/**
+	 * DataTables print preview view.
+	 *
+	 * @var string
+	 */
+	protected $printPreview = 'kasir.app.laporan.print';
+	/**
 	 * Build DataTable class.
 	 *
 	 * @param mixed $query Results from query() method.
@@ -88,6 +94,9 @@ class LaporanTransaksiDataTable extends DataTable
 		if ($tahun = $this->request()->get('tahun')) {
 			$model->whereYear('created_at', $tahun);
 		}
+		if ($hari = $this->request()->get('hari')) {
+			$model->whereDate('created_at', "$tahun-$bulan-$hari");
+		}
 		return $model;
 	}
 
@@ -106,6 +115,7 @@ class LaporanTransaksiDataTable extends DataTable
 					data.status = $('select[name=status]').val();
 					data.bulan = $('select[name=bulan]').val();
 					data.tahun = $('select[name=tahun]').val();
+					data.hari = $('select[name=hari]').val();
 				}"
 			])
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +

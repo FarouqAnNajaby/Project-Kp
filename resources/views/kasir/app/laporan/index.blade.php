@@ -66,12 +66,15 @@
                             <div class="col-md-2">
                                 {!! Form::select('status', ['pending' => 'Pending', 'selesai' => 'Selesai', 'batal' => 'Batal'], null, ['placeholder' => 'Status', 'class' => 'form-control select2']) !!}
                             </div>
-                            <div class="col-md-4 offset-md-6">
+                            <div class="col-md-6 offset-md-4">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4" id="combobox-tgl">
+                                        {!! Form::select('hari', [], null, ['placeholder' => 'Tanggal', 'class' => 'form-control select2']) !!}
+                                    </div>
+                                    <div class="col-md-4">
                                         {!! Form::select('bulan', $bulan, null, ['placeholder' => 'Bulan', 'class' => 'form-control select2']) !!}
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         {!! Form::select('tahun', $tahun, date('Y'), ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
                                     </div>
                                 </div>
@@ -143,7 +146,7 @@
         })
     });
     $(document).ready(function() {
-        $("select[name=bulan], select[name=tahun], select[name=status]").on('change', function() {
+        $("select[name=bulan], select[name=tahun], select[name=status], select[name=hari]").on('change', function() {
             $('#laporantransaksi-table').DataTable().draw();
         })
         $('#save').on('click', function() {
@@ -189,6 +192,21 @@
                             })
                         }
                     })
+            }
+        })
+        $('select[name=bulan], select[name=tahun]').on('change', function() {
+            var tahun = $('select[name=tahun]').val()
+            var bulan = $("select[name=bulan]").val()
+            var opt = '<option selected="selected" value="">Tanggal</option>';
+            if (tahun && bulan) {
+                let date = new Date(tahun, bulan, 0).getDate();
+                let days = [];
+                for (var i = 1; i <= date; i++) {
+                    opt += "<option value=\"" + i + "\">" + i + "</option>";
+                }
+                $("select[name=hari]").html(opt);
+            } else {
+                $("select[name=hari]").html(opt);
             }
         })
     })

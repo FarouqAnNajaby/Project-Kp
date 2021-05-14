@@ -1,113 +1,80 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
+    <title>Print Table</title>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Kasir Lamongan Mart</title>
-
-    @include('admin.partials.stylesheet')
+    <meta name=description content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">
+    <style>
+        body {
+            margin: 20px
+        }
+    </style>
 </head>
 
-
 <body>
-    <section class="section">
-        <div class="invoice">
-            <div class="invoice-print">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="invoice-title">
-                            <h4>Transaksi</h4>
-                            <div class="invoice-number">#{{ $data->kode }}</div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            @if($data->jenis == 'online')
-                            <div class="col-md-6">
-                                <address>
-                                    <strong>Pemesan:</strong><br>
-                                    {{ $data->User->nama }}<br>
-                                    {{ $data->User->email }}<br>
-                                    {{ $data->User->nomor_telepon }}
-                                </address>
-                            </div>
-                            @endif
-                            <div class="col-md-6 ml-auto text-md-right">
-                                <address>
-                                    <strong>Tanggal Transaksi:</strong><br>
-                                    {{ $data->formatted_tanggal }}<br><br>
-                                </address>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="section-title">Daftar Barang</div>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover table-md">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th class="text-center">Nama Barang</th>
-                                        <th class="text-center">Harga</th>
-                                        <th class="text-center">Jumlah</th>
-                                        <th class="text-center">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($data->TransaksiBarang as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}.</td>
-                                        <td>
-                                            {{ $item->Barang->nama }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $item->rp_harga }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $item->jumlah }}
-                                        </td>
-                                        <td class="text-right">
-                                            {{ $item->total }}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-lg-8 col-md-8 col-12">
-                                <div class="section-title">
-                                    Bukti Transfer
-                                </div>
-                                <div class="chocolat-parent">
-                                    <a href="{{ asset('storage/bukti-transfer/' . $data->foto_bukti) }}" class="chocolat-image" title="Transaksi #{{ $data->kode }}">
-                                        <div>
-                                            <img alt="image" src="{{ asset('storage/bukti-transfer/' . $data->foto_bukti) }}" class="img-thumbnail" width="200px">
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 text-right">
-                                <hr class="mb-2">
-                                <div class="invoice-detail-item">
-                                    <div class="invoice-detail-name">Total</div>
-                                    <div class="invoice-detail-value invoice-detail-value-lg">{{ $data->rp_total }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @include('admin.partials.js')
-    <script>
-        window.onload = function() {
-            window.print();
-            setTimeout(window.close, 0);
+    <h4 class="text-center mb-4">LAPORAN TRANSAKSI LAMONGAN MART</h4>
+    <table class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode Transaksi</th>
+                <th>Status</th>
+                <th>Total Pembelian</th>
+                <th>Tanggal</th>
+            </tr>
+        </thead>
+        @php
+        $search = request()->search['value'];
+        $kategori = request()->kategori;
+        $status = request()->status;
+        $bulan = request()->bulan;
+        $tahun = request()->tahun;
+        $hari = request()->hari;
+        $data = new \App\Models\Transaksi;
+        if($search) {
+        $data = $data->where(function($query) use($search) {
+        $search = preg_replace("/[^0-9]/", "", trim($search, 0));
+        if (filter_var($search, FILTER_VALIDATE_INT)) {
+        $query->where('total', 'LIKE', "%$search%");
         }
+        });
+        }
+        if($kategori) {
+        $data = $data->where('uuid_umkm_kategori', $kategori);
+        }
+        if ($status) {
+        $data = $data->where('status', $status);
+        }
+        if ($bulan) {
+        $data = $data->whereMonth('created_at', $bulan);
+        }
+        if ($tahun) {
+        $data = $data->whereYear('created_at', $tahun);
+        }
+        if ($hari) {
+        $data = $data->whereDate('created_at', "$tahun-$bulan-$hari");
+        }
+        $data = $data->get();
+        @endphp
+        @foreach($data as $row)
+        <tr>
+            <td>
+                {{ $loop->iteration }}.
+            </td>
+            <td>{{ $row->kode }}</td>
+            <td>{{ ucfirst($row->status) }}</td>
+            <td>{{ 'Rp' . number_format($row->total, 2, ',', '.') }}</td>
+            <td>{{ \Carbon\Carbon::parse($row->created_at)->isoFormat('dddd, Do MMMM YYYY') }}</td>
+        </tr>
+        @endforeach
+    </table>
+    <script>
+        window.print();
     </script>
 </body>
+
 </html>

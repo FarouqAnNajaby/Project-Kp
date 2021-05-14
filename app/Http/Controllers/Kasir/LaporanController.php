@@ -40,7 +40,7 @@ class LaporanController extends Controller
 	 */
 	public function create(Transaksi $data)
 	{
-		return view('kasir.app.laporan.print', compact('data'));
+		return view('kasir.app.laporan.detail-print', compact('data'));
 	}
 
 	/**
