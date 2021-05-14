@@ -22,6 +22,7 @@
                         </div>
                         <hr>
                         <div class="row">
+                            @if($data->jenis == 'online')
                             <div class="col-md-6">
                                 <address>
                                     <strong>Pemesan:</strong><br>
@@ -30,7 +31,8 @@
                                     {{ $data->User->nomor_telepon }}
                                 </address>
                             </div>
-                            <div class="col-md-6 text-md-right">
+                            @endif
+                            <div class="col-md-6 ml-auto text-md-right">
                                 <address>
                                     <strong>Tanggal Transaksi:</strong><br>
                                     {{ $data->formatted_tanggal }}<br><br>
