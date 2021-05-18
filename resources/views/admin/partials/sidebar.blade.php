@@ -12,6 +12,25 @@
                     <i class="fas fa-home"></i> <span>Beranda</span>
                 </a>
             </li>
+            @if(Gate::check('super-admin'))
+            <li class="dropdown{{ request()->segment(2) == 'list-admin-kasir' ? ' active' : null }}">
+                <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-users"></i><span>List Admin & Kasir</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->segment(3) == 'admin' ? ' active' : null }}">
+                        <a class="nav-link" href="{{ route('admin.list-admin-kasir.admin.index') }}">
+                            Data Admin
+                        </a>
+                    </li>
+                    <li class="{{ request()->segment(3) == 'kasir' ? ' active' : null }}">
+                        <a class="nav-link" href="{{ route('admin.list-admin-kasir.kasir.index') }}">
+                            Data Kasir
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
             <li class="menu-header">Data Master</li>
             <li class="dropdown{{ request()->segment(2) == 'master-data' ? ' active' : null }}">
                 <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">

@@ -49,7 +49,7 @@ class LoginRequest extends FormRequest
 		$user = Admin::where('username', $this->username);
 
 		if ($user->count()) {
-			if (!$user->where('role', 'admin')->count()) {
+			if (!$user->whereIn('role', ['admin', 'super_admin'])->count()) {
 				$this->throwValidationError();
 			} else {
 				if (!Auth::guard('admin')->attempt($this->only('username', 'password'))) {

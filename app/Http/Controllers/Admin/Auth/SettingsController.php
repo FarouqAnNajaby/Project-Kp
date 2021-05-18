@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Rules\HumanName;
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
 
@@ -38,16 +40,27 @@ class SettingsController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$request->validate([
-			'username' => 'required|string|min:8|max:20',
-		]);
+		$validation = [
+			'username' => 'required|string|min:8|max:20'
+		];
+
+		if (Auth::guard('admin')->user()->role == 'admin') {
+			$validation = Arr::add($validation, 'nama', ['required', new HumanName, 'min:1', 'max:100']);
+		}
+
+		$request->validate($validation);
 
 		$user = Auth::guard('admin')->user();
-		$user->update([
-			'username' => $request->username
-		]);
+
+		if (Auth::guard('admin')->user()->role == 'admin') {
+			$data = $request->only('username', 'nama');
+		} else {
+			$data = $request->only('username');
+		}
+
+		$user->update($data);
 		alert()
-			->success('Username berhasil diubah.', 'Sukses!')
+			->success('Data berhasil diubah.', 'Sukses!')
 			->persistent('Tutup');
 		return redirect()->route('admin.auth.settings');
 	}

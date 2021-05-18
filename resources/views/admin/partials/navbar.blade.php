@@ -5,7 +5,7 @@
     </ul>
     <ul class="navbar-nav navbar-right ml-auto">
         <li class="dropdown"><a href="javascript:;" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <div class="d-sm-none d-lg-inline-block">{{ auth('admin')->user()->username }}</div>
+                <div class="d-sm-none d-lg-inline-block">{{ auth('admin')->user()->nama }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="{{ route('admin.auth.settings') }}" class="dropdown-item has-icon">

@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
 class Admin extends Authenticatable
 {
-	use HasFactory, Uuid;
+	use HasFactory, Uuid, SoftDeletes;
 
 	/**
 	 * The table associated with the model.

@@ -3,10 +3,11 @@
 @section('content')
 
 <section class="section">
-    <x-admin-breadcrumb backBtn=true title="Ubah Pengaturan" backUrl="{{ route($route . '.index') }}">
+    <x-admin-breadcrumb backBtn=true title="Ubah Data Admin" backUrl="{{ route('admin.list-admin-kasir.admin.index') }}">
         <x-slot name="breadcrumbItem">
+            <div class="breadcrumb-item">List Admin & Kasir</div>
             <div class="breadcrumb-item">
-                <a href="{{ route('admin.auth.settings') }}">Pengaturan</a>
+                <a href="{{ route('admin.list-admin-kasir.admin.index') }}">Data Admin</a>
             </div>
         </x-slot>
     </x-admin-breadcrumb>
@@ -15,10 +16,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Ubah Username</h4>
+                        <h4>Formulir</h4>
                     </div>
                     <div class="card-body">
-                        {!! Form::model($data, ['route' => $route . '.auth.settings', 'method' => 'patch']) !!}
+                        {!! Form::model($data,['route' => ['admin.list-admin-kasir.admin.update', $data->uuid],'method' => 'patch']) !!}
                         <div class="form-group row mb-4">
                             {!! Form::label('username', 'Username*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
@@ -28,27 +29,15 @@
                                 @enderror
                             </div>
                         </div>
-                        @if(auth()->user()->role == 'admin' || auth()->user()->role == 'kasir')
-                        <div class="form-group row mb-4">
-                            {!! Form::label('nama', 'Nama*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
-                            <div class="col-sm-12 col-md-7">
-                                {!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null), 'autocomplete' => 'off']) !!}
-                                @error('nama')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        @else
                         <div class="form-group row mb-4">
                             {!! Form::label('nama', 'Nama', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
                                 {!! Form::text('nama', $data->nama, ['class' => 'form-control', 'disabled']) !!}
                             </div>
                         </div>
-                        @endif
                         <div class="form-group row mb-4">
                             <div class="col-sm-12 col-md-9 offset-md-3">
-                                {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+                                {!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -61,12 +50,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Ubah Password</h4>
+                        <h4>Formulir Ubah Password</h4>
                     </div>
                     <div class="card-body">
-                        {!! Form::open(['route' => $route . '.auth.settings.password', 'method' => 'patch']) !!}
+                        {!! Form::open(['route' => ['admin.list-admin-kasir.admin.update', $data->uuid],'method' => 'put']) !!}
                         <div class="form-group row mb-4">
-                            {!! Form::label('password', 'Password Sekarang*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('password', 'Password', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
                                 {!! Form::password('password', ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
                                 @error('password')
@@ -75,29 +64,17 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('new_password', 'Password Baru*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('password_confirmation', 'Konfirmasi Password', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::password('new_password', ['class' => 'form-control' . ($errors->has('new_password') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
-                                @error('new_password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row mb-4">
-                            {!! Form::label('new_password_confirmation', 'Konfirmasi Password Baru*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
-                            <div class="col-sm-12 col-md-7">
-                                {!! Form::password('new_password_confirmation', ['class' => 'form-control' . ($errors->has('new_password_confirmation') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                {!! Form::password('password_confirmation', ['class' => 'form-control', 'required']) !!}
                             </div>
                         </div>
                         <div class="form-group row mb-4">
                             <div class="col-sm-12 col-md-9 offset-md-3">
-                                {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+                                {!! Form::submit('Kirim', ['class' => 'btn btn-primary']) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
-                    </div>
-                    <div class="card-footer bg-whitesmoke">
-                        (<b>*</b>) = Wajib diisi
                     </div>
                 </div>
             </div>
@@ -116,13 +93,14 @@
 
 @push('javascript-custom')
 <script>
-    $('form').on('submit', function(e) {
-        FreezeUI({
-            selector: 'form'
+    $(document).ready(function() {
+        $('form').on('submit', function(e) {
+            FreezeUI({
+                selector: 'form'
+            })
+            $('input.form-control').attr('readonly', true)
+            $('input[type=submit]').attr('disabled', true)
         })
-        $('input.form-control').attr('readonly', true)
-        $('input[type=submit]').attr('disabled', true)
-        $('.select2').attr("readonly", true)
     })
 </script>
 @endpush

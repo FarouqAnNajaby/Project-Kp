@@ -26,6 +26,25 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 		Route::get('/', 'HomeController@index')->name('index');
 		Route::get('logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
 
+		Route::namespace('ListAdminKasir')->prefix('list-admin-kasir')->name('list-admin-kasir.')->middleware('role:super_admin')->group(function () {
+			Route::prefix('admin')->name('admin.')->group(function () {
+				Route::get('/', 'ListAdminController@index')->name('index');
+				Route::get('create', 'ListAdminController@create')->name('create');
+				Route::post('create', 'ListAdminController@store')->name('store');
+				Route::get('{data:uuid}/edit', 'ListAdminController@edit')->name('edit');
+				Route::match(['patch', 'put'], '{data:uuid}/update', 'ListAdminController@update')->name('update');
+				Route::delete('{data:uuid}/delete', 'ListAdminController@destroy')->name('destroy');
+			});
+			Route::prefix('kasir')->name('kasir.')->group(function () {
+				Route::get('/', 'ListKasirController@index')->name('index');
+				Route::get('create', 'ListKasirController@create')->name('create');
+				Route::post('create', 'ListKasirController@store')->name('store');
+				Route::get('{data:uuid}/edit', 'ListKasirController@edit')->name('edit');
+				Route::match(['patch', 'put'], '{data:uuid}/update', 'ListKasirController@update')->name('update');
+				Route::delete('{data:uuid}/delete', 'ListKasirController@destroy')->name('destroy');
+			});
+		});
+
 		Route::namespace('Auth')->name('auth.')->group(function () {
 			Route::get('pengaturan', 'SettingsController@edit')->name('settings');
 			Route::patch('pengaturan', 'SettingsController@store');
