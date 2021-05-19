@@ -95,7 +95,7 @@ class AjaxController extends Controller
 			$total += $item['jumlah'] * $data->harga;
 		}
 
-		$auth = Auth::guard('admin')->user();
+		$auth = Auth::guard('kasir')->user();
 		$transaksi = [
 			'jenis'      => 'offline',
 			'status'     => 'selesai',
