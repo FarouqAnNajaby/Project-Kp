@@ -41,6 +41,9 @@ class LogDataTable extends DataTable
 			->editColumn('harga', function ($query) {
 				return 'Rp' . number_format($query->harga, 2, ',', '.');
 			})
+			->editColumn('admin.nama', function ($query) {
+				return Str::limit($query->Admin->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->Admin->nama . '">...</p>');
+			})
 			->editColumn('created_at', function ($query) {
 				return Carbon::parse($query->created_at)->isoFormat('dddd, Do MMMM YYYY');
 			})
@@ -54,7 +57,7 @@ class LogDataTable extends DataTable
 					$query->where('harga', 'LIKE', "%$keyword%");
 				}
 			})
-			->rawColumns(['action', 'barang.nama']);
+			->rawColumns(['action', 'barang.nama', 'admin.nama']);
 	}
 
 	/**
@@ -67,6 +70,7 @@ class LogDataTable extends DataTable
 	{
 		return $model
 			->with('barang')
+			->with('admin')
 			->select('barang_log.*')
 			->newQuery();
 	}
@@ -85,7 +89,7 @@ class LogDataTable extends DataTable
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
 							"<\'row\'<\'col-sm-12\'tr>>" + 
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
-			->orderBy(4, 'desc')
+			->orderBy(5, 'desc')
 			->buttons(
 				Button::make('export'),
 				Button::make('print'),
@@ -111,6 +115,8 @@ class LogDataTable extends DataTable
 			Column::make('stok'),
 			Column::make('harga')
 				->title('Harga Satuan'),
+			Column::make('admin.nama')
+				->title('Di Inputkan Oleh'),
 			Column::make('created_at')
 				->title('Tanggal Input'),
 			Column::computed('action', 'Opsi')

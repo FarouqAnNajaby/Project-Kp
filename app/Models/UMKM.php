@@ -96,6 +96,14 @@ class UMKM extends Model
 	}
 
 	/**
+	 * Get the creator admin for umkm
+	 */
+	public function Admin()
+	{
+		return $this->belongsTo(Admin::class, 'admin_uuid', 'uuid');
+	}
+
+	/**
 	 * The "booted" method of the model.
 	 *
 	 * @return void

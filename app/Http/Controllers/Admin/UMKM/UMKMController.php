@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\UMKMKategori;
@@ -53,11 +54,13 @@ class UMKMController extends Controller
 	{
 		$validated = $request->validated();
 
+		$auth = Auth::guard('admin')->user();
 		$nomor_telp = PhoneNumber::make($request->nomor_telp, 'ID')->formatE164();
 
 		$validated = Arr::except($validated, ['nomor_telp', 'syarat_ketentuan', 'kategori']);
 		$validated = Arr::add($validated, 'uuid_umkm_kategori', $request->kategori);
 		$validated = Arr::add($validated, 'nomor_telp', $nomor_telp);
+		$validated = Arr::add($validated, 'admin_uuid', $auth->uuid);
 
 		$data = UMKM::create($validated);
 

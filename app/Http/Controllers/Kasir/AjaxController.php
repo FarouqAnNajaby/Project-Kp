@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Kasir;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
@@ -93,10 +94,13 @@ class AjaxController extends Controller
 			$barang[$index]['harga'] = $data->harga;
 			$total += $item['jumlah'] * $data->harga;
 		}
+
+		$auth = Auth::guard('admin')->user();
 		$transaksi = [
-			'jenis' => 'offline',
-			'status' => 'selesai',
-			'total' => $total
+			'jenis'      => 'offline',
+			'status'     => 'selesai',
+			'total'      => $total,
+			'admin_uuid' => $auth->uuid
 		];
 
 		$transaksi = Transaksi::create($transaksi);

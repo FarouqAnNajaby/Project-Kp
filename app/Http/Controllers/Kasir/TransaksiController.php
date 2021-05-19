@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Kasir;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
@@ -98,8 +99,11 @@ class TransaksiController extends Controller
 					'stok' => $item->Barang->stok - $item->jumlah
 				]);
 			}
+
+			$auth = Auth::guard('admin')->user();
 			$data->update([
-				'status' => 'selesai'
+				'status' => 'selesai',
+				'admin_uuid' => $auth->uuid
 			]);
 
 			$link = route('kasir.laporan.whatsapp', $data->uuid);

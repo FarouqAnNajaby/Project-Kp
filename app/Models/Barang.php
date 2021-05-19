@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Carbon\Carbon;
 use App\Observers\Admin\BarangObserver;
 
 class Barang extends Model
@@ -56,6 +57,16 @@ class Barang extends Model
 	public function getRouteKeyName()
 	{
 		return 'uuid';
+	}
+
+	/**
+	 * Get the barang created_at.
+	 *
+	 * @return string
+	 */
+	public function getTanggalInputAttribute()
+	{
+		return Carbon::parse($this->created_at)->isoFormat('dddd, Do MMMM YYYY');
 	}
 
 	/**
@@ -154,6 +165,14 @@ class Barang extends Model
 	public function Review()
 	{
 		return $this->hasMany(Review::class, 'uuid_barang', 'uuid');
+	}
+
+	/**
+	 * Get the creator admin for log barang
+	 */
+	public function Admin()
+	{
+		return $this->belongsTo(Admin::class, 'admin_uuid', 'uuid');
 	}
 
 	/**

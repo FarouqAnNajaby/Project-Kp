@@ -5,6 +5,7 @@ namespace App\DataTables\Kasir;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Transaksi;
@@ -50,6 +51,13 @@ class LaporanTransaksiDataTable extends DataTable
 				</a>';
 				return $opsi;
 			})
+			->editColumn('admin.nama', function ($query) {
+				$nama = '-';
+				if ($query->admin_uuid) {
+					$nama = Str::limit($query->Admin->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->Admin->nama . '">...</p>');
+				}
+				return $nama;
+			})
 			->editColumn('created_at', function ($query) {
 				return Carbon::parse($query->created_at)->isoFormat('dddd, Do MMMM YYYY');
 			})
@@ -73,7 +81,7 @@ class LaporanTransaksiDataTable extends DataTable
 					$query->where('total', 'LIKE', "%$keyword%");
 				}
 			})
-			->rawColumns(['action', 'status']);
+			->rawColumns(['action', 'status', 'admin.nama']);
 	}
 
 	/**
@@ -84,7 +92,9 @@ class LaporanTransaksiDataTable extends DataTable
 	 */
 	public function query(Transaksi $model)
 	{
-		$model = $model->newQuery();
+		$model = $model->with('admin')
+			->select('transaksi.*')
+			->newQuery();
 		if ($status = $this->request()->get('status')) {
 			$model->where('status', $status);
 		}
@@ -121,7 +131,7 @@ class LaporanTransaksiDataTable extends DataTable
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +
             "<\'row\'<\'col-sm-12\'tr>>" +
             "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
-			->orderBy(4, 'desc')
+			->orderBy(5, 'desc')
 			->buttons(
 				Button::make('export'),
 				Button::make('print'),
@@ -151,6 +161,8 @@ class LaporanTransaksiDataTable extends DataTable
 			Column::make('total')
 				->title('Total Pembelian')
 				->addClass('text-center'),
+			Column::make('admin.nama')
+				->title('Kasir'),
 			Column::make('created_at')
 				->searchable(false)
 				->title('Tanggal')

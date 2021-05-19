@@ -48,10 +48,6 @@
                             <p class="col-form-label col-7 col-md-8">{{ $data->UMKM_Kategori->nama }}</p>
                         </div>
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-5 col-md-4">Tanggal Daftar :</label>
-                            <p class="col-form-label col-7 col-md-8">{{ $data->tanggal_input }}</p>
-                        </div>
-                        <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-5 col-md-4">Nama Pemilik :</label>
                             <p class="col-form-label col-7 col-md-8">{{ $data->nama_pemilik }}</p>
                         </div>
@@ -66,6 +62,14 @@
                         <div class="form-group row mb-4">
                             <label class="col-form-label text-md-right col-5 col-md-4">Alamat :</label>
                             <p class="col-form-label col-7 col-md-8">{{ $data->alamat }}</p>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-5 col-md-4">Di Daftarkan Oleh :</label>
+                            <p class="col-form-label col-7 col-md-8">{{ $data->Admin->nama }}</p>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-5 col-md-4">Tanggal Daftar :</label>
+                            <p class="col-form-label col-7 col-md-8">{{ $data->tanggal_input }}</p>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="deskripsi">

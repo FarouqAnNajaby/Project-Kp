@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Barang;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -53,6 +54,7 @@ class BarangController extends Controller
 	 */
 	public function store(BarangRequest $request)
 	{
+		$auth = Auth::guard('admin')->user();
 		$validated = $request->validated();
 		$validated = Arr::except($validated, ['harga', 'stok', 'umkm', 'kategori', 'deskripsi', 'deskripsi_singkat']);
 
@@ -69,6 +71,7 @@ class BarangController extends Controller
 		$validated = Arr::add($validated, 'deskripsi', $deskripsi);
 		$validated = Arr::add($validated, 'deskripsi_singkat', $deskripsi_singkat);
 		$validated = Arr::add($validated, 'slug', $slug);
+		$validated = Arr::add($validated, 'admin_uuid', $auth->uuid);
 
 		Barang::create($validated);
 
@@ -112,6 +115,7 @@ class BarangController extends Controller
 	 */
 	public function update(BarangRequest $request, Barang $data)
 	{
+		$auth = Auth::guard('admin')->user();
 		$validated = $request->validated();
 		$validated = Arr::except($validated, ['harga', 'stok', 'kategori', 'deskripsi', 'deskripsi_singkat']);
 
@@ -135,7 +139,8 @@ class BarangController extends Controller
 		if ($stok != $stok_awal || $harga != $harga_awal) {
 			$data->log()->create([
 				'stok'  => $stok,
-				'harga' => $harga
+				'harga' => $harga,
+				'admin_uuid' => $auth->uuid
 			]);
 		}
 

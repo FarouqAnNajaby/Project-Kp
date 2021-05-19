@@ -102,6 +102,14 @@ class BarangLog extends Model
 	}
 
 	/**
+	 * Get the creator admin for log barang
+	 */
+	public function Admin()
+	{
+		return $this->belongsTo(Admin::class, 'admin_uuid', 'uuid');
+	}
+
+	/**
 	 * The "booted" method of the model.
 	 *
 	 * @return void

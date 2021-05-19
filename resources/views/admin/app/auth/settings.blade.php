@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Ubah Username</h4>
+                        <h4>Ubah Data</h4>
                     </div>
                     <div class="card-body">
                         {!! Form::model($data, ['route' => $route . '.auth.settings', 'method' => 'patch']) !!}

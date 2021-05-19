@@ -30,9 +30,12 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('nama', 'Nama', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('nama', 'Nama*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('nama', $data->nama, ['class' => 'form-control', 'disabled']) !!}
+                                {!! Form::text('nama', null, ['class' => 'form-control' . ($errors->has('nama') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                @error('nama')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-4">

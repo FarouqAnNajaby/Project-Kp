@@ -32,7 +32,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 				Route::get('create', 'ListAdminController@create')->name('create');
 				Route::post('create', 'ListAdminController@store')->name('store');
 				Route::get('{data:uuid}/edit', 'ListAdminController@edit')->name('edit');
-				Route::match(['patch', 'put'], '{data:uuid}/update', 'ListAdminController@update')->name('update');
+				Route::match(['patch', 'put'], '{uuid}/update', 'ListAdminController@update')->name('update');
 				Route::delete('{data:uuid}/delete', 'ListAdminController@destroy')->name('destroy');
 			});
 			Route::prefix('kasir')->name('kasir.')->group(function () {

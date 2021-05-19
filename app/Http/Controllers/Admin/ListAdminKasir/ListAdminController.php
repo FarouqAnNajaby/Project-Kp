@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\ListAdminKasir;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use App\Rules\HumanName;
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
 
@@ -86,15 +87,17 @@ class ListAdminController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Admin $data)
+	public function update(Request $request, $uuid)
 	{
+		$data = Admin::where('uuid', $uuid)->where('role', 'admin')->firstOrFail();
 		if ($request->isMethod('PATCH')) {
 			$request->validate([
-				'username' => ['required', Rule::unique('admin', 'username')->ignore($data->uuid, 'uuid')]
+				'username' => ['required', Rule::unique('admin', 'username')->ignore($data->uuid, 'uuid')],
+				'nama'     => ['required', new HumanName, 'min:1', 'max:100']
 			]);
-			$data->update($request->only('username'));
+			$data->update($request->only('username', 'nama'));
 			alert()
-				->success('Username berhasil diubah.', 'Sukses!')
+				->success('Data berhasil diubah.', 'Sukses!')
 				->persistent('Tutup');
 		} else {
 			$request->validate([
