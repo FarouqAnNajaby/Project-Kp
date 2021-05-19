@@ -83,6 +83,7 @@ class TransaksiController extends Controller
 	 */
 	public function update(Request $request, $uuid, $status)
 	{
+		$auth = Auth::guard('kasir')->user();
 		if ($request->status == 'terima') {
 			$data = Transaksi::where('jenis', 'online')->where('status', 'pending')->findOrFail($uuid);
 			foreach ($data->TransaksiBarang()->get() as $index => $item) {
@@ -99,8 +100,6 @@ class TransaksiController extends Controller
 					'stok' => $item->Barang->stok - $item->jumlah
 				]);
 			}
-
-			$auth = Auth::guard('admin')->user();
 			$data->update([
 				'status' => 'selesai',
 				'admin_uuid' => $auth->uuid
@@ -140,7 +139,8 @@ class TransaksiController extends Controller
 				]
 			];
 			$data->update([
-				'status' => 'batal'
+				'status' => 'batal',
+				'admin_uuid' => $auth->uuid
 			]);
 			return response()->json($response, 200);
 		}
