@@ -2,6 +2,7 @@
 
 namespace App\Observers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Barang;
 
 class BarangObserver
@@ -14,9 +15,11 @@ class BarangObserver
 	 */
 	public function created(Barang $barang)
 	{
+		$auth = Auth::guard('admin')->user();
 		$barang->log()->create([
-			'stok'  => $barang->stok,
-			'harga' => $barang->harga
+			'stok'       => $barang->stok,
+			'harga'      => $barang->harga,
+			'admin_uuid' => $auth->uuid
 		]);
 	}
 
