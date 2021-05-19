@@ -77,6 +77,7 @@
                             </table>
                         </div>
                         <div class="row mt-4">
+                            @if($data->jenis == 'online')
                             <div class="col-lg-8 col-md-8 col-12">
                                 <div class="section-title">
                                     Bukti Transfer
@@ -89,7 +90,8 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12 text-right">
+                            @endif
+                            <div class="col-lg-4 col-md-4 col-12 text-right ml-auto">
                                 <hr class="mb-2">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Total</div>
