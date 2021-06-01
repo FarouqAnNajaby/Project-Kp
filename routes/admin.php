@@ -51,7 +51,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::patch('change-password', 'SettingsController@update')->name('settings.password');
 		});
 
-		Route::namespace('MasterData')->prefix('master-data')->name('master-data.')->group(function () {
+		Route::namespace('MasterData')->prefix('master-data')->name('master-data.')->middleware('role:super_admin')->group(function () {
 
 			Route::prefix('banner-ecommerce')->name('banner.')->group(function () {
 				Route::get('/', 'BannerController@index')->name('index');

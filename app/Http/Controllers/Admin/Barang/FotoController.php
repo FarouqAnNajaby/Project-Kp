@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Barang;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\Barang;
@@ -62,9 +63,12 @@ class FotoController extends Controller
 			$highlight = 1;
 		}
 
+		$admin = Auth::user();
+
 		$data->Foto()->create([
 			'file' => $nama_file,
-			'is_highlight' => $highlight
+			'is_highlight' => $highlight,
+			'uuid_admin' => $admin->uuid
 		]);
 
 		Storage::disk('barang')->put($nama_file, $logo);

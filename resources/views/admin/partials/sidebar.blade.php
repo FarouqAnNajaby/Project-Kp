@@ -30,7 +30,6 @@
                     </li>
                 </ul>
             </li>
-            @endif
             <li class="menu-header">Data Master</li>
             <li class="dropdown{{ request()->segment(2) == 'master-data' ? ' active' : null }}">
                 <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown">
@@ -54,6 +53,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
             <li class="menu-header">Data Umum</li>
             <li class="{{ request()->segment(2) == 'umkm' ? 'active' : null }}">
                 <a class="nav-link" href="{{ route('admin.umkm.index') }}">
