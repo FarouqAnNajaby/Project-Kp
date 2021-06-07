@@ -36,7 +36,7 @@
                             <a href="{{ route('ecommerce.profile') }}" class="single-icon"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
                             @endauth
                             @guest
-                            <a href="{{ route('ecommerce.login') }}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                            <a href="{{ route('ecommerce.login') }}" class="single-icon"><i class="fa fa-sign-in-alt" aria-hidden="true"></i></a>
                             @endguest
                         </div>
                         @auth
