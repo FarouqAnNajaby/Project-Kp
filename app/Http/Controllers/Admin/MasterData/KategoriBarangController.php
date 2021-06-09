@@ -132,7 +132,7 @@ class KategoriBarangController extends Controller
 		}
 
 
-		return redirect()->route('admin.master-data.kategori-barang.edit', $uuid);
+		return redirect()->route('admin.master-data.kategori-barang.edit', $data->uuid);
 	}
 
 	/**
