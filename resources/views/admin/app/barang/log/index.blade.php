@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <h4>Log Barang</h4>
                         <div class="card-header-form">
-                            {!! Form::select('jenis', ['create' => 'Create', 'update' => 'Update', 'delete' => 'Delete'], null, ['placeholder' => 'Semua Jenis', 'class' => 'form-control select2']) !!}
+                            {!! Form::select('jenis', ['create' => 'Baru', 'update' => 'Ubah', 'delete' => 'Hapus'], null, ['placeholder' => 'Semua Jenis', 'class' => 'form-control select2']) !!}
                         </div>
                     </div>
                     <div class="card-body">

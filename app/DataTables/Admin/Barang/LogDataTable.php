@@ -48,7 +48,14 @@ class LogDataTable extends DataTable
 				return Carbon::parse($query->created_at)->isoFormat('dddd, Do MMMM YYYY HH:mm');
 			})
 			->editColumn('jenis', function ($query) {
-				return ucfirst($query->jenis);
+				if ($query->jenis == 'create') {
+					$jenis = 'Baru';
+				} else if ($query->jenis == 'update') {
+					$jenis = 'Ubah';
+				} else {
+					$jenis = 'Hapus';
+				}
+				return ucfirst($jenis);
 			})
 			->filterColumn('harga', function ($query, $keyword) {
 				$keyword = preg_replace("/[^0-9,]/", "", $keyword);
