@@ -17,9 +17,10 @@ class BarangObserver
 	{
 		$auth = Auth::guard('admin')->user();
 		$barang->log()->create([
-			'stok'       => $barang->stok,
+			'stok_awal'  => $barang->stok,
 			'harga'      => $barang->harga,
-			'admin_uuid' => $auth->uuid
+			'admin_uuid' => $auth->uuid,
+			'jenis'		 => 'create'
 		]);
 	}
 

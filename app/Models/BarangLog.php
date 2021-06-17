@@ -78,9 +78,19 @@ class BarangLog extends Model
 	 *
 	 * @return string
 	 */
-	public function getStokFormattedAttribute()
+	public function getStokAwalFormattedAttribute()
 	{
-		return number_format($this->stok, 0, '', '.');
+		return number_format($this->stok_awal, 0, '', '.');
+	}
+
+	/**
+	 * Get the barang stok tambahan.
+	 *
+	 * @return string
+	 */
+	public function getStokTambahanFormattedAttribute()
+	{
+		return number_format($this->stok_tambahan, 0, '', '.');
 	}
 
 	/**

@@ -25,8 +25,12 @@
                     <p class="col-form-label col-7 col-md-8">{{ $data->Barang->Kategori->nama }}</p>
                 </div>
                 <div class="form-group row mb-4">
-                    <label class="col-form-label text-md-right col-5 col-md-4">Stok :</label>
-                    <p class="col-form-label col-7 col-md-8">{{ $data->stok_formatted }}</p>
+                    <label class="col-form-label text-md-right col-5 col-md-4">Stok Awal :</label>
+                    <p class="col-form-label col-7 col-md-8">{{ $data->stok_awal_formatted }}</p>
+                </div>
+                <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-5 col-md-4">Stok Tambahan :</label>
+                    <p class="col-form-label col-7 col-md-8">{{ $data->stok_tambahan_formatted }}</p>
                 </div>
                 <div class="form-group row mb-4">
                     <label class="col-form-label text-md-right col-5 col-md-4">Harga Satuan :</label>
@@ -41,11 +45,15 @@
                     </p>
                 </div>
                 <div class="form-group row mb-4">
-                    <label class="col-form-label text-md-right col-5 col-md-4">Di Inputkan Oleh :</label>
+                    <label class="col-form-label text-md-right col-5 col-md-4">Jenis :</label>
+                    <p class="col-form-label col-7 col-md-8">{{ ucfirst($data->jenis) }}</p>
+                </div>
+                <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-5 col-md-4">Nama Admin :</label>
                     <p class="col-form-label col-7 col-md-8">{{ $data->Admin->nama }}</p>
                 </div>
                 <div class="form-group row mb-4">
-                    <label class="col-form-label text-md-right col-5 col-md-4">Tanggal Input :</label>
+                    <label class="col-form-label text-md-right col-5 col-md-4">Tanggal :</label>
                     <p class="col-form-label col-7 col-md-8">{{ $data->tanggal_input }}</p>
                 </div>
             </div>

@@ -45,7 +45,10 @@ class LogDataTable extends DataTable
 				return Str::limit($query->Admin->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->Admin->nama . '">...</p>');
 			})
 			->editColumn('created_at', function ($query) {
-				return Carbon::parse($query->created_at)->isoFormat('dddd, Do MMMM YYYY');
+				return Carbon::parse($query->created_at)->isoFormat('dddd, Do MMMM YYYY HH:mm');
+			})
+			->editColumn('jenis', function ($query) {
+				return ucfirst($query->jenis);
 			})
 			->filterColumn('harga', function ($query, $keyword) {
 				$keyword = preg_replace("/[^0-9,]/", "", $keyword);
@@ -68,11 +71,16 @@ class LogDataTable extends DataTable
 	 */
 	public function query(BarangLog $model)
 	{
-		return $model
+		$model = $model
 			->with('barang')
 			->with('admin')
 			->select('barang_log.*')
 			->newQuery();
+
+		if ($jenis = $this->request()->get('jenis')) {
+			$model->where('jenis', $jenis);
+		}
+		return $model;
 	}
 
 	/**
@@ -85,11 +93,15 @@ class LogDataTable extends DataTable
 		return $this->builder()
 			->setTableId('log-table')
 			->columns($this->getColumns())
-			->minifiedAjax()
+			->ajax([
+				'data' => "function(data) {
+					data.jenis = $('select[name=jenis]').val();
+				}"
+			])
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" + 
 							"<\'row\'<\'col-sm-12\'tr>>" + 
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
-			->orderBy(5, 'desc')
+			->orderBy(7, 'desc')
 			->buttons(
 				Button::make('export'),
 				Button::make('print'),
@@ -112,13 +124,16 @@ class LogDataTable extends DataTable
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
 			Column::make('barang.nama')
 				->title('Nama Barang'),
-			Column::make('stok'),
+			Column::make('stok_awal'),
+			Column::make('stok_tambahan'),
 			Column::make('harga')
 				->title('Harga Satuan'),
+			Column::make('jenis')
+				->searchable(false),
 			Column::make('admin.nama')
-				->title('Di Inputkan Oleh'),
+				->title('Nama Admin'),
 			Column::make('created_at')
-				->title('Tanggal Input'),
+				->title('Tanggal'),
 			Column::computed('action', 'Opsi')
 				->printable(false)
 				->exportable(false)

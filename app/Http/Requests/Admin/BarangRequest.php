@@ -35,7 +35,6 @@ class BarangRequest extends FormRequest
 		$rules = [
 			'nama'              => 'required|string|max:100',
 			'kategori'          => 'required|in:' . $kategori,
-			'stok'              => ['required', new FilteredNumeric],
 			'harga'             => ['required', new FilteredNumeric],
 			'deskripsi_singkat' => ['required', new MaxWord(50)],
 			'deskripsi'         => ['required', 'string', new MinWord(50)]
@@ -45,6 +44,8 @@ class BarangRequest extends FormRequest
 			$umkm  = UMKM::pluck('uuid');
 			$umkm  = implode(',', json_decode($umkm));
 			$rules = Arr::add($rules, 'umkm', 'required|in:' . $umkm);
+		} else if ($this->method() == 'PATCH') {
+			$rules = Arr::add($rules, 'tambah_stok', ['numeric', new FilteredNumeric, 'min:1']);
 		}
 
 		return $rules;
