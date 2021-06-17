@@ -43,10 +43,19 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            {!! Form::label('stok', 'Stok Barang*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            {!! Form::label('stok', 'Stok Sekarang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
-                                {!! Form::text('stok', null, ['class' => 'form-control' . ($errors->has('stok') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                {!! Form::text('stok', $data->stok, ['class' => 'form-control', 'disabled']) !!}
                                 @error('stok')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            {!! Form::label('tambah_stok', 'Tambah Stok', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            <div class="col-sm-12 col-md-7">
+                                {!! Form::text('tambah_stok', null, ['class' => 'form-control' . ($errors->has('tambah_stok') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                @error('tambah_stok')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -128,7 +137,7 @@
             , numeral: true
         });
     }
-    cleaveInit('#stok')
+    cleaveInit('#tambah_stok')
     cleaveInit('#harga')
 
     $('form').on('submit', function(e) {

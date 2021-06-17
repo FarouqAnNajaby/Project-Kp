@@ -117,13 +117,15 @@ class BarangController extends Controller
 	{
 		$auth = Auth::guard('admin')->user();
 		$validated = $request->validated();
-		$validated = Arr::except($validated, ['harga', 'stok', 'kategori', 'deskripsi', 'deskripsi_singkat']);
+		$validated = Arr::except($validated, ['harga', 'tambah_stok', 'kategori', 'deskripsi', 'deskripsi_singkat']);
 
 		$harga             = filter_var($request->harga, FILTER_SANITIZE_NUMBER_INT);
-		$stok              = filter_var($request->stok, FILTER_SANITIZE_NUMBER_INT);
+		$stok              = filter_var($request->tambah_stok, FILTER_SANITIZE_NUMBER_INT);
 		$deskripsi         = nl2br(strip_tags($request->deskripsi));
 		$deskripsi_singkat = strip_tags($request->deskripsi_singkat);
 		$slug              = Str::slug($request->nama);
+
+		$stok += $data->stok;
 
 		$validated = Arr::add($validated, 'uuid_barang_kategori', $request->kategori);
 		$validated = Arr::add($validated, 'harga', $harga);
@@ -138,9 +140,11 @@ class BarangController extends Controller
 		$data->update($validated);
 		if ($stok != $stok_awal || $harga != $harga_awal) {
 			$data->log()->create([
-				'stok'  => $stok,
-				'harga' => $harga,
-				'admin_uuid' => $auth->uuid
+				'stok_awal'     => $stok_awal,
+				'stok_tambahan' => $request->tambah_stok,
+				'harga'         => $harga,
+				'admin_uuid'    => $auth->uuid,
+				'jenis'			=> 'update'
 			]);
 		}
 
@@ -160,6 +164,13 @@ class BarangController extends Controller
 	 */
 	public function destroy(Barang $data)
 	{
+		$auth = Auth::guard('admin')->user();
+		$data->log()->create([
+			'stok_awal'     => $data->stok,
+			'harga'         => $data->harga,
+			'admin_uuid'    => $auth->uuid,
+			'jenis'			=> 'delete'
+		]);
 		$data->delete();
 		alert()
 			->success('Data berhasil dihapus', 'Sukses!')
