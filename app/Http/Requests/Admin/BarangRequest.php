@@ -44,8 +44,7 @@ class BarangRequest extends FormRequest
 			$umkm  = UMKM::pluck('uuid');
 			$umkm  = implode(',', json_decode($umkm));
 			$rules = Arr::add($rules, 'umkm', 'required|in:' . $umkm);
-		} else if ($this->method() == 'PATCH') {
-			$rules = Arr::add($rules, 'tambah_stok', ['numeric', new FilteredNumeric, 'min:1']);
+			$rules = Arr::add($rules, 'stok', ['numeric', new FilteredNumeric, 'min:1']);
 		}
 
 		return $rules;

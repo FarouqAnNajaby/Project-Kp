@@ -103,6 +103,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 			Route::post('export', 'BarangController@export')->name('export');
 			Route::get('{data:uuid}/send-whatsapp', 'BarangController@sendWhatsapp')->name('send-whatsapp');
 
+			Route::prefix('pengadaan')->name('pengadaan.')->group(function () {
+				Route::get('/', 'PengadaanController@index')->name('index');
+				Route::get('umkm/{data:uuid}/barang', 'PengadaanController@show')->name('show');
+				Route::get('umkm/{uuid}/barang/{uuid_barang}', 'PengadaanController@edit')->name('edit');
+				Route::patch('umkm/{uuid}/barang/{uuid_barang}', 'PengadaanController@update')->name('update');
+			});
+
 			Route::prefix('{data:uuid}/foto')->name('foto.')->group(function () {
 				Route::get('/', 'FotoController@index')->name('index');
 				Route::get('create', 'FotoController@create')->name('create');

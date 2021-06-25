@@ -1,11 +1,12 @@
 @extends('admin.layout.app')
 
 @section('content')
-
 <section class="section">
-    <x-admin-breadcrumb title="Log Barang">
+    <x-admin-breadcrumb title="Pengadaan Barang">
         <x-slot name="breadcrumbItem">
-            <div class="breadcrumb-item">Log Barang</div>
+            <div class="breadcrumb-item">
+                <a href="{{ route('admin.barang.pengadaan.index') }}">Pengadaan Barang</a>
+            </div>
         </x-slot>
     </x-admin-breadcrumb>
     <div class="section-body">
@@ -13,14 +14,14 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Log Barang</h4>
+                        <h4>Data Barang</h4>
                         <div class="card-header-form">
-                            {!! Form::select('jenis', ['create' => 'Baru', 'update' => 'Ubah', 'stock' => 'Pengadaan', 'delete' => 'Hapus'], null, ['placeholder' => 'Semua Jenis', 'class' => 'form-control select2']) !!}
+                            {!! Form::select('kategori', $kategori, null, ['placeholder' => 'Semua Kategori', 'class' => 'form-control select2']) !!}
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            {!! $dataTable->table(['class' => 'table table-striped white-space-nowrap']) !!}
+                            {!! $dataTable->table(['class' => 'table table-striped']) !!}
                         </div>
                     </div>
                 </div>
@@ -28,7 +29,6 @@
         </div>
     </div>
 </section>
-
 @endsection
 
 @push('stylesheet')
@@ -45,10 +45,13 @@
 <script src="{{ asset('assets/modules/datatables/Buttons-1.7.0/js/buttons.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts() }}
+@endpush
+
+@push('javascript-custom')
 <script>
     $(document).ready(function() {
-        $("select[name=jenis]").on('change', function() {
-            $('#log-table').DataTable().draw();
+        $("select[name=kategori]").on('change', function() {
+            $('#daftar-barang-umkm-table').DataTable().draw();
         })
     })
     $("table").on('draw.dt', function() {

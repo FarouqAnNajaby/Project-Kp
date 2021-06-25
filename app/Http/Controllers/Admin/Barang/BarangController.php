@@ -120,16 +120,12 @@ class BarangController extends Controller
 		$validated = Arr::except($validated, ['harga', 'tambah_stok', 'kategori', 'deskripsi', 'deskripsi_singkat']);
 
 		$harga             = filter_var($request->harga, FILTER_SANITIZE_NUMBER_INT);
-		$stok              = filter_var($request->tambah_stok, FILTER_SANITIZE_NUMBER_INT);
 		$deskripsi         = nl2br(strip_tags($request->deskripsi));
 		$deskripsi_singkat = strip_tags($request->deskripsi_singkat);
 		$slug              = Str::slug($request->nama);
 
-		$stok += $data->stok;
-
 		$validated = Arr::add($validated, 'uuid_barang_kategori', $request->kategori);
 		$validated = Arr::add($validated, 'harga', $harga);
-		$validated = Arr::add($validated, 'stok', $stok);
 		$validated = Arr::add($validated, 'deskripsi', $deskripsi);
 		$validated = Arr::add($validated, 'deskripsi_singkat', $deskripsi_singkat);
 		$validated = Arr::add($validated, 'slug', $slug);
@@ -138,10 +134,10 @@ class BarangController extends Controller
 		$harga_awal = $data->harga;
 
 		$data->update($validated);
-		if ($stok != $stok_awal || $harga != $harga_awal) {
+		if ($harga != $harga_awal) {
 			$data->log()->create([
 				'stok_awal'     => $stok_awal,
-				'stok_tambahan' => $request->tambah_stok,
+				'stok_tambahan' => 0,
 				'harga'         => $harga,
 				'admin_uuid'    => $auth->uuid,
 				'jenis'			=> 'update'

@@ -22,9 +22,12 @@
             <tr>
                 <th>No</th>
                 <th>Nama Barang</th>
-                <th>Stok</th>
+                <th>Stok Awal</th>
+                <th>Stok Tambahan</th>
                 <th>Harga</th>
-                <th>Tanggal Input</th>
+                <th>Jenis</th>
+                <th>Nama Admin</th>
+                <th>Tanggal</th>
             </tr>
         </thead>
         @php
@@ -43,16 +46,30 @@
         }
         });
         }
-        $data = $data->get();
+        $data = $data->orderBy('created_at', 'desc')->get();
         @endphp
         @foreach($data as $row)
+        @php
+        if ($row->jenis == 'create') {
+        $jenis = 'Baru';
+        } else if ($row->jenis == 'update') {
+        $jenis = 'Ubah';
+        } else if ($row->jenis == 'stock') {
+        $jenis = 'Pengadaan';
+        } else {
+        $jenis = 'Hapus';
+        }
+        @endphp
         <tr>
             <td class="text-center">
                 {{ $loop->iteration }}.
             </td>
             <td>{{ $row->Barang->nama }}</td>
-            <td>{{ number_format($row->stok, 0, '', '.') }}</td>
+            <td>{{ number_format($row->stok_awal, 0, '', '.') }}</td>
+            <td>{{ number_format($row->stok_tambahan, 0, '', '.') }}</td>
             <td>{{ 'Rp' . number_format($row->harga, 2, ',', '.') }}</td>
+            <td>{{ $jenis }}</td>
+            <td>{{ $row->admin->nama }}</td>
             <td>{{ \Carbon\Carbon::parse($row->created_at)->isoFormat('dddd, Do MMMM YYYY') }}</td>
         </tr>
         @endforeach

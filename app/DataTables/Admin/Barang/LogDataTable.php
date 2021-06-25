@@ -52,6 +52,8 @@ class LogDataTable extends DataTable
 					$jenis = 'Baru';
 				} else if ($query->jenis == 'update') {
 					$jenis = 'Ubah';
+				} else if ($query->jenis == 'stock') {
+					$jenis = 'Pengadaan';
 				} else {
 					$jenis = 'Hapus';
 				}

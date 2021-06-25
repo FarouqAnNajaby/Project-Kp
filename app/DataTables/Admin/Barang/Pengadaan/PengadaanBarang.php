@@ -1,22 +1,15 @@
 <?php
 
-namespace App\DataTables\Admin\UMKM;
+namespace App\DataTables\Admin\Barang\Pengadaan;
 
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
 use Illuminate\Support\Str;
-use Collective\Html\FormFacade as Form;
 use App\Models\Barang;
 
-class DaftarBarangDataTable extends DataTable
+class PengadaanBarang extends DataTable
 {
-	/**
-	 * DataTables print preview view.
-	 *
-	 * @var string
-	 */
-	protected $printPreview = 'admin.app.umkm.print.barang';
 
 	/**
 	 * Build DataTable class.
@@ -29,19 +22,9 @@ class DaftarBarangDataTable extends DataTable
 		return datatables()
 			->eloquent($query)
 			->addColumn('action', function ($query) {
-				$opsi = '<a class="btn btn-icon btn-info mr-1" data-toggle="tooltip" title="Foto" target="_blank" href="' . route('admin.barang.foto.index', $query->uuid) . '">
-							<i class="far fa-images"></i>
+				return '<a class="btn btn-icon btn-primary mr-1" data-toggle="tooltip" title="Pengadaan" target="_blank" href="' . route('admin.barang.pengadaan.edit', [$query->uuid_umkm, $query->uuid]) . '">
+							<i class="far fa-pencil"></i>
 						</a>';
-				$opsi .= '<a class="btn btn-icon btn-primary" data-toggle="tooltip" title="Ubah" target="_blank" href="' . route('admin.barang.edit', $query->uuid) . '">
-							<i class="fas fa-pencil-alt"></i>
-						</a>';
-				$opsi .= Form::open(['route' => ['admin.barang.destroy', $query->uuid], 'method' => 'delete', 'class' => 'table-action-column']);
-				$opsi .= '<button class="btn btn-icon btn-danger delete" data-toggle="tooltip" title="Hapus">
-							<i class="fas fa-trash"></i>
-						</button>';
-				$opsi .= Form::close();
-
-				return $opsi;
 			})
 			->editColumn('nama', function ($query) {
 				return Str::limit($query->nama, 20, '<p class="d-inline-block" data-toggle="tooltip" title="' . $query->nama . '">...</p>');
@@ -62,7 +45,7 @@ class DaftarBarangDataTable extends DataTable
 					$query->where('harga', 'LIKE', "%$keyword%");
 				}
 			})
-			->rawColumns(['action', 'nama']);
+			->rawColumns(['action', 'nama', 'umkm.nama']);
 	}
 
 	/**
@@ -104,8 +87,6 @@ class DaftarBarangDataTable extends DataTable
 							"<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"')
 			->orders([[4, 'asc'], [2, 'asc']])
 			->buttons(
-				Button::make('postExport'),
-				Button::make('print'),
 				Button::make('reload')
 			);
 	}

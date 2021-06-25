@@ -65,8 +65,8 @@
                     <i class="fas fa-boxes"></i><span>Barang</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="{{ request()->segment(2) == 'barang' && request()->segment(3) != 'log' ? ' active' : null }}"><a class=" nav-link" href="{{ route('admin.barang.index') }}">Data Barang</a></li>
-
+                    <li class="{{ request()->segment(2) == 'barang' && !in_array(request()->segment(3), ['log', 'pengadaan']) ? ' active' : null }}"><a class=" nav-link" href="{{ route('admin.barang.index') }}">Data Barang</a></li>
+                    <li class="{{ request()->segment(2) == 'barang' && request()->segment(3) == 'pengadaan' ? ' active' : null }}"><a class=" nav-link" href="{{ route('admin.barang.pengadaan.index') }}">Pengadaan Barang</a></li>
                     <li class="{{ request()->segment(2) == 'barang' && request()->segment(3) == 'log' ? ' active' : null }}">
                         <a href="{{ route('admin.barang.log.index') }}">Log Barang</a>
                     </li>

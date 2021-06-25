@@ -46,7 +46,18 @@
                 </div>
                 <div class="form-group row mb-4">
                     <label class="col-form-label text-md-right col-5 col-md-4">Jenis :</label>
-                    <p class="col-form-label col-7 col-md-8">{{ ucfirst($data->jenis) }}</p>
+                    @php
+                    if($data->jenis == 'create') {
+                    $jenis = 'Baru';
+                    } else if($data->jenis == 'update') {
+                    $jenis = 'Ubah';
+                    } else if($data->jenis == 'stock') {
+                    $jenis = 'Pengadaan';
+                    } else {
+                    $jenis = 'Hapus';
+                    }
+                    @endphp
+                    <p class="col-form-label col-7 col-md-8">{{ $jenis }}</p>
                 </div>
                 <div class="form-group row mb-4">
                     <label class="col-form-label text-md-right col-5 col-md-4">Nama Admin :</label>
