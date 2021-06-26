@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Barang;
 
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Rules\HumanName;
 use App\Rules\FilteredNumeric;
 use App\Models\UMKMKategori;
 use App\Models\UMKM;
@@ -89,12 +93,19 @@ class PengadaanController extends Controller
 		$data = $umkm->Barang()->where('uuid', $uuid_barang)->firstOrFail();
 
 		$request->validate([
-			'tambah_stok' => ['required', 'numeric', new FilteredNumeric, 'min:1']
+			'tambah_stok'  => ['required', 'numeric', new FilteredNumeric, 'min:1'],
+			'nama_pengirim' => ['required', 'string', new HumanName, 'max:100'],
+			'foto_bukti'   => 'required|mimes:jpg,jpeg,png|image|max:3072'
 		]);
 
 		$auth = Auth::guard('admin')->user();
 		$stok_awal = $data->stok;
 		$stok = $data->stok + $request->tambah_stok;
+
+		$logo = Image::make($request->file('foto_bukti'))->resize(500,  null, function ($constraint) {
+			$constraint->aspectRatio();
+		})->encode('jpg', 75);
+		$foto_bukti = Str::random(50) . ".jpg";
 
 		$data->update([
 			'stok' => $stok
@@ -103,9 +114,13 @@ class PengadaanController extends Controller
 			'stok_awal'     => $stok_awal,
 			'stok_tambahan' => $request->tambah_stok,
 			'harga'         => $data->harga,
+			'nama_pengirim'	=> $request->nama_pengirim,
+			'foto_bukti'	=> $foto_bukti,
 			'admin_uuid'    => $auth->uuid,
 			'jenis'			=> 'stock'
 		]);
+
+		Storage::disk('foto-bukti')->put($foto_bukti, $logo);
 
 		alert()
 			->success('Data berhasil diubah', 'Sukses!')

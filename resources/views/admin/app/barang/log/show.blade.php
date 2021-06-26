@@ -63,6 +63,24 @@
                     <label class="col-form-label text-md-right col-5 col-md-4">Nama Admin :</label>
                     <p class="col-form-label col-7 col-md-8">{{ $data->Admin->nama }}</p>
                 </div>
+                @if($data->jenis == 'stock')
+                <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-5 col-md-4">Nama Pengirim :</label>
+                    <p class="col-form-label col-7 col-md-8">{{ $data->nama_pengirim }}</p>
+                </div>
+                <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-5 col-md-4">Foto Bukti :</label>
+                    <div class="col-form-label col-7 col-md-8">
+                        <div class="chocolat-parent">
+                            <a href="{{ asset('storage/foto-bukti/' . $data->foto_bukti) }}" class="chocolat-image" title="{{ $data->Barang->nama }}">
+                                <div>
+                                    <img alt="image" src="{{ asset('storage/foto-bukti/' . $data->foto_bukti) }}" class="img-thumbnail" width="200px">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 <div class="form-group row mb-4">
                     <label class="col-form-label text-md-right col-5 col-md-4">Tanggal :</label>
                     <p class="col-form-label col-7 col-md-8">{{ $data->tanggal_input }}</p>
@@ -72,3 +90,11 @@
     </div>
 </section>
 @endsection
+
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('assets/modules/chocolat/dist/css/chocolat.css') }}">
+@endpush
+
+@push('javascript')
+<script src="{{ asset('assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
+@endpush

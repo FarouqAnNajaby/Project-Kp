@@ -14,7 +14,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        {!! Form::model($data, ['route' => ['admin.barang.pengadaan.update', [$data->uuid_umkm, $data->uuid]], 'method' => 'patch']) !!}
+                        {!! Form::model($data, ['route' => ['admin.barang.pengadaan.update', [$data->uuid_umkm, $data->uuid]], 'method' => 'patch', 'files' => true]) !!}
                         <div class="form-group row mb-4">
                             {!! Form::label('nama', 'Nama Barang', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
                             <div class="col-sm-12 col-md-7">
@@ -54,8 +54,26 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tanggal Input :</label>
-                            <p class="col-sm-12 col-md-7">{{ $data->tanggal_input }}</p>
+                            {!! Form::label('nama_pengirim', 'Nama Pengirim*', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+                            <div class="col-sm-12 col-md-7">
+                                {!! Form::text('nama_pengirim', null, ['class' => 'form-control' . ($errors->has('nama_pengirim') ? ' is-invalid' : null), 'autocomplete' => 'off', 'required']) !!}
+                                @error('nama_pengirim')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            {!! Form::label('foto_bukti', 'Foto Bukti* <i class="fas fa-info-circle" data-toggle="tooltip" title="Ukuran file maksimal 3MB & ekstensi berupa jpeg, jpg, png."></i>', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3'], false) !!}
+                            <div class="col-sm-12 col-md-7">
+                                <div class="custom-file">
+                                    {!! Form::file('foto_bukti', ['class' => 'custom-file-input', 'id'=>'foto_bukti', 'accept' => 'image/jpeg,image/png']) !!}
+                                    {!! Form::label('foto_bukti', 'Pilih foto', ['class' => 'custom-file-label']) !!}
+                                </div>
+                                @error('foto_bukti')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                                <div class="preview-image mt-4"></div>
+                            </div>
                         </div>
                         <div class="form-group row mb-4">
                             <div class="col-sm-12 col-md-9 offset-md-3">
@@ -81,10 +99,51 @@
 @push('javascript')
 <script src="{{ asset('assets/modules/freezeui/freeze-ui.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
+<script src="{{ asset('assets/modules/bs-custom-file-input/dist/bs-custom-file-input.min.js') }}"></script>
 @endpush
 
 @push('javascript-custom')
 <script>
+    const logo = $("#foto_bukti")
+    const maxAllowedSize = 3 * 1024 * 1024;
+    const invalidMaxSizeAlert = () => swalAlert('Ukuran foto maksimal 3MB.')
+    const invalidExtAlert = () => swalAlert('Ekstensi file hanya boleh berupa jpeg, jpg dan png.')
+    const resetLogoInput = () => {
+        $("#foto_bukti").val('').next('label').html('Pilih foto');
+    }
+    const swalAlert = (text) => {
+        swal({
+            title: 'Terjadi Kesalahan'
+            , text: text
+            , icon: 'error'
+        })
+    }
+    $.fn.hasExtension = function(exts) {
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$', "i")).test($(this).val());
+    }
+
+    bsCustomFileInput.init()
+
+    logo.on('change', function() {
+        const $this = this
+        if (this.files && this.files[0]) {
+            if (logo.hasExtension(['.jpeg', '.jpg', '.png'])) {
+                if ($this.files[0].size < maxAllowedSize) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('.preview-image').css('background-image', 'url(' + e.target.result + ')');
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    invalidMaxSizeAlert()
+                    resetLogoInput()
+                }
+            } else {
+                invalidExtAlert()
+                resetLogoInput()
+            }
+        }
+    })
     const cleaveInit = (id) => {
         new Cleave(id, {
             numeralDecimalMark: ','
