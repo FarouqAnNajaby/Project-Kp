@@ -99,6 +99,14 @@ class TransaksiBarang extends Model
 		return $this->hasOne(Review::class, 'uuid_transaksi_barang', 'uuid');
 	}
 
+	/**
+	 * Get the related transaksi
+	 */
+	public function Transaksi()
+	{
+		return $this->belongsTo(Transaksi::class, 'uuid_transaksi', 'uuid');
+	}
+
 	protected static function booted()
 	{
 		parent::boot();

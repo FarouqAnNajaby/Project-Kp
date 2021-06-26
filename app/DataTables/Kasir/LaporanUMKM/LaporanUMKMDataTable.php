@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables\Kasir;
+namespace App\DataTables\Kasir\LaporanUMKM;
 
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;

@@ -42,6 +42,7 @@ Route::namespace('Kasir')->prefix('kasir')->name('kasir.')->group(function () {
 		Route::prefix('laporan-umkm')->name('laporan-umkm.')->group(function () {
 			Route::get('/', 'LaporanUMKMController@index')->name('index');
 			Route::get('{data:uuid}/show', 'LaporanUMKMController@show')->name('show');
+			Route::get('{data:uuid}/show/{uuid}/barang', 'LaporanUMKMController@transaksi')->name('transaksi');
 			Route::post('{data:uuid}/show/export', 'LaporanUMKMController@export');
 		});
 

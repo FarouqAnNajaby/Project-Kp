@@ -2,13 +2,13 @@
 
 @section('content')
 <section class="section">
-    <x-admin-breadcrumb backBtn=true title="Detail Laporan UMKM" backUrl="{{ route('kasir.laporan-umkm.index') }}">
+    <x-admin-breadcrumb backBtn=true title="Daftar Transaksi" backUrl="{{ route('kasir.laporan-umkm.show', $umkm->uuid) }}">
         <x-slot name="breadcrumbItem">
             <div class="breadcrumb-item">
                 <a href="{{ route('kasir.laporan-umkm.index') }}">Laporan UMKM</a>
             </div>
             <div class="breadcrumb-item">
-                <a href="{{ route('kasir.laporan-umkm.show', $data->uuid) }}">Detail Laporan UMKM</a>
+                <a href="{{ route('kasir.laporan-umkm.show', $umkm->uuid) }}">Detail Laporan UMKM</a>
             </div>
         </x-slot>
     </x-admin-breadcrumb>
@@ -18,7 +18,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Detail Laporan UMKM</h4>
+                        <h4>{{ $barang->nama }}</h4>
                     </div>
                     <div class="card-body ">
                         <div class="table-responsive">

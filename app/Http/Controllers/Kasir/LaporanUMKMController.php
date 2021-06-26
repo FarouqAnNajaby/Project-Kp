@@ -6,12 +6,14 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\UMKMKategori;
 use App\Models\UMKM;
+use App\Models\TransaksiBarang;
 use App\Models\BarangKategori;
 use App\Models\Barang;
 use App\Http\Controllers\Controller;
 use App\Exports\Kasir\BarangExport;
-use App\DataTables\Kasir\LaporanUMKMDataTable;
-use App\DataTables\Kasir\DetailLaporanUMKMDatatable;
+use App\DataTables\Kasir\LaporanUMKM\LaporanUMKMDataTable;
+use App\DataTables\Kasir\LaporanUMKM\LaporanTransaksiBarangDatatable;
+use App\DataTables\Kasir\LaporanUMKM\DetailLaporanUMKMDatatable;
 
 class LaporanUMKMController extends Controller
 {
@@ -101,25 +103,7 @@ class LaporanUMKMController extends Controller
 		$kategori = $request->kategori;
 		$columns = $request->columns;
 		$orders = $request->order;
-		// $data = Barang::where('barang.uuid', 'e54a7882-6ac6-4cba-bb91-4c90cc1f74c1')->select('barang.*');
-		// foreach ($orders as $key => $value) {
-		// 	foreach ($columns as $index => $val) {
-		// 		if ($value['column'] == $index) {
-		// 			$dir = $orders[$key]['dir'];
-		// 			if ($columns[$index]['name'] == 'kategori.nama') {
-		// 				$data = $data->with(['kategori' => function ($query) use ($dir) {
-		// 					$query->orderBy('nama', $dir);
-		// 				}]);
-		// 			} else if ($columns[$index]['name'] == 'transaksi') {
-		// 				$data = $data->join('transaksi_barang', 'transaksi_barang.uuid_barang', '=', 'barang.uuid')
-		// 					->groupBy('uuid_barang')->orderByRaw('SUM(jumlah) ' . $dir);
-		// 			} else {
-		// 				$data = $data->orderBy($columns[$index]['name'], $dir);
-		// 			}
-		// 		}
-		// 	}
-		// }
-		// return $data->get();
+
 		if ($request->action == 'csv') {
 			$ext = '.csv';
 		} else {
@@ -127,5 +111,14 @@ class LaporanUMKMController extends Controller
 		}
 		$export = new BarangExport($data->uuid, $search, $kategori, $columns, $orders);
 		return Excel::download($export, 'Detail Laporan UMKM-' . date('Ymdhis') . $ext);
+	}
+
+	public function transaksi(LaporanTransaksiBarangDatatable $dataTable, $uuid_umkm, $uuid)
+	{
+		$umkm = UMKM::where('uuid', $uuid_umkm)->firstOrFail();
+		$barang = Barang::where('uuid', $uuid)->where('uuid_umkm', $umkm->uuid)->firstOrFail();
+		return $dataTable
+			->with(['uuid' => $uuid])
+			->render('kasir.app.laporan-umkm.transaksi', compact('barang', 'umkm'));
 	}
 }
