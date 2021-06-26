@@ -50,7 +50,7 @@
                                         <a href="{{ route('ecommerce.barang.show', [$item->kode, $item->slug]) }}" target="_blank">
                                             {{ $item->nama }}
                                         </a>
-                                        <span>Rp{{ number_format($item->harga, 2, ',', '.') }}</span>
+                                        <span>{{ $item->jumlah }} x Rp{{ number_format($item->harga, 2, ',', '.') }}</span>
                                     </li>
                                     @endforeach
                                     <li class="last	">
