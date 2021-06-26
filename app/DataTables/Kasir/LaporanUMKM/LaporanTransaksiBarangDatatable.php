@@ -12,6 +12,12 @@ use App\Models\TransaksiBarang;
 
 class LaporanTransaksiBarangDatatable extends DataTable
 {
+	/**
+	 * DataTables print preview view.
+	 *
+	 * @var string
+	 */
+	protected $printPreview = 'kasir.app.laporan-umkm.print-transaksi';
 
 	/**
 	 * Build DataTable class.
