@@ -170,7 +170,7 @@ class LaporanController extends Controller
 			$text .= $tahun;
 		}
 		if ($hari == 0 && $bulan == 0 && $tahun == 0) {
-			$text .= " Keseluruhan";
+			$text .= "Keseluruhan";
 		}
 		$pendapatan = "Rp. " . number_format($pendapatan->sum('total'), 0, '', '.');
 		$data = [
