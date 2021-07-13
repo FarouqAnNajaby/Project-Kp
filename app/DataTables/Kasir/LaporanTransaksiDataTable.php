@@ -98,6 +98,9 @@ class LaporanTransaksiDataTable extends DataTable
 		if ($status = $this->request()->get('status')) {
 			$model->where('status', $status);
 		}
+		if ($jenis = $this->request()->get('jenis')) {
+			$model->where('jenis', $jenis);
+		}
 		if ($bulan = $this->request()->get('bulan')) {
 			$model->whereMonth('created_at', $bulan);
 		}
@@ -126,6 +129,7 @@ class LaporanTransaksiDataTable extends DataTable
 					data.bulan = $('select[name=bulan]').val();
 					data.tahun = $('select[name=tahun]').val();
 					data.hari = $('select[name=hari]').val();
+					data.jenis = $('select[name=jenis]').val();
 				}"
 			])
 			->dom('"<\'row\'<\'col-sm-12 col-md-2\'l><\'col-sm-12 col-md-5\'B><\'col-sm-12 col-md-5\'f>>" +

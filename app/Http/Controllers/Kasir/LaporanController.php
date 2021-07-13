@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Kasir;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use DateTimeZone;
+use DateTime;
 use App\Models\Transaksi;
 use App\Http\Controllers\Controller;
 use App\DataTables\Kasir\LaporanTransaksiDataTable;
@@ -30,7 +32,10 @@ class LaporanController extends Controller
 			->groupBy('year')
 			->pluck('year', 'year');
 
-		return $dataTable->render('kasir.app.laporan.index', compact('bulan', 'tahun', 'pending', 'selesai', 'batal'));
+		$pendapatan = Transaksi::whereYear('created_at', '2021')->sum('total');
+		$pendapatan = 'Rp. ' . number_format($pendapatan, 0, '', '.');
+
+		return $dataTable->render('kasir.app.laporan.index', compact('pendapatan', 'bulan', 'tahun', 'pending', 'selesai', 'batal'));
 	}
 
 	/**
@@ -128,5 +133,50 @@ class LaporanController extends Controller
 	public function destroy($id)
 	{
 		//
+	}
+
+	/**
+	 * Get pendapatan
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function pendapatan(Request $request)
+	{
+		$hari = $request->hari;
+		$bulan = $request->bulan;
+		$tahun = $request->tahun;
+		$pendapatan = new Transaksi();
+		$text = "Total Pendapatan ";
+		if ($hari >= 1) {
+			$pendapatan = $pendapatan->whereDay('created_at', $hari);
+			$text .= "per-Tanggal " . $hari . " ";
+		}
+		if ($bulan >= 1) {
+			$pendapatan = $pendapatan->whereMonth('created_at', $bulan);
+			$bulan = DateTime::createFromFormat('!m', $bulan);
+			$timezone = new DateTimeZone('Asia/Jakarta');
+			$bulan->setTimezone($timezone);
+			$bulan = strftime('%B', strtotime($bulan->format('d-m-Y')));
+			if ($hari == 0) {
+				$text .= "per-Bulan ";
+			}
+			$text .= $bulan . " ";
+		}
+		if ($tahun >= 1) {
+			$pendapatan = $pendapatan->whereYear('created_at', $tahun);
+			if ($hari == 0 && $bulan == 0) {
+				$text .= "per-Tahun ";
+			}
+			$text .= $tahun;
+		}
+		if ($hari == 0 && $bulan == 0 && $tahun == 0) {
+			$text .= " Keseluruhan";
+		}
+		$pendapatan = "Rp. " . number_format($pendapatan->sum('total'), 0, '', '.');
+		$data = [
+			'amount'  => $pendapatan,
+			'description' => $text
+		];
+		return response()->json($data, 200);
 	}
 }

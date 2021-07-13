@@ -54,6 +54,14 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="summary">
+                    <div class="summary-info bg-primary">
+                        <h4 class="text-light" id="pendapatan-amount">{{ $pendapatan }}</h4>
+                        <div class="text-light font-weight-bold" id="pendapatan-desc">Total Pendapatan per-Tahun {{ date('Y') }}</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
@@ -66,16 +74,19 @@
                             <div class="col-md-2">
                                 {!! Form::select('status', ['pending' => 'Pending', 'selesai' => 'Selesai', 'batal' => 'Batal'], null, ['placeholder' => 'Status', 'class' => 'form-control select2']) !!}
                             </div>
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-3">
+                                {!! Form::select('jenis', ['online' => 'Transaksi Online', 'offline' => 'Transaksi Offline'], null, ['placeholder' => 'Jenis Transaksi', 'class' => 'form-control select2']) !!}
+                            </div>
+                            <div class="col-md-5 offset-md-2">
                                 <div class="row">
-                                    <div class="col-md-4" id="combobox-tgl">
-                                        {!! Form::select('hari', [], null, ['placeholder' => 'Tanggal', 'class' => 'form-control select2']) !!}
+                                    <div class="col-md-4">
+                                        {!! Form::select('tahun', $tahun, date('Y'), ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
                                     </div>
                                     <div class="col-md-4">
                                         {!! Form::select('bulan', $bulan, null, ['placeholder' => 'Bulan', 'class' => 'form-control select2']) !!}
                                     </div>
-                                    <div class="col-md-4">
-                                        {!! Form::select('tahun', $tahun, date('Y'), ['placeholder' => 'Tahun', 'class' => 'form-control select2']) !!}
+                                    <div class="col-md-4" id="combobox-tgl">
+                                        {!! Form::select('hari', [], null, ['placeholder' => 'Tanggal', 'class' => 'form-control select2']) !!}
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +157,7 @@
         })
     });
     $(document).ready(function() {
-        $("select[name=bulan], select[name=tahun], select[name=status], select[name=hari]").on('change', function() {
+        $("select[name=bulan], select[name=tahun], select[name=status], select[name=hari], select[name=jenis]").on('change', function() {
             $('#laporantransaksi-table').DataTable().draw();
         })
         $('#save').on('click', function() {
@@ -209,6 +220,48 @@
                 $("select[name=hari]").html(opt);
             }
         })
+        $('select[name=hari], select[name=bulan], select[name=tahun]').on('change', function() {
+            var hari = $('select[name=hari]').val();
+            if (!hari) {
+                hari = 0;
+            }
+            var bulan = $('select[name=bulan]').val();
+            if (!bulan) {
+                bulan = 0;
+            }
+            var tahun = $('select[name=tahun]').val();
+            if (!tahun) {
+                tahun = 0;
+            }
+            let csrf_token = $('meta[name=csrf-token]').attr('content');
+            let url = window.location.href + "/getPendapatan";
+            $.ajax({
+                url: url
+                , data: {
+                    hari: hari
+                    , bulan: bulan
+                    , tahun: tahun
+                }
+                , type: 'POST'
+                , headers: {
+                    'X-CSRF-TOKEN': csrf_token
+                }
+                , success: function(response) {
+                    $("#pendapatan-amount").html(response.amount)
+                    $("#pendapatan-desc").html(response.description)
+                }
+                , error: function(xhr, status, error) {
+                    if (xhr.responseText != "") {
+                        var err = JSON.parse(xhr.responseText)
+                        swal({
+                            icon: 'error'
+                            , title: "Gagal!"
+                            , text: "Terjadi Kesalahan dalam Mendapatkan Pendapatan."
+                        })
+                    }
+                }
+            });
+        });
     })
 </script>
 @endpush

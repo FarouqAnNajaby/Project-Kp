@@ -51,6 +51,7 @@ Route::namespace('Kasir')->prefix('kasir')->name('kasir.')->group(function () {
 			Route::get('{uuid}/show', 'LaporanController@show')->name('show');
 			Route::get('{data:uuid}/print', 'LaporanController@create')->name('print');
 			Route::match(['get', 'post'], '{uuid}/whatsapp', 'LaporanController@store')->name('whatsapp');
+			Route::post('/getPendapatan', 'LaporanController@pendapatan')->name('pendapatan');
 		});
 
 		Route::prefix('ajax')->name('ajax.')->group(function () {
